@@ -5,7 +5,12 @@ import pandas as pd
 import os
 from streamlit_autorefresh import st_autorefresh
 
-# --- Function to make QR code ---
+# --- Files ---
+QUESTIONS_FILE = "questions.csv"
+CSV_FILE = "answers.csv"
+STATE_FILE = "state.csv"
+
+# --- Functions ---
 def make_qr_image(url):
     qr = qrcode.QRCode(box_size=6, border=2)
     qr.add_data(url)
@@ -16,30 +21,28 @@ def make_qr_image(url):
     buf.seek(0)
     return buf
 
-# --- Quiz data ---
-quiz = [
-    {"q": "What is 2 + 2?", "options": ["3", "4", "5"], "answer": "4"},
-    {"q": "Capital of France?", "options": ["Paris", "Rome", "Berlin"], "answer": "Paris"},
-    {"q": "Which planet is known as the Red Planet?", "options": ["Mars", "Venus", "Jupiter"], "answer": "Mars"},
-]
+def load_quiz_from_csv(file):
+    if os.path.exists(file) and os.path.getsize(file) > 0:
+        try:
+            # read with proper quoting and escape
+            df = pd.read_csv(file, quotechar='"', keep_default_na=False)
+            quiz_list = []
+            for _, row in df.iterrows():
+                options = [row[f"Option{i}"] for i in range(1, 5) if row.get(f"Option{i}", "").strip()]
+                quiz_list.append({
+                    "q": row["Question"],
+                    "type": row["Type"],
+                    "options": options,
+                    "answer": row["Answer"]
+                })
+            return quiz_list
+        except Exception as e:
+            st.error(f"Error reading CSV: {e}")
+            return []
+    else:
+        st.error("Questions CSV file is missing or empty!")
+        return []
 
-CSV_FILE = "answers.csv"
-STATE_FILE = "state.csv"  # store current question index for students
-
-st.set_page_config(page_title="Classroom Quiz", layout="wide")
-st.title("📚 Classroom Quiz")
-
-# --- Sidebar: QR code + info ---
-app_url = "http://192.168.1.159:8501"  # Change to your hotspot IP
-st.sidebar.markdown("## 🔗 Connection Info")
-st.sidebar.write("Students: connect to your teacher's Wi-Fi hotspot, then open:")
-st.sidebar.code(app_url)
-qr_buf = make_qr_image(app_url)
-st.sidebar.image(qr_buf, caption="📱 Scan to join", use_container_width=True)
-
-mode = st.sidebar.radio("Select mode:", ["Student", "Teacher"])
-
-# --- Helper functions ---
 def read_answers():
     if os.path.exists(CSV_FILE) and os.path.getsize(CSV_FILE) > 0:
         return pd.read_csv(CSV_FILE)
@@ -48,7 +51,6 @@ def read_answers():
 
 def append_answer(student, question, answer):
     df = read_answers()
-    # Prevent multiple submissions for same question
     if not ((df["Student"] == student) & (df["Question"] == question)).any():
         df = pd.concat([df, pd.DataFrame([{"Student": student, "Question": question, "Answer": answer}])], ignore_index=True)
         df.to_csv(CSV_FILE, index=False)
@@ -64,30 +66,45 @@ def write_current_question(q_index):
     pd.DataFrame([{"current_question": q_index}]).to_csv(STATE_FILE, index=False)
 
 def reset_quiz():
-    # Clear answers
     pd.DataFrame(columns=["Student", "Question", "Answer"]).to_csv(CSV_FILE, index=False)
-    # Reset question index
     write_current_question(0)
-    # Clear session state
     for key in ["current_question"]:
         if key in st.session_state:
             del st.session_state[key]
 
+# --- Load quiz ---
+quiz = load_quiz_from_csv(QUESTIONS_FILE)
+
+# --- Streamlit config ---
+st.set_page_config(page_title="Classroom Quiz", layout="wide")
+st.title("📚 Classroom Quiz")
+
+# --- Sidebar ---
+app_url = "http://192.168.1.159:8501"  # change to your hotspot IP
+st.sidebar.markdown("## 🔗 Connection Info")
+st.sidebar.write("Students: connect to your teacher's Wi-Fi hotspot, then open:")
+st.sidebar.code(app_url)
+qr_buf = make_qr_image(app_url)
+st.sidebar.image(qr_buf, caption="📱 Scan to join", use_container_width=True)
+
+mode = st.sidebar.radio("Select mode:", ["Student", "Teacher"])
+
 # --- Student View ---
 if mode == "Student":
     st_autorefresh(interval=2000, limit=None, key="student_refresh")
-
     student_name = st.text_input("✏️ Enter your name to start:")
 
-    if student_name:
+    if student_name and quiz:
         q_index = read_current_question()
         q = quiz[q_index]
-
         st.subheader(f"📝 Question {q_index + 1}")
-        st.write(q["q"])
+        st.markdown(q["q"].replace("\n", "  \n"))  # keep multiline formatting
 
         key = f"{student_name}_q{q_index}"
-        selected = st.radio("Choose your answer:", q["options"], index=0, key=key)
+        if q["type"] == "MC":
+            selected = st.radio("Choose your answer:", q["options"], index=0, key=key)
+        elif q["type"] == "OR":
+            selected = st.text_area("Your answer:", key=key)
 
         if st.button("✅ Submit Answer", key=f"submit_{key}"):
             append_answer(student_name, q["q"], selected)
@@ -96,11 +113,9 @@ if mode == "Student":
 # --- Teacher View ---
 elif mode == "Teacher":
     password = st.text_input("🔑 Enter teacher password:", type="password")
-
-    if password == "secret123":  # Change password
+    if password == "secret123":  # change as needed
         st_autorefresh(interval=5000, limit=None, key="teacher_refresh")
 
-        # Reset button
         if st.button("🔄 Reset Quiz"):
             reset_quiz()
             st.success("Quiz has been reset. Students can start fresh.")
@@ -111,7 +126,7 @@ elif mode == "Teacher":
 
         col_left, col_right = st.columns([1, 2])
 
-        # --- Left column: students logged in ---
+        # --- Left: Students logged in ---
         with col_left:
             st.subheader("👥 Students Logged In")
             df = read_answers()
@@ -122,36 +137,33 @@ elif mode == "Teacher":
             else:
                 st.write("No students yet")
 
-        # --- Right column: current question + aggregated responses ---
+        # --- Right: Current question + responses ---
         with col_right:
-            if q_index < len(quiz):
+            if quiz and q_index < len(quiz):
                 q = quiz[q_index]
                 st.subheader(f"👩‍🏫 Question {q_index + 1}")
-                st.write(f"**{q['q']}**")
-                st.write("Options:", q["options"])
+                st.markdown(q["q"].replace("\n", "  \n"))  # multiline
+                df = read_answers()
+                df_q = df[df["Question"] == q["q"]]
+                total_responses = len(df_q)
+                st.write(f"📝 Total responses: {total_responses}")
 
-                if not df.empty:
-                    df_q = df[df["Question"] == q["q"]]
-                    total_responses = len(df_q)
-                    st.write(f"📝 Total responses: {total_responses}")
+                if q["type"] == "MC" and total_responses > 0:
+                    counts = df_q['Answer'].value_counts()
+                    percentages = counts / total_responses * 100
+                    with st.expander("📊 Show Answer Percentages", expanded=False):
+                        st.write("### Percentages")
+                        for option in q["options"]:
+                            pct = percentages.get(option, 0)
+                            st.write(f"{option}: {pct:.1f}%")
+                            st.progress(min(int(pct), 100))
+                elif q["type"] == "OR":
+                    with st.expander("📝 Open Responses", expanded=False):
+                        st.write("### Responses")
+                        for idx, row in df_q.iterrows():
+                            st.write(f"- {row['Student']}: {row['Answer']}")
 
-                    if total_responses > 0:
-                        counts = df_q['Answer'].value_counts()
-                        percentages = counts / total_responses * 100
-
-                        # Collapsible container
-                        with st.expander("📊 Show Answer Percentages", expanded=False):
-                            st.write("### Percentages")
-                            for option in q["options"]:
-                                pct = percentages.get(option, 0)
-                                st.write(f"- {option}: {pct:.1f}%")
-                            st.bar_chart(percentages.reindex(q["options"]).fillna(0))
-                    else:
-                        st.info("No responses yet.")
-                else:
-                    st.info("No responses yet.")
-
-                # Teacher navigation
+                # --- Navigation ---
                 col1, col2 = st.columns(2)
                 if col1.button("⏮ Previous") and q_index > 0:
                     st.session_state["current_question"] = q_index - 1
@@ -165,6 +177,5 @@ elif mode == "Teacher":
                     st.dataframe(df)
                     csv = df.to_csv().encode("utf-8")
                     st.download_button("📥 Download all results as CSV", csv, "quiz_results.csv", "text/csv")
-
     elif password:
         st.error("❌ Incorrect password")
