@@ -4,6 +4,7 @@ from io import BytesIO
 import pandas as pd
 import os
 from streamlit_autorefresh import st_autorefresh
+import socket
 
 # --- Files ---
 QUESTIONS_FILE = "questions.csv"
@@ -67,9 +68,9 @@ def write_current_question(q_index):
 def reset_quiz():
     pd.DataFrame(columns=["Student", "Question", "Answer"]).to_csv(CSV_FILE, index=False)
     write_current_question(0)
-    for key in ["current_question", "show_answer"]:
-        if key in st.session_state:
-            del st.session_state[key]
+    keys_to_clear = [key for key in st.session_state.keys() if key.startswith("show_answer_") or key in ["current_question"]]
+    for key in keys_to_clear:
+        del st.session_state[key]
 
 def calculate_scores(df, quiz):
     scores = {}
@@ -92,8 +93,20 @@ quiz = load_quiz_from_csv(QUESTIONS_FILE)
 st.set_page_config(page_title="Classroom Quiz", layout="wide")
 st.title("📚 Classroom Quiz")
 
+def get_local_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't need to actually connect, just used to find IP
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+    except Exception:
+        ip = "127.0.0.1"
+    finally:
+        s.close()
+    return ip
+
 # --- Sidebar ---
-app_url = "http://192.168.1.159:8501"  # change to your hotspot IP
+app_url = f"http://{get_local_ip()}:8501"  # change to your hotspot IP
 st.sidebar.markdown("## 🔗 Connection Info")
 st.sidebar.write("Students: connect to your teacher's Wi-Fi hotspot, then open:")
 st.sidebar.code(app_url)
@@ -137,9 +150,6 @@ elif mode == "Teacher":
         with col_top2:
             if st.button("🔄 Refresh Now"):
                 st.rerun()
-        with col_top3:
-            if st.button("👀 Show Correct Answer"):
-                st.session_state["show_answer"] = True
 
         if "current_question" not in st.session_state:
             st.session_state["current_question"] = read_current_question()
@@ -147,12 +157,13 @@ elif mode == "Teacher":
 
         col_left, col_mid, col_right = st.columns([1, 2, 1])
 
-        # --- Left: Students logged in (+ scores only if show_answer pressed) ---
+        # --- Left: Students logged in (+ scores only if show_answer pressed for that question) ---
         with col_left:
             st.subheader("👥 Students Logged In")
             df = read_answers()
             if not df.empty:
-                if st.session_state.get("show_answer"):
+                show_key = f"show_answer_{q_index}"
+                if st.session_state.get(show_key):
                     scores = calculate_scores(df, quiz)
                     for student, score in scores.items():
                         st.write(f"- {student} ({score} correct)")
@@ -193,21 +204,19 @@ elif mode == "Teacher":
                 if col2.button("⏭ Next") and q_index < len(quiz) - 1:
                     st.session_state["current_question"] = q_index + 1
                     write_current_question(st.session_state["current_question"])
-            else:
-                st.subheader("✅ Quiz complete!")
-                if not df.empty:
-                    st.dataframe(df)
-                    csv = df.to_csv().encode("utf-8")
-                    st.download_button("📥 Download all results as CSV", csv, "quiz_results.csv", "text/csv")
 
-        # --- Right: Possible answers ---
+        # --- Right: Possible answers + show answer button ---
         with col_right:
             if quiz and q_index < len(quiz):
                 q = quiz[q_index]
+                st.subheader("✅ Possible Answers")
+                if st.button("👀 Show Correct Answer"):
+                    st.session_state[f"show_answer_{q_index}"] = True
+
+                show_key = f"show_answer_{q_index}"
                 if q["type"] == "MC":
-                    st.subheader("✅ Possible Answers")
                     for option in q["options"]:
-                        if st.session_state.get("show_answer") and option == q["answer"]:
+                        if st.session_state.get(show_key) and option == q["answer"]:
                             st.markdown(f"**✅ {option}**")
                         else:
                             st.write(f"- {option}")
