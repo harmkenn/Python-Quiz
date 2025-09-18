@@ -147,14 +147,18 @@ elif mode == "Teacher":
 
         col_left, col_mid, col_right = st.columns([1, 2, 1])
 
-        # --- Left: Students logged in + scores ---
+        # --- Left: Students logged in (+ scores only if show_answer pressed) ---
         with col_left:
             st.subheader("👥 Students Logged In")
             df = read_answers()
             if not df.empty:
-                scores = calculate_scores(df, quiz)
-                for student, score in scores.items():
-                    st.write(f"- {student} ({score} correct)")
+                if st.session_state.get("show_answer"):
+                    scores = calculate_scores(df, quiz)
+                    for student, score in scores.items():
+                        st.write(f"- {student} ({score} correct)")
+                else:
+                    for student in df["Student"].unique():
+                        st.write(f"- {student}")
             else:
                 st.write("No students yet")
 
