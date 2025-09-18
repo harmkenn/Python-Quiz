@@ -24,7 +24,6 @@ def make_qr_image(url):
 def load_quiz_from_csv(file):
     if os.path.exists(file) and os.path.getsize(file) > 0:
         try:
-            # read with proper quoting and escape
             df = pd.read_csv(file, quotechar='"', keep_default_na=False)
             quiz_list = []
             for _, row in df.iterrows():
@@ -33,7 +32,7 @@ def load_quiz_from_csv(file):
                     "q": row["Question"],
                     "type": row["Type"],
                     "options": options,
-                    "answer": row["Answer"]
+                    "answer": row.get("Answer", "").strip()
                 })
             return quiz_list
         except Exception as e:
@@ -116,9 +115,14 @@ elif mode == "Teacher":
     if password == "secret123":  # change as needed
         st_autorefresh(interval=5000, limit=None, key="teacher_refresh")
 
-        if st.button("🔄 Reset Quiz"):
-            reset_quiz()
-            st.success("Quiz has been reset. Students can start fresh.")
+        col_top1, col_top2 = st.columns([1, 1])
+        with col_top1:
+            if st.button("🧹 Reset Quiz"):
+                reset_quiz()
+                st.success("Quiz has been reset. Students can start fresh.")
+        with col_top2:
+            if st.button("🔄 Refresh Now"):
+                st.rerun()
 
         if "current_question" not in st.session_state:
             st.session_state["current_question"] = read_current_question()
@@ -152,14 +156,12 @@ elif mode == "Teacher":
                     counts = df_q['Answer'].value_counts()
                     percentages = counts / total_responses * 100
                     with st.expander("📊 Show Answer Percentages", expanded=False):
-                        st.write("### Percentages")
                         for option in q["options"]:
                             pct = percentages.get(option, 0)
                             st.write(f"{option}: {pct:.1f}%")
                             st.progress(min(int(pct), 100))
                 elif q["type"] == "OR":
                     with st.expander("📝 Open Responses", expanded=False):
-                        st.write("### Responses")
                         for idx, row in df_q.iterrows():
                             st.write(f"- {row['Student']}: {row['Answer']}")
 
@@ -185,7 +187,13 @@ elif mode == "Teacher":
                 if q["type"] == "MC":
                     st.subheader("✅ Possible Answers")
                     for option in q["options"]:
-                        st.write(f"- {option}")
+                        if st.session_state.get("show_answer") and option == q["answer"]:
+                            st.markdown(f"**✅ {option}**")  # highlight correct
+                        else:
+                            st.write(f"- {option}")
+
+                    if st.button("👀 Show Correct Answer"):
+                        st.session_state["show_answer"] = True
                 elif q["type"] == "OR":
                     st.subheader("📝 Open Response")
                     st.write("Students type their own answers here.")
