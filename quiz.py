@@ -67,9 +67,23 @@ def write_current_question(q_index):
 def reset_quiz():
     pd.DataFrame(columns=["Student", "Question", "Answer"]).to_csv(CSV_FILE, index=False)
     write_current_question(0)
-    for key in ["current_question"]:
+    for key in ["current_question", "show_answer"]:
         if key in st.session_state:
             del st.session_state[key]
+
+def calculate_scores(df, quiz):
+    scores = {}
+    for student in df["Student"].unique():
+        student_df = df[df["Student"] == student]
+        correct_count = 0
+        for _, row in student_df.iterrows():
+            q_text = row["Question"]
+            q_match = next((q for q in quiz if q["q"] == q_text), None)
+            if q_match and q_match["type"] == "MC":
+                if str(row["Answer"]).strip() == q_match["answer"]:
+                    correct_count += 1
+        scores[student] = correct_count
+    return scores
 
 # --- Load quiz ---
 quiz = load_quiz_from_csv(QUESTIONS_FILE)
@@ -97,7 +111,7 @@ if mode == "Student":
         q_index = read_current_question()
         q = quiz[q_index]
         st.subheader(f"📝 Question {q_index + 1}")
-        st.markdown(q["q"].replace("\n", "  \n"))  # keep multiline formatting
+        st.markdown(q["q"].replace("\n", "  \n"))
 
         key = f"{student_name}_q{q_index}"
         if q["type"] == "MC":
@@ -115,7 +129,7 @@ elif mode == "Teacher":
     if password == "secret123":  # change as needed
         st_autorefresh(interval=5000, limit=None, key="teacher_refresh")
 
-        col_top1, col_top2 = st.columns([1, 1])
+        col_top1, col_top2, col_top3 = st.columns([1, 1, 1])
         with col_top1:
             if st.button("🧹 Reset Quiz"):
                 reset_quiz()
@@ -123,6 +137,9 @@ elif mode == "Teacher":
         with col_top2:
             if st.button("🔄 Refresh Now"):
                 st.rerun()
+        with col_top3:
+            if st.button("👀 Show Correct Answer"):
+                st.session_state["show_answer"] = True
 
         if "current_question" not in st.session_state:
             st.session_state["current_question"] = read_current_question()
@@ -130,14 +147,14 @@ elif mode == "Teacher":
 
         col_left, col_mid, col_right = st.columns([1, 2, 1])
 
-        # --- Left: Students logged in ---
+        # --- Left: Students logged in + scores ---
         with col_left:
             st.subheader("👥 Students Logged In")
             df = read_answers()
-            students = df["Student"].unique()
-            if len(students) > 0:
-                for s in students:
-                    st.write(f"- {s}")
+            if not df.empty:
+                scores = calculate_scores(df, quiz)
+                for student, score in scores.items():
+                    st.write(f"- {student} ({score} correct)")
             else:
                 st.write("No students yet")
 
@@ -146,8 +163,7 @@ elif mode == "Teacher":
             if quiz and q_index < len(quiz):
                 q = quiz[q_index]
                 st.subheader(f"👩‍🏫 Question {q_index + 1}")
-                st.markdown(q["q"].replace("\n", "  \n"))  # multiline
-                df = read_answers()
+                st.markdown(q["q"].replace("\n", "  \n"))
                 df_q = df[df["Question"] == q["q"]]
                 total_responses = len(df_q)
                 st.write(f"📝 Total responses: {total_responses}")
@@ -188,12 +204,9 @@ elif mode == "Teacher":
                     st.subheader("✅ Possible Answers")
                     for option in q["options"]:
                         if st.session_state.get("show_answer") and option == q["answer"]:
-                            st.markdown(f"**✅ {option}**")  # highlight correct
+                            st.markdown(f"**✅ {option}**")
                         else:
                             st.write(f"- {option}")
-
-                    if st.button("👀 Show Correct Answer"):
-                        st.session_state["show_answer"] = True
                 elif q["type"] == "OR":
                     st.subheader("📝 Open Response")
                     st.write("Students type their own answers here.")
