@@ -124,7 +124,7 @@ elif mode == "Teacher":
             st.session_state["current_question"] = read_current_question()
         q_index = st.session_state["current_question"]
 
-        col_left, col_right = st.columns([1, 2])
+        col_left, col_mid, col_right = st.columns([1, 2, 1])
 
         # --- Left: Students logged in ---
         with col_left:
@@ -137,8 +137,8 @@ elif mode == "Teacher":
             else:
                 st.write("No students yet")
 
-        # --- Right: Current question + responses ---
-        with col_right:
+        # --- Middle: Current question + responses ---
+        with col_mid:
             if quiz and q_index < len(quiz):
                 q = quiz[q_index]
                 st.subheader(f"👩‍🏫 Question {q_index + 1}")
@@ -177,5 +177,17 @@ elif mode == "Teacher":
                     st.dataframe(df)
                     csv = df.to_csv().encode("utf-8")
                     st.download_button("📥 Download all results as CSV", csv, "quiz_results.csv", "text/csv")
+
+        # --- Right: Possible answers ---
+        with col_right:
+            if quiz and q_index < len(quiz):
+                q = quiz[q_index]
+                if q["type"] == "MC":
+                    st.subheader("✅ Possible Answers")
+                    for option in q["options"]:
+                        st.write(f"- {option}")
+                elif q["type"] == "OR":
+                    st.subheader("📝 Open Response")
+                    st.write("Students type their own answers here.")
     elif password:
         st.error("❌ Incorrect password")
