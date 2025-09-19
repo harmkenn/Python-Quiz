@@ -96,9 +96,11 @@ st.title("📚 Classroom Quiz")
 # --- IP Detection ---
 def get_local_ip():
     try:
-        # Works well on Linux: returns the first non-loopback address
-        ip = os.popen("hostname -I").read().split()[0]
-        return ip
+        ips = os.popen("hostname -I").read().split()
+        for ip in ips:
+            if ip.startswith("10.") or ip.startswith("192."):
+                return ip
+        return "127.0.0.1"
     except Exception:
         return "127.0.0.1"
 
