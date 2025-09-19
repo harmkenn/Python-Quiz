@@ -93,20 +93,17 @@ quiz = load_quiz_from_csv(QUESTIONS_FILE)
 st.set_page_config(page_title="Classroom Quiz", layout="wide")
 st.title("📚 Classroom Quiz")
 
+# --- IP Detection ---
 def get_local_ip():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
-        # doesn't need to actually connect, just used to find IP
-        s.connect(("8.8.8.8", 80))
-        ip = s.getsockname()[0]
+        # Works well on Linux: returns the first non-loopback address
+        ip = os.popen("hostname -I").read().split()[0]
+        return ip
     except Exception:
-        ip = "127.0.0.1"
-    finally:
-        s.close()
-    return ip
+        return "127.0.0.1"
 
 # --- Sidebar ---
-app_url = f"http://{get_local_ip()}:8501"  # change to your hotspot IP
+app_url = f"http://{get_local_ip()}:8501"
 st.sidebar.markdown("## 🔗 Connection Info")
 st.sidebar.write("Students: connect to your teacher's Wi-Fi hotspot, then open:")
 st.sidebar.code(app_url)
