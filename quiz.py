@@ -55,12 +55,11 @@ def append_answer(student, question, answer):
         df.to_csv(CSV_FILE, index=False)
 
 def read_current_question():
-    if os.path.exists(STATE_FILE) and os.path.getsize(STATE_FILE) > 0:
+    if os.path.exists(STATE_FILE):
         df = pd.read_csv(STATE_FILE)
-        if "current_question" in df.columns and not df.empty:
+        if not df.empty and "current_question" in df.columns:
             return int(df.loc[0, "current_question"])
-    # default if missing or empty
-    return -1  # -1 indicates quiz hasn't started (waiting room)
+    return -1  # -1 will indicate waiting room
 
 def write_current_question(q_index):
     pd.DataFrame([{"current_question": q_index}]).to_csv(STATE_FILE, index=False)
@@ -119,11 +118,13 @@ if mode == "Student":
     st_autorefresh(interval=2000, limit=None, key="student_refresh")
     student_name = st.text_input("✏️ Enter your name to start:")
 
+    if student_name:
+        # mark student in CSV even if waiting
+        append_answer(student_name, "Waiting Room", "Joined")
+
     if student_name and quiz:
         q_index = read_current_question()
-        if q_index == -1:
-            st.info("⏳ Waiting for teacher to start the quiz...")
-        elif q_index < len(quiz):
+        if q_index >= 0:
             q = quiz[q_index]
             st.subheader(f"📝 Question {q_index + 1}")
             st.markdown(q["q"].replace("\n", "  \n"))
@@ -138,19 +139,18 @@ if mode == "Student":
                 append_answer(student_name, q["q"], selected)
                 st.success("Answer submitted!")
         else:
-            st.success("🎉 Quiz finished!")
+            st.info("⏳ Waiting for the teacher to start the quiz...")
 
 # --- Teacher View ---
 elif mode == "Teacher":
     password = st.text_input("🔑 Enter teacher password:", type="password")
     if password == "secret123":  # change as needed
-        st_autorefresh(interval=5000, limit=None, key="teacher_refresh")
-
-        col_top1, col_top2 = st.columns([1, 1])
+        st_autorefresh(interval=2000, limit=None, key="teacher_refresh")
+        col_top1, col_top2 = st.columns([1,1])
         with col_top1:
             if st.button("🧹 Reset Quiz"):
                 reset_quiz()
-                st.success("Quiz has been reset. Students can start fresh.")
+                st.success("Quiz reset!")
         with col_top2:
             if st.button("🔄 Refresh Now"):
                 st.rerun()
@@ -159,89 +159,85 @@ elif mode == "Teacher":
             st.session_state["current_question"] = read_current_question()
         q_index = st.session_state["current_question"]
 
-        col_left, col_mid, col_right = st.columns([1, 2, 1])
-        df = read_answers()
+        col_left, col_mid, col_right = st.columns([1,2,1])
 
-        # --- Waiting Room ---
-        if q_index == -1:
-            with col_mid:
-                st.subheader("⏳ Waiting Room")
-                st.write("Students logged in:")
-                if not df.empty:
-                    for student in df["Student"].unique():
-                        st.write(f"- {student}")
+        # --- Left Column: Students / Waiting Room ---
+        with col_left:
+            st.subheader("👥 Students Logged In")
+            df = read_answers()
+            waiting_students = df[df["Question"]=="Waiting Room"]["Student"].unique()
+            if q_index == -1:  # waiting room
+                if len(waiting_students) > 0:
+                    for s in waiting_students:
+                        st.write(f"- {s}")
                 else:
                     st.write("No students yet")
+            else:
+                # normal quiz, show scores if show_answer pressed
+                show_key = f"show_answer_{q_index}"
+                if st.session_state.get(show_key):
+                    scores = calculate_scores(df, quiz)
+                    for student, score in scores.items():
+                        st.write(f"- {student} ({score} correct)")
+                else:
+                    for student in df["Student"].unique():
+                        st.write(f"- {student}")
 
+        # --- Middle Column: Question / Responses ---
+        with col_mid:
+            if q_index == -1:
+                st.subheader("⏳ Waiting Room")
+                st.info("Waiting for the teacher to start the quiz...")
                 if st.button("▶️ Start Quiz"):
                     st.session_state["current_question"] = 0
                     write_current_question(0)
                     st.success("Quiz started!")
-        else:
-            # --- Left: Students logged in (+ scores only if show_answer pressed for that question) ---
-            with col_left:
-                st.subheader("👥 Students Logged In")
-                if not df.empty:
-                    show_key = f"show_answer_{q_index}"
-                    if st.session_state.get(show_key):
-                        scores = calculate_scores(df, quiz)
-                        for student, score in scores.items():
-                            st.write(f"- {student} ({score} correct)")
-                    else:
-                        for student in df["Student"].unique():
-                            st.write(f"- {student}")
-                else:
-                    st.write("No students yet")
+            elif quiz and q_index < len(quiz):
+                q = quiz[q_index]
+                st.subheader(f"👩‍🏫 Question {q_index + 1}")
+                st.markdown(q["q"].replace("\n", "  \n"))
+                df_q = df[df["Question"]==q["q"]]
+                total_responses = len(df_q)
+                st.write(f"📝 Total responses: {total_responses}")
 
-            # --- Middle: Current question + responses ---
-            with col_mid:
-                if quiz and q_index < len(quiz):
-                    q = quiz[q_index]
-                    st.subheader(f"👩‍🏫 Question {q_index + 1}")
-                    st.markdown(q["q"].replace("\n", "  \n"))
-                    df_q = df[df["Question"] == q["q"]]
-                    total_responses = len(df_q)
-                    st.write(f"📝 Total responses: {total_responses}")
-
-                    if q["type"] == "MC" and total_responses > 0:
-                        counts = df_q['Answer'].value_counts()
-                        percentages = counts / total_responses * 100
-                        with st.expander("📊 Show Answer Percentages", expanded=False):
-                            for option in q["options"]:
-                                pct = percentages.get(option, 0)
-                                st.write(f"{option}: {pct:.1f}%")
-                                st.progress(min(int(pct), 100))
-                    elif q["type"] == "OR":
-                        with st.expander("📝 Open Responses", expanded=False):
-                            for idx, row in df_q.iterrows():
-                                st.write(f"- {row['Student']}: {row['Answer']}")
-
-                    # --- Navigation ---
-                    col1, col2 = st.columns(2)
-                    if col1.button("⏮ Previous") and q_index > 0:
-                        st.session_state["current_question"] = q_index - 1
-                        write_current_question(st.session_state["current_question"])
-                    if col2.button("⏭ Next") and q_index < len(quiz) - 1:
-                        st.session_state["current_question"] = q_index + 1
-                        write_current_question(st.session_state["current_question"])
-
-            # --- Right: Possible answers + show answer button ---
-            with col_right:
-                if quiz and q_index < len(quiz):
-                    q = quiz[q_index]
-                    st.subheader("✅ Possible Answers")
-                    if st.button("👀 Show Correct Answer"):
-                        st.session_state[f"show_answer_{q_index}"] = True
-
-                    show_key = f"show_answer_{q_index}"
-                    if q["type"] == "MC":
+                if q["type"]=="MC" and total_responses>0:
+                    counts = df_q['Answer'].value_counts()
+                    percentages = counts / total_responses * 100
+                    with st.expander("📊 Show Answer Percentages", expanded=False):
                         for option in q["options"]:
-                            if st.session_state.get(show_key) and option == q["answer"]:
-                                st.markdown(f"**✅ {option}**")
-                            else:
-                                st.write(f"- {option}")
-                    elif q["type"] == "OR":
-                        st.subheader("📝 Open Response")
-                        st.write("Students type their own answers here.")
+                            pct = percentages.get(option,0)
+                            st.write(f"{option}: {pct:.1f}%")
+                            st.progress(min(int(pct),100))
+                elif q["type"]=="OR":
+                    with st.expander("📝 Open Responses", expanded=False):
+                        for idx, row in df_q.iterrows():
+                            st.write(f"- {row['Student']}: {row['Answer']}")
+
+                col1, col2 = st.columns(2)
+                if col1.button("⏮ Previous") and q_index>0:
+                    st.session_state["current_question"] = q_index-1
+                    write_current_question(st.session_state["current_question"])
+                if col2.button("⏭ Next") and q_index<len(quiz)-1:
+                    st.session_state["current_question"] = q_index+1
+                    write_current_question(st.session_state["current_question"])
+
+        # --- Right Column: Possible Answers ---
+        with col_right:
+            if q_index>=0 and quiz and q_index < len(quiz):
+                q = quiz[q_index]
+                st.subheader("✅ Possible Answers")
+                if st.button("👀 Show Correct Answer"):
+                    st.session_state[f"show_answer_{q_index}"] = True
+
+                show_key = f"show_answer_{q_index}"
+                if q["type"]=="MC":
+                    for option in q["options"]:
+                        if st.session_state.get(show_key) and option==q["answer"]:
+                            st.markdown(f"**✅ {option}**")
+                        else:
+                            st.write(f"- {option}")
+                elif q["type"]=="OR":
+                    st.subheader("📝 Open Response")
+                    st.write("Students type their own answers here.")
     elif password:
         st.error("❌ Incorrect password")
