@@ -49,14 +49,25 @@ def append_answer(student, question, answer):
 def read_state():
     default_state = {"current_question": -1, "quiz_started": False}
     if os.path.exists(STATE_FILE) and os.path.getsize(STATE_FILE) > 0:
-        df = pd.read_csv(STATE_FILE)
-        if not df.empty:
-            state = df.iloc[0].to_dict()
-            for key, val in default_state.items():
-                if key not in state:
-                    state[key] = val
-            return state
+        try:
+            df = pd.read_csv(STATE_FILE)
+            if not df.empty:
+                state = df.iloc[0].to_dict()
+                # enforce defaults strictly
+                state["quiz_started"] = bool(state.get("quiz_started", False))
+                state["current_question"] = int(state.get("current_question", -1))
+                return state
+        except Exception:
+            return default_state
     return default_state
+
+def reset_quiz():
+    if os.path.exists(ANSWERS_FILE):
+        os.remove(ANSWERS_FILE)
+    if os.path.exists(STATE_FILE):
+        os.remove(STATE_FILE)
+    write_state({"current_question": -1, "quiz_started": False})
+    st.session_state.clear()
 
 def write_state(state):
     pd.DataFrame([state]).to_csv(STATE_FILE, index=False)
@@ -94,7 +105,7 @@ state = read_state()
 # --- Student Waiting Room in Sidebar ---
 df = read_answers()
 students = df["Student"].unique().tolist()
-st.sidebar.subheader("👥 Students Waiting / Submitted")
+st.sidebar.subheader("👥 Students Logged")
 if not students:
     st.sidebar.write("No students yet")
 else:
@@ -126,7 +137,7 @@ if mode == "Student":
             st.info("⌛ Waiting for teacher to start the quiz...")
         else:
             q_index = state["current_question"]
-            if q_index >= 0 and q_index < len(quiz):
+            if q_index >= 0 and q_index < len(quiz):  # only show once quiz started
                 q = quiz[q_index]
                 st.subheader(f"📝 Question {q_index + 1}")
                 st.markdown(q["q"].replace("\n", "  \n"))
@@ -153,29 +164,32 @@ elif mode == "Teacher" and st.session_state.get("password_correct"):
     with col_top2:
         if st.button("▶️ Start Quiz") and not state["quiz_started"]:
             state["quiz_started"] = True
-            state["current_question"] = 0
+            state["current_question"] = 0  # show first question only after pressing Start
             write_state(state)
             st.success("Quiz started!")
     with col_top3:
         if st.button("🔄 Refresh Dashboard"):
             st_autorefresh(interval=1000, limit=None, key="teacher_refresh")
 
-    # ---------------- Quiz Display (only if started) ----------------
-    if state["quiz_started"] and quiz:
+    # ---------------- Quiz Display (only if started and question >= 0) ----------------
+    if state["quiz_started"] and state["current_question"] >= 0 and quiz:
         q_index = state["current_question"]
         if q_index < len(quiz):
             q = quiz[q_index]
-            col_mid, col_right = st.columns([2, 1])
+            col_mid, col_right = st.columns([1, 1])
 
             with col_mid:
                 st.subheader(f"👩‍🏫 Question {q_index + 1}")
                 st.markdown(q["q"].replace("\n", "  \n"))
-                if st.button("⏭ Next") and q_index < len(quiz)-1:
-                    state["current_question"] += 1
-                    write_state(state)
-                if st.button("⏮ Previous") and q_index > 0:
-                    state["current_question"] -= 1
-                    write_state(state)
+                b_left, b_right = st.columns(2)
+                with b_left:
+                    if st.button("⏭ Next") and q_index < len(quiz)-1:
+                        state["current_question"] += 1
+                        write_state(state)
+                with b_right:
+                    if st.button("⏮ Previous") and q_index > 0:
+                        state["current_question"] -= 1
+                        write_state(state)
 
             with col_right:
                 st.subheader("📨 Student Responses")
