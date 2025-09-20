@@ -61,22 +61,24 @@ def read_state():
             return default_state
     return default_state
 
-def reset_quiz():
-    if os.path.exists(ANSWERS_FILE):
-        os.remove(ANSWERS_FILE)
-    if os.path.exists(STATE_FILE):
-        os.remove(STATE_FILE)
-    write_state({"current_question": -1, "quiz_started": False})
-    st.session_state.clear()
-
 def write_state(state):
     pd.DataFrame([state]).to_csv(STATE_FILE, index=False)
 
 def reset_quiz():
+    # Remove answers file (students + responses)
     if os.path.exists(ANSWERS_FILE):
         os.remove(ANSWERS_FILE)
+
+    # Remove quiz state
+    if os.path.exists(STATE_FILE):
+        os.remove(STATE_FILE)
+
+    # Reset state
     write_state({"current_question": -1, "quiz_started": False})
+
+    # Clear session memory
     st.session_state.clear()
+
 
 # --- Streamlit App ---
 st.set_page_config(page_title="Classroom Quiz", layout="wide")
@@ -130,7 +132,24 @@ if mode == "Teacher":
 if mode == "Student":
     st.title("📚 Classroom Quiz")  # Title only for students
     st_autorefresh(interval=2000, limit=None, key="student_refresh")
-    student_name = st.text_input("✏️ Enter your name to start:")
+
+    # --- Store student name permanently in session_state ---
+    if "student_name" not in st.session_state:
+        st.session_state["student_name"] = ""
+
+    if not st.session_state["student_name"]:
+        name_input = st.text_input("✏️ Enter your name to start:")
+        if name_input:
+            st.session_state["student_name"] = name_input
+            # ✅ Log student immediately if not already in answers.csv
+            df = read_answers()
+            if name_input not in df["Student"].values:
+                df = pd.concat([df, pd.DataFrame([{"Student": name_input, "Question": "__login__", "Answer": ""}])], ignore_index=True)
+                df.to_csv(ANSWERS_FILE, index=False)
+    else:
+        st.text_input("✏️ Your name:", value=st.session_state["student_name"], disabled=True)
+
+    student_name = st.session_state["student_name"]
 
     if student_name:
         if not state["quiz_started"]:
@@ -170,6 +189,8 @@ elif mode == "Teacher" and st.session_state.get("password_correct"):
     with col_top3:
         if st.button("🔄 Refresh Dashboard"):
             st_autorefresh(interval=1000, limit=None, key="teacher_refresh")
+    # Auto-refresh every 5 seconds (5000 ms)
+    st_autorefresh(interval=5000, limit=None, key="teacher_autorefresh")
 
     # ---------------- Quiz Display (only if started and question >= 0) ----------------
     if state["quiz_started"] and state["current_question"] >= 0 and quiz:
@@ -183,12 +204,12 @@ elif mode == "Teacher" and st.session_state.get("password_correct"):
                 st.markdown(q["q"].replace("\n", "  \n"))
                 b_left, b_right = st.columns(2)
                 with b_left:
-                    if st.button("⏭ Next") and q_index < len(quiz)-1:
-                        state["current_question"] += 1
-                        write_state(state)
-                with b_right:
                     if st.button("⏮ Previous") and q_index > 0:
                         state["current_question"] -= 1
+                        write_state(state)
+                with b_right:
+                    if st.button("⏭ Next") and q_index < len(quiz)-1:
+                        state["current_question"] += 1
                         write_state(state)
 
             with col_right:
