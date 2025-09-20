@@ -38,12 +38,23 @@ def load_quiz_from_csv(file):
 
 def read_answers():
     if os.path.exists(ANSWERS_FILE) and os.path.getsize(ANSWERS_FILE) > 0:
-        return pd.read_csv(ANSWERS_FILE)
-    return pd.DataFrame(columns=["Student", "Question", "Answer"])
+        df = pd.read_csv(ANSWERS_FILE)
+        if "Score" not in df.columns:
+            df["Score"] = 0  # add missing Score column
+        return df
+    return pd.DataFrame(columns=["Student", "Question", "Answer", "Score"])
 
-def append_answer(student, question, answer):
+def append_answer(student, question, answer, q_type, correct_answer):
     df = read_answers()
-    df = pd.concat([df, pd.DataFrame([{"Student": student, "Question": question, "Answer": answer}])], ignore_index=True)
+    # Determine score
+    score = 0
+    if q_type == "MC":
+        if answer == correct_answer:
+            score = 1
+    else:  # Open response
+        if len(answer.strip().split()) > 3:
+            score = 1
+    df = pd.concat([df, pd.DataFrame([{"Student": student, "Question": question, "Answer": answer, "Score": score}])], ignore_index=True)
     df.to_csv(ANSWERS_FILE, index=False)
 
 def read_state():
@@ -71,22 +82,6 @@ def reset_quiz():
     write_state({"current_question": -1, "quiz_started": False})
     st.session_state.clear()
 
-# --- Calculate student scores ---
-def calculate_scores(quiz):
-    df_answers = read_answers()
-    df_scores = []
-    for student in df_answers["Student"].unique():
-        score = 0
-        for q in quiz:
-            ans_row = df_answers[(df_answers["Student"] == student) & (df_answers["Question"] == q["q"])]
-            if not ans_row.empty and q["answer"]:
-                if ans_row.iloc[0]["Answer"].strip().lower() == q["answer"].strip().lower():
-                    score += 1
-        df_scores.append({"Student": student, "Score": score})
-    df_scores = pd.DataFrame(df_scores)
-    df_scores = df_scores.sort_values(by="Score", ascending=False)
-    return df_scores
-
 # --- Streamlit App ---
 st.set_page_config(page_title="Classroom Quiz", layout="wide")
 
@@ -102,7 +97,7 @@ def get_local_ip():
         return "127.0.0.1"
 
 app_url = f"http://{get_local_ip()}:8501"
-st.sidebar.title("Offline Quiz v1.0")
+st.sidebar.title("Offline Quiz v1.1")
 st.sidebar.markdown("## 🔗 Connection Info")
 st.sidebar.write("Connect to teacher hotspot and open:")
 st.sidebar.code(app_url)
@@ -112,14 +107,16 @@ mode = st.sidebar.radio("Mode:", ["Student", "Teacher"])
 quiz = load_quiz_from_csv(QUESTIONS_FILE)
 state = read_state()
 
-# --- Student Waiting Room in Sidebar with Scores ---
-df_scores = calculate_scores(quiz)
-st.sidebar.subheader("👥 Students Logged")
-if df_scores.empty:
+# --- Student Waiting Room in Sidebar ---
+df_answers = read_answers()
+student_scores = df_answers.groupby("Student")["Score"].sum().reset_index()
+student_scores = student_scores.sort_values(by="Score", ascending=False)
+st.sidebar.subheader("👥 Students Logged (by score)")
+if student_scores.empty:
     st.sidebar.write("No students yet")
 else:
-    for _, row in df_scores.iterrows():
-        st.sidebar.write(f"- {row['Student']} ({row['Score']} pts)")
+    for _, row in student_scores.iterrows():
+        st.sidebar.write(f"- {row['Student']}: {row['Score']}")
 
 # ---------------- Teacher Password in Sidebar ----------------
 if mode == "Teacher":
@@ -149,10 +146,10 @@ if mode == "Student":
 
     if student_name:
         # Log student immediately if not already in answers.csv
-        df = read_answers()
-        if student_name not in df["Student"].values:
-            df = pd.concat([df, pd.DataFrame([{"Student": student_name, "Question": "__login__", "Answer": ""}])], ignore_index=True)
-            df.to_csv(ANSWERS_FILE, index=False)
+        df_answers = read_answers()
+        if student_name not in df_answers["Student"].values:
+            df_answers = pd.concat([df_answers, pd.DataFrame([{"Student": student_name, "Question": "__login__", "Answer": "", "Score": 0}])], ignore_index=True)
+            df_answers.to_csv(ANSWERS_FILE, index=False)
 
         if not state["quiz_started"]:
             st.info("⌛ Waiting for teacher to start the quiz...")
@@ -170,7 +167,7 @@ if mode == "Student":
                     selected = st.text_area("Your answer:", key=key)
 
                 if st.button("✅ Submit Answer", key=f"submit_{key}"):
-                    append_answer(student_name, q["q"], selected)
+                    append_answer(student_name, q["q"], selected, q["type"], q.get("answer", ""))
                     st.success("Answer submitted!")
 
 # ---------------- Teacher View ----------------
@@ -213,22 +210,20 @@ elif mode == "Teacher" and st.session_state.get("password_correct"):
                         state["current_question"] += 1
                         write_state(state)
 
-            # --- Student Responses (Current Question Only, Names Hidden) ---
+            # --- Student Responses for current question only ---
             with col_right:
                 df_answers = read_answers()
                 df_q = df_answers[df_answers["Question"] == q["q"]]
 
-                total_students = len(df_answers["Student"].unique())
-                answered_students = len(df_q["Student"].unique())
-                st.subheader(f"📨 Student Responses ({answered_students}/{total_students} submitted)")
-
-                with st.expander("Show all responses for this question"):
+                st.subheader(f"📨 Student Responses ({len(df_q)}/{len(df_answers['Student'].unique())} submitted)")
+                with st.expander("Show all responses"):
                     if not df_q.empty:
-                        for ans in df_q['Answer']:
+                        for ans in df_q["Answer"]:
                             st.write(f"- {ans}")
                     else:
                         st.write("No answers submitted yet.")
 
+                # Show possible MC answers
                 if q["type"] == "MC":
                     st.subheader("✅ Possible Answers")
                     show_key = f"show_answer_{q_index}"
