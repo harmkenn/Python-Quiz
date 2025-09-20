@@ -44,17 +44,21 @@ def read_answers():
         return df
     return pd.DataFrame(columns=["Student", "Question", "Answer", "Score"])
 
-def append_answer(student, question, answer, q_type, correct_answer):
+def append_answer(student, question, answer):
     df = read_answers()
-    # Determine score
-    score = 0
-    if q_type == "MC":
-        if answer == correct_answer:
-            score = 1
-    else:  # Open response
-        if len(answer.strip().split()) > 3:
-            score = 1
-    df = pd.concat([df, pd.DataFrame([{"Student": student, "Question": question, "Answer": answer, "Score": score}])], ignore_index=True)
+    # Initially score is 0
+    df = pd.concat([df, pd.DataFrame([{"Student": student, "Question": question, "Answer": answer, "Score": 0}])], ignore_index=True)
+    df.to_csv(ANSWERS_FILE, index=False)
+
+def score_question(question_text, q_type, correct_answer):
+    df = read_answers()
+    mask = (df["Question"] == question_text) & (df["Score"] == 0)
+    for idx in df[mask].index:
+        ans = df.at[idx, "Answer"]
+        if q_type == "MC":
+            df.at[idx, "Score"] = 1 if ans == correct_answer else 0
+        else:  # Open response
+            df.at[idx, "Score"] = 1 if len(ans.strip().split()) > 3 else 0
     df.to_csv(ANSWERS_FILE, index=False)
 
 def read_state():
@@ -97,7 +101,7 @@ def get_local_ip():
         return "127.0.0.1"
 
 app_url = f"http://{get_local_ip()}:8501"
-st.sidebar.title("Offline Quiz v1.1")
+st.sidebar.title("Offline Quiz v1.2")
 st.sidebar.markdown("## 🔗 Connection Info")
 st.sidebar.write("Connect to teacher hotspot and open:")
 st.sidebar.code(app_url)
@@ -107,7 +111,7 @@ mode = st.sidebar.radio("Mode:", ["Student", "Teacher"])
 quiz = load_quiz_from_csv(QUESTIONS_FILE)
 state = read_state()
 
-# --- Student Waiting Room in Sidebar ---
+# --- Student Waiting Room with Scores ---
 df_answers = read_answers()
 student_scores = df_answers.groupby("Student")["Score"].sum().reset_index()
 student_scores = student_scores.sort_values(by="Score", ascending=False)
@@ -118,7 +122,7 @@ else:
     for _, row in student_scores.iterrows():
         st.sidebar.write(f"- {row['Student']}: {row['Score']}")
 
-# ---------------- Teacher Password in Sidebar ----------------
+# ---------------- Teacher Password ----------------
 if mode == "Teacher":
     if "password_correct" not in st.session_state:
         st.session_state["password_correct"] = False
@@ -167,7 +171,7 @@ if mode == "Student":
                     selected = st.text_area("Your answer:", key=key)
 
                 if st.button("✅ Submit Answer", key=f"submit_{key}"):
-                    append_answer(student_name, q["q"], selected, q["type"], q.get("answer", ""))
+                    append_answer(student_name, q["q"], selected)
                     st.success("Answer submitted!")
 
 # ---------------- Teacher View ----------------
@@ -207,6 +211,8 @@ elif mode == "Teacher" and st.session_state.get("password_correct"):
                         write_state(state)
                 with b_right:
                     if st.button("⏭ Next") and q_index < len(quiz)-1:
+                        # Score current question before moving next
+                        score_question(q["q"], q["type"], q.get("answer", ""))
                         state["current_question"] += 1
                         write_state(state)
 
