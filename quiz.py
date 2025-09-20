@@ -53,7 +53,6 @@ def read_state():
             df = pd.read_csv(STATE_FILE)
             if not df.empty:
                 state = df.iloc[0].to_dict()
-                # enforce defaults strictly
                 state["quiz_started"] = bool(state.get("quiz_started", False))
                 state["current_question"] = int(state.get("current_question", -1))
                 return state
@@ -65,20 +64,12 @@ def write_state(state):
     pd.DataFrame([state]).to_csv(STATE_FILE, index=False)
 
 def reset_quiz():
-    # Remove answers file (students + responses)
     if os.path.exists(ANSWERS_FILE):
         os.remove(ANSWERS_FILE)
-
-    # Remove quiz state
     if os.path.exists(STATE_FILE):
         os.remove(STATE_FILE)
-
-    # Reset state
     write_state({"current_question": -1, "quiz_started": False})
-
-    # Clear session memory
     st.session_state.clear()
-
 
 # --- Streamlit App ---
 st.set_page_config(page_title="Classroom Quiz", layout="wide")
@@ -95,6 +86,7 @@ def get_local_ip():
         return "127.0.0.1"
 
 app_url = f"http://{get_local_ip()}:8501"
+st.sidebar.title("Offline Quiz v1.0")
 st.sidebar.markdown("## 🔗 Connection Info")
 st.sidebar.write("Connect to teacher hotspot and open:")
 st.sidebar.code(app_url)
@@ -130,33 +122,28 @@ if mode == "Teacher":
 
 # ---------------- Student View ----------------
 if mode == "Student":
-    st.title("📚 Classroom Quiz")  # Title only for students
+    st.title("📚 Classroom Quiz")
     st_autorefresh(interval=2000, limit=None, key="student_refresh")
 
-    # --- Store student name permanently in session_state ---
+    # Lock student name after entry
     if "student_name" not in st.session_state:
-        st.session_state["student_name"] = ""
-
-    if not st.session_state["student_name"]:
-        name_input = st.text_input("✏️ Enter your name to start:")
-        if name_input:
-            st.session_state["student_name"] = name_input
-            # ✅ Log student immediately if not already in answers.csv
-            df = read_answers()
-            if name_input not in df["Student"].values:
-                df = pd.concat([df, pd.DataFrame([{"Student": name_input, "Question": "__login__", "Answer": ""}])], ignore_index=True)
-                df.to_csv(ANSWERS_FILE, index=False)
-    else:
-        st.text_input("✏️ Your name:", value=st.session_state["student_name"], disabled=True)
-
-    student_name = st.session_state["student_name"]
+        student_name_input = st.text_input("✏️ Enter your name to start:")
+        if student_name_input:
+            st.session_state["student_name"] = student_name_input
+    student_name = st.session_state.get("student_name")
 
     if student_name:
+        # Log student immediately if not already in answers.csv
+        df = read_answers()
+        if student_name not in df["Student"].values:
+            df = pd.concat([df, pd.DataFrame([{"Student": student_name, "Question": "__login__", "Answer": ""}])], ignore_index=True)
+            df.to_csv(ANSWERS_FILE, index=False)
+
         if not state["quiz_started"]:
             st.info("⌛ Waiting for teacher to start the quiz...")
         else:
             q_index = state["current_question"]
-            if q_index >= 0 and q_index < len(quiz):  # only show once quiz started
+            if q_index >= 0 and q_index < len(quiz):
                 q = quiz[q_index]
                 st.subheader(f"📝 Question {q_index + 1}")
                 st.markdown(q["q"].replace("\n", "  \n"))
@@ -175,6 +162,7 @@ if mode == "Student":
 elif mode == "Teacher" and st.session_state.get("password_correct"):
     st.header("👩‍🏫 Teacher Dashboard")
 
+    # Top buttons
     col_top1, col_top2, col_top3 = st.columns([1,1,1])
     with col_top1:
         if st.button("🧹 Reset Quiz"):
@@ -183,22 +171,20 @@ elif mode == "Teacher" and st.session_state.get("password_correct"):
     with col_top2:
         if st.button("▶️ Start Quiz") and not state["quiz_started"]:
             state["quiz_started"] = True
-            state["current_question"] = 0  # show first question only after pressing Start
+            state["current_question"] = 0
             write_state(state)
             st.success("Quiz started!")
     with col_top3:
-        if st.button("🔄 Refresh Dashboard"):
-            st_autorefresh(interval=1000, limit=None, key="teacher_refresh")
-    # Auto-refresh every 5 seconds (5000 ms)
-    st_autorefresh(interval=5000, limit=None, key="teacher_autorefresh")
+        st_autorefresh(interval=5000, limit=None, key="teacher_autorefresh")
 
-    # ---------------- Quiz Display (only if started and question >= 0) ----------------
+    # ---------------- Quiz Display ----------------
     if state["quiz_started"] and state["current_question"] >= 0 and quiz:
         q_index = state["current_question"]
         if q_index < len(quiz):
             q = quiz[q_index]
             col_mid, col_right = st.columns([1, 1])
 
+            # --- Question Display & Navigation ---
             with col_mid:
                 st.subheader(f"👩‍🏫 Question {q_index + 1}")
                 st.markdown(q["q"].replace("\n", "  \n"))
@@ -212,12 +198,21 @@ elif mode == "Teacher" and st.session_state.get("password_correct"):
                         state["current_question"] += 1
                         write_state(state)
 
+            # --- Student Responses (Current Question Only, Names Hidden) ---
             with col_right:
-                st.subheader("📨 Student Responses")
-                df_q = df[df["Question"] == q["q"]]
-                if not df_q.empty:
-                    for ans in df_q['Answer']:
-                        st.write(f"- {ans}")
+                df_answers = read_answers()
+                df_q = df_answers[df_answers["Question"] == q["q"]]
+
+                total_students = len(df_answers["Student"].unique())
+                answered_students = len(df_q["Student"].unique())
+                st.subheader(f"📨 Student Responses ({answered_students}/{total_students} submitted)")
+
+                with st.expander("Show all responses for this question"):
+                    if not df_q.empty:
+                        for ans in df_q['Answer']:
+                            st.write(f"- {ans}")
+                    else:
+                        st.write("No answers submitted yet.")
 
                 if q["type"] == "MC":
                     st.subheader("✅ Possible Answers")
