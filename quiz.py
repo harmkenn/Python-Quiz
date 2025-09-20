@@ -71,6 +71,22 @@ def reset_quiz():
     write_state({"current_question": -1, "quiz_started": False})
     st.session_state.clear()
 
+# --- Calculate student scores ---
+def calculate_scores(quiz):
+    df_answers = read_answers()
+    df_scores = []
+    for student in df_answers["Student"].unique():
+        score = 0
+        for q in quiz:
+            ans_row = df_answers[(df_answers["Student"] == student) & (df_answers["Question"] == q["q"])]
+            if not ans_row.empty and q["answer"]:
+                if ans_row.iloc[0]["Answer"].strip().lower() == q["answer"].strip().lower():
+                    score += 1
+        df_scores.append({"Student": student, "Score": score})
+    df_scores = pd.DataFrame(df_scores)
+    df_scores = df_scores.sort_values(by="Score", ascending=False)
+    return df_scores
+
 # --- Streamlit App ---
 st.set_page_config(page_title="Classroom Quiz", layout="wide")
 
@@ -96,15 +112,14 @@ mode = st.sidebar.radio("Mode:", ["Student", "Teacher"])
 quiz = load_quiz_from_csv(QUESTIONS_FILE)
 state = read_state()
 
-# --- Student Waiting Room in Sidebar ---
-df = read_answers()
-students = df["Student"].unique().tolist()
+# --- Student Waiting Room in Sidebar with Scores ---
+df_scores = calculate_scores(quiz)
 st.sidebar.subheader("👥 Students Logged")
-if not students:
+if df_scores.empty:
     st.sidebar.write("No students yet")
 else:
-    for s in students:
-        st.sidebar.write(f"- {s}")
+    for _, row in df_scores.iterrows():
+        st.sidebar.write(f"- {row['Student']} ({row['Score']} pts)")
 
 # ---------------- Teacher Password in Sidebar ----------------
 if mode == "Teacher":
