@@ -40,15 +40,21 @@ def read_answers():
     if os.path.exists(ANSWERS_FILE) and os.path.getsize(ANSWERS_FILE) > 0:
         df = pd.read_csv(ANSWERS_FILE)
         if "Score" not in df.columns:
-            df["Score"] = 0  # add missing Score column
+            df["Score"] = 0
         return df
     return pd.DataFrame(columns=["Student", "Question", "Answer", "Score"])
 
 def append_answer(student, question, answer):
     df = read_answers()
-    # Initially score is 0
-    df = pd.concat([df, pd.DataFrame([{"Student": student, "Question": question, "Answer": answer, "Score": 0}])], ignore_index=True)
-    df.to_csv(ANSWERS_FILE, index=False)
+    # Add only if not already answered
+    if df[(df["Student"] == student) & (df["Question"] == question)].empty:
+        df = pd.concat([df, pd.DataFrame([{
+            "Student": student,
+            "Question": question,
+            "Answer": answer,
+            "Score": 0
+        }])], ignore_index=True)
+        df.to_csv(ANSWERS_FILE, index=False)
 
 def score_question(question_text, q_type, correct_answer):
     df = read_answers()
@@ -57,7 +63,7 @@ def score_question(question_text, q_type, correct_answer):
         ans = df.at[idx, "Answer"]
         if q_type == "MC":
             df.at[idx, "Score"] = 1 if ans == correct_answer else 0
-        else:  # Open response
+        else:
             df.at[idx, "Score"] = 1 if len(ans.strip().split()) > 3 else 0
     df.to_csv(ANSWERS_FILE, index=False)
 
@@ -101,7 +107,7 @@ def get_local_ip():
         return "127.0.0.1"
 
 app_url = f"http://{get_local_ip()}:8501"
-st.sidebar.title("Offline Quiz v1.2")
+st.sidebar.title("Offline Quiz v1.3")
 st.sidebar.markdown("## 🔗 Connection Info")
 st.sidebar.write("Connect to teacher hotspot and open:")
 st.sidebar.code(app_url)
@@ -152,7 +158,12 @@ if mode == "Student":
         # Log student immediately if not already in answers.csv
         df_answers = read_answers()
         if student_name not in df_answers["Student"].values:
-            df_answers = pd.concat([df_answers, pd.DataFrame([{"Student": student_name, "Question": "__login__", "Answer": "", "Score": 0}])], ignore_index=True)
+            df_answers = pd.concat([df_answers, pd.DataFrame([{
+                "Student": student_name,
+                "Question": "__login__",
+                "Answer": "",
+                "Score": 0
+            }])], ignore_index=True)
             df_answers.to_csv(ANSWERS_FILE, index=False)
 
         if not state["quiz_started"]:
@@ -164,15 +175,24 @@ if mode == "Student":
                 st.subheader(f"📝 Question {q_index + 1}")
                 st.markdown(q["q"].replace("\n", "  \n"))
 
-                key = f"{student_name}_q{q_index}"
-                if q["type"] == "MC":
-                    selected = st.radio("Choose your answer:", q["options"], key=key)
-                else:
-                    selected = st.text_area("Your answer:", key=key)
+                # --- Check if already answered ---
+                already_answered = not df_answers[
+                    (df_answers["Student"] == student_name) &
+                    (df_answers["Question"] == q["q"])
+                ].empty
 
-                if st.button("✅ Submit Answer", key=f"submit_{key}"):
-                    append_answer(student_name, q["q"], selected)
-                    st.success("Answer submitted!")
+                if already_answered:
+                    st.success("✅ You have already submitted your answer for this question.")
+                else:
+                    key = f"{student_name}_q{q_index}"
+                    if q["type"] == "MC":
+                        selected = st.radio("Choose your answer:", q["options"], key=key)
+                    else:
+                        selected = st.text_area("Your answer:", key=key)
+
+                    if st.button("✅ Submit Answer", key=f"submit_{key}"):
+                        append_answer(student_name, q["q"], selected)
+                        st.success("Answer submitted! You cannot change it afterwards.")
 
 # ---------------- Teacher View ----------------
 elif mode == "Teacher" and st.session_state.get("password_correct"):
@@ -211,7 +231,6 @@ elif mode == "Teacher" and st.session_state.get("password_correct"):
                         write_state(state)
                 with b_right:
                     if st.button("⏭ Next") and q_index < len(quiz)-1:
-                        # Score current question before moving next
                         score_question(q["q"], q["type"], q.get("answer", ""))
                         state["current_question"] += 1
                         write_state(state)
