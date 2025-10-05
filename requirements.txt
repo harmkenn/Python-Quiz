@@ -1,9 +1,5 @@
 streamlit
-random
-time
 qrcode
-io
 pandas
-os
 streamlit_autorefresh
 
