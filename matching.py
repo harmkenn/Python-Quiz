@@ -45,7 +45,7 @@ scriptures = {
 
 # --- Sidebar: Game Setup ---
 st.sidebar.header("🎮 Game Setup")
-num_pairs = st.sidebar.slider("Number of scripture pairs:", 6, len(scriptures), 6, step=2)
+num_pairs = st.sidebar.slider("Number of scripture pairs:", 6, len(scriptures), 6, step=1)
 num_teams = st.sidebar.slider("Number of teams:", 2, 4, 4, step=1)
 
 # Define team colors
