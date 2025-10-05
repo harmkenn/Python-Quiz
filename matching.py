@@ -11,6 +11,7 @@ st.markdown("""
 .stButton button { height: 100px; width: 100%; font-size: 20px; white-space: normal; word-wrap: break-word; }
 .team-current { font-weight: 700; color: green; }
 .score-label { font-size: 24px; font-weight: bold; text-align: center; }
+.row-space { margin-top: 25px; }  /* 👈 added space between rows */
 </style>
 """, unsafe_allow_html=True)
 
@@ -109,20 +110,27 @@ def flip_card(index):
 # --- Display game board ---
 st.markdown(f"### Current turn: Team {st.session_state.current_team + 1}")
 cols_per_row = 6
-cols = st.columns(cols_per_row)
+num_cards = len(st.session_state.cards)
 
-for i, (card, ctype) in enumerate(st.session_state.cards):
-    col = cols[i % cols_per_row]
-    with col:
-        if i in st.session_state.matched:
-            team = st.session_state.matched_by_team.get(i, 0)
-            color = team_colors[team]
-            st.markdown(f"<div class='big-font' style='color:{color}'>{card}</div>", unsafe_allow_html=True)
-        elif i in st.session_state.revealed:
-            st.markdown(f"<div class='big-font'>{card}</div>", unsafe_allow_html=True)
-        else:
-            if st.button(f"{i+1}", key=f"card-{i}"):
-                flip_card(i)
+for start in range(0, num_cards, cols_per_row):
+    cols = st.columns(cols_per_row)
+    for i, col in enumerate(cols):
+        idx = start + i
+        if idx >= num_cards:
+            continue
+        card, ctype = st.session_state.cards[idx]
+        with col:
+            if idx in st.session_state.matched:
+                team = st.session_state.matched_by_team.get(idx, 0)
+                color = team_colors[team]
+                st.markdown(f"<div class='big-font' style='color:{color}'>{card}</div>", unsafe_allow_html=True)
+            elif idx in st.session_state.revealed:
+                st.markdown(f"<div class='big-font'>{card}</div>", unsafe_allow_html=True)
+            else:
+                if st.button(f"{idx+1}", key=f"card-{idx}"):
+                    flip_card(idx)
+    # 👇 Add spacing after each row
+    st.markdown("<div class='row-space'></div>", unsafe_allow_html=True)
 
 # --- Scores ---
 st.markdown("---")
