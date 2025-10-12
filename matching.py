@@ -70,7 +70,7 @@ if st.sidebar.button("🔁 Start New Game") or not st.session_state.initialized:
     st.session_state.matched_by_team = {}
     st.session_state.turns = 0
     st.session_state.team_scores = [0] * num_teams
-    st.session_state.current_team = 0
+    st.session_state.current_team = random.randint(0, num_teams - 1)
     st.session_state.flip_timer = None
     st.session_state.all_revealed = False
     st.session_state.initialized = True
