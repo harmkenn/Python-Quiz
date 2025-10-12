@@ -11,7 +11,7 @@ st.markdown("""
 .stButton button { height: 100px; width: 100%; font-size: 20px; white-space: normal; word-wrap: break-word; }
 .team-current { font-weight: 700; color: green; }
 .score-label { font-size: 24px; font-weight: bold; text-align: center; }
-.row-space { margin-top: 25px; }  /* 👈 added space between rows */
+.row-space { margin-top: 25px; }  /* 👈 space between rows */
 </style>
 """, unsafe_allow_html=True)
 
@@ -49,7 +49,7 @@ num_pairs = st.sidebar.slider("Number of scripture pairs:", 6, len(scriptures), 
 num_teams = st.sidebar.slider("Number of teams:", 2, 4, 4, step=1)
 
 # Define team colors
-team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"]  # red, blue, green, gold
+team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"]
 team_colors = team_colors[:num_teams]
 
 # --- Initialize game ---
@@ -64,15 +64,16 @@ if "initialized" not in st.session_state or st.sidebar.button("🔁 Start New Ga
     st.session_state.cards = pairs
     st.session_state.revealed = []
     st.session_state.matched = []
-    st.session_state.matched_by_team = {}  # {card_index: team_number}
+    st.session_state.matched_by_team = {}
     st.session_state.turns = 0
     st.session_state.team_scores = [0] * num_teams
     st.session_state.current_team = 0
     st.session_state.flip_timer = None
     st.session_state.initialized = True
+    st.session_state.all_revealed = False  # 👈 track reveal state
     st.rerun()
 
-# --- Check if 3 seconds passed to hide non-matching cards ---
+# --- Check timer to flip back non-matching pair ---
 if st.session_state.flip_timer:
     if time.time() - st.session_state.flip_timer >= 3:
         st.session_state.revealed = []
@@ -90,7 +91,7 @@ def is_matching_pair(idx1, idx2):
 def flip_card(index):
     if index in st.session_state.matched or index in st.session_state.revealed:
         return
-    if st.session_state.flip_timer:
+    if st.session_state.flip_timer or st.session_state.all_revealed:
         return
 
     st.session_state.revealed.append(index)
@@ -100,12 +101,27 @@ def flip_card(index):
         st.session_state.turns += 1
         if is_matching_pair(idx1, idx2):
             st.session_state.matched.extend([idx1, idx2])
-            st.session_state.matched_by_team[idx1] = st.session_state.current_team
-            st.session_state.matched_by_team[idx2] = st.session_state.current_team
-            st.session_state.team_scores[st.session_state.current_team] += 1
+            team = st.session_state.current_team
+            st.session_state.matched_by_team[idx1] = team
+            st.session_state.matched_by_team[idx2] = team
+            st.session_state.team_scores[team] += 1
             st.session_state.revealed = []
         else:
             st.session_state.flip_timer = time.time()
+
+# --- Reveal / Hide Buttons ---
+reveal_col, hide_col = st.columns(2)
+with reveal_col:
+    if st.sidebar.button("👁️ Reveal All"):
+        st.session_state.all_revealed = True
+        st.session_state.revealed = list(range(len(st.session_state.cards)))
+        st.rerun()
+
+with hide_col:
+    if st.sidebar.button("🙈 Hide All"):
+        st.session_state.all_revealed = False
+        st.session_state.revealed = []
+        st.rerun()
 
 # --- Display game board ---
 st.markdown(f"### Current turn: Team {st.session_state.current_team + 1}")
@@ -124,12 +140,11 @@ for start in range(0, num_cards, cols_per_row):
                 team = st.session_state.matched_by_team.get(idx, 0)
                 color = team_colors[team]
                 st.markdown(f"<div class='big-font' style='color:{color}'>{card}</div>", unsafe_allow_html=True)
-            elif idx in st.session_state.revealed:
+            elif st.session_state.all_revealed or idx in st.session_state.revealed:
                 st.markdown(f"<div class='big-font'>{card}</div>", unsafe_allow_html=True)
             else:
                 if st.button(f"{idx+1}", key=f"card-{idx}"):
                     flip_card(idx)
-    # 👇 Add spacing after each row
     st.markdown("<div class='row-space'></div>", unsafe_allow_html=True)
 
 # --- Scores ---
@@ -145,7 +160,7 @@ for t in range(len(st.session_state.team_scores)):
 
 st.markdown(f"**Turns taken:** {st.session_state.turns}")
 
-# --- Game Over Message ---
+# --- Game Over ---
 if len(st.session_state.matched) == len(st.session_state.cards):
     st.success("🎉 Game Over! All pairs matched!")
     winner = max(range(len(st.session_state.team_scores)), key=lambda i: st.session_state.team_scores[i])
