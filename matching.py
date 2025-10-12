@@ -52,8 +52,11 @@ num_teams = st.sidebar.slider("Number of teams:", 2, 4, 4, step=1)
 team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"]
 team_colors = team_colors[:num_teams]
 
-# --- Initialize game ---
-if "initialized" not in st.session_state or st.sidebar.button("🔁 Start New Game"):
+# --- Initialize game (only shuffle when "Start New Game" pressed) ---
+if "initialized" not in st.session_state:
+    st.session_state.initialized = False
+
+if st.sidebar.button("🔁 Start New Game") or not st.session_state.initialized:
     selected_refs = random.sample(list(scriptures.items()), num_pairs)
     pairs = []
     for ref, text in selected_refs:
@@ -69,9 +72,10 @@ if "initialized" not in st.session_state or st.sidebar.button("🔁 Start New Ga
     st.session_state.team_scores = [0] * num_teams
     st.session_state.current_team = 0
     st.session_state.flip_timer = None
+    st.session_state.all_revealed = False
     st.session_state.initialized = True
-    st.session_state.all_revealed = False  # 👈 track reveal state
     st.rerun()
+
 
 # --- Check timer to flip back non-matching pair ---
 if st.session_state.flip_timer:
