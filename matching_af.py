@@ -18,7 +18,7 @@ st.markdown("""
 # --- Scripture Data ---
 scriptures = {
 "Article of Faith 1": "We believe in God, the Eternal Father, and in His Son, Jesus Christ, and in the Holy Ghost.",
-"Article of Faith 2": "We believe that men will be punished for their own sins, and not for Adam’s transgression.",
+"Article of Faith 2": "We believe that men will be punished for their own sins, and not for Adam's transgression.",
 "Article of Faith 3": "We believe that through the Atonement of Christ, all mankind may be saved, by obedience to the laws and ordinances of the Gospel.",
 "Article of Faith 4": "We believe that the first principles and ordinances of the Gospel are: first, Faith in the Lord Jesus Christ; second, Repentance; third, Baptism by immersion for the remission of sins; fourth, Laying on of hands for the gift of the Holy Ghost.",
 "Article of Faith 5": "We believe that a man must be called of God, by prophecy, and by the laying on of hands by those who are in authority, to preach the Gospel and administer in the ordinances thereof.",
@@ -31,6 +31,15 @@ scriptures = {
 "Article of Faith 12": "We believe in being subject to kings, presidents, rulers, and magistrates, in obeying, honoring, and sustaining the law.",
 "Article of Faith 13": "We believe in being honest, true, chaste, benevolent, virtuous, and in doing good to all men; indeed, we may say that we follow the admonition of Paul—We believe all things, we hope all things, we have endured many things, and hope to be able to endure all things. If there is anything virtuous, lovely, or of good report or praiseworthy, we seek after these things.",
 }
+
+# --- Helper function to convert index to letter ---
+def index_to_letter(index):
+    """Convert index to letter (A, B, C, ..., Z, AA, BB, etc.)"""
+    if index < 26:
+        return chr(65 + index)  # A-Z
+    else:
+        # For more than 26 cards, use AA, BB, CC, etc.
+        return chr(65 + (index % 26)) * ((index // 26) + 1)
 
 # --- Sidebar: Game Setup ---
 st.sidebar.header("🎮 Game Setup")
@@ -136,7 +145,8 @@ for start in range(0, num_cards, cols_per_row):
             elif st.session_state.all_revealed or idx in st.session_state.revealed:
                 st.markdown(f"<div class='big-font'>{card}</div>", unsafe_allow_html=True)
             else:
-                if st.button(f"{idx+1}", key=f"card-{idx}"):
+                card_letter = index_to_letter(idx)
+                if st.button(f"{card_letter}", key=f"card-{idx}"):
                     flip_card(idx)
     st.markdown("<div class='row-space'></div>", unsafe_allow_html=True)
 
