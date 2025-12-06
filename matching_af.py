@@ -7,7 +7,7 @@ st.set_page_config(page_title="Scripture Match", layout="wide")
 
 st.markdown("""
 <style>
-.big-font { font-size: 24px !important; text-align: center; }
+.big-font { font-size: 20px !important; text-align: center; }
 .stButton button { height: 100px; width: 100%; font-size: 20px; white-space: normal; word-wrap: break-word; }
 .team-current { font-weight: 700; color: green; }
 .score-label { font-size: 24px; font-weight: bold; text-align: center; }
