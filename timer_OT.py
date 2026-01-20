@@ -22,6 +22,21 @@ SCRIPTURES = {
     "Psalm 24:3–4": "Who shall stand in his holy place? He that hath clean hands, and a pure heart.",
     "Proverbs 3:5–6": "Trust in the Lord with all thine heart … and he shall direct thy paths.",
     "Isaiah 1:18": "Though your sins be as scarlet, they shall be as white as snow.",
+}
+
+Others = {
+    "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
+    "Moses 7:18": "The Lord called his people Zion, because they were of one heart and one mind.",
+    "Abraham 2:9–11": "The Lord promised Abraham that his seed would bear this ministry and Priesthood unto all nations.",
+    "Abraham 3:22–23": "As spirits we were organized before the world was.",
+    "Genesis 1:26–27": "God created man in his own image.",
+    "Genesis 2:24": "A man shall cleave unto his wife: and they shall be one.",
+    "Genesis 39:9": "How then can I do this great wickedness, and sin against God?",
+    "Exodus 20:3–17": "The Ten Commandments.",
+    "Joshua 24:15": "Choose you this day whom ye will serve.",
+    "Psalm 24:3–4": "Who shall stand in his holy place? He that hath clean hands, and a pure heart.",
+    "Proverbs 3:5–6": "Trust in the Lord with all thine heart … and he shall direct thy paths.",
+    "Isaiah 1:18": "Though your sins be as scarlet, they shall be as white as snow.",
     "Isaiah 5:20": "Woe unto them that call evil good, and good evil.",
     "Isaiah 29:13–14": "The restoration of the gospel is a marvellous work and a wonder.",
     "Isaiah 53:3–5": "Surely Jesus Christ hath borne our griefs, and carried our sorrows.",
