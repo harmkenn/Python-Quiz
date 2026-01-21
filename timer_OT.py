@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v1.7
+# SHARED SCRIPTURE DATA v1.8
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -52,12 +52,59 @@ def get_game_state():
         "student_answers": {},
         "question_number": 0,
         "question_history": [],
+        "version": 0,  # used to trigger student refresh
     }
 
 # =========================
-# PAGE CONFIG
+# PAGE CONFIG & STYLES
 # =========================
 st.set_page_config(page_title="Scripture Speed Quiz", layout="wide")
+
+st.markdown("""
+<style>
+.big-text { 
+    font-size: 26px; 
+    padding: 20px; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    margin: 10px 0;
+    text-align: center;
+}
+.timer-text { 
+    font-size: 48px; 
+    font-weight: bold; 
+    color: #FF4B4B; 
+    text-align: center;
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+.score-card {
+    padding: 15px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    margin: 10px 0;
+}
+.leaderboard-card {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    background: #f8f9fa;
+    border-left: 5px solid #667eea;
+    color: #000;
+}
+.stButton button:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # =========================
 # HELPER FUNCTIONS
@@ -100,6 +147,8 @@ def record_student_answer(game_state, name, answer_ref):
     if not game_state["answers_open"]:
         return
     if name in game_state["student_answers"]:
+        return
+    if game_state["question_start_time"] is None:
         return
 
     elapsed = time.time() - game_state["question_start_time"]
@@ -149,11 +198,15 @@ if mode == "Teacher":
     pin = st.sidebar.text_input("Enter teacher PIN:", type="password")
     if pin == TEACHER_PIN:
         is_teacher = True
-        st.sidebar.success("Teacher mode")
+        st.sidebar.success("✅ Teacher mode")
+    elif pin:
+        st.sidebar.error("❌ Incorrect PIN")
 else:
     student_name = st.sidebar.text_input("Your name:", max_chars=30)
     if student_name:
         st.sidebar.success(f"Welcome, {student_name}!")
+        if student_name in game_state["student_scores"]:
+            st.sidebar.metric("Your Score", game_state["student_scores"][student_name])
 
 # =========================
 # TEACHER VIEW
@@ -163,46 +216,55 @@ if is_teacher:
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        if st.button("▶️ Start New Question"):
+        if st.button("▶️ Start New Question", use_container_width=True):
             start_new_question(game_state)
+            game_state["version"] += 1  # trigger student refresh
             st.rerun()
     with col2:
-        if st.button("🔒 Lock Answers"):
+        if st.button("🔒 Lock Answers", use_container_width=True):
             lock_answers(game_state)
     with col3:
-        if st.button("🔁 Reset Game"):
+        if st.button("🔁 Reset Game", use_container_width=True):
+            base = get_game_state()
             game_state.clear()
-            game_state.update(get_game_state())
+            game_state.update({
+                "current_phrase": None,
+                "correct_ref": None,
+                "options": [],
+                "question_start_time": None,
+                "answers_open": False,
+                "student_scores": {},
+                "student_answers": {},
+                "question_number": 0,
+                "question_history": [],
+                "version": 0,
+            })
             st.rerun()
     with col4:
-        if st.button("⏭️ Next Question"):
+        if st.button("⏭️ Next Question", use_container_width=True):
             lock_answers(game_state)
             time.sleep(0.3)
             start_new_question(game_state)
+            game_state["version"] += 1  # trigger student refresh
             st.rerun()
 
     st.markdown("---")
 
-    # Show scripture phrase
     if game_state["current_phrase"] is None:
-        st.info("Waiting to start a question.")
+        st.info("🎮 Click **Start New Question** to begin.")
     else:
         st.subheader(f"📖 Question {game_state['question_number']}")
         st.markdown(f"<div class='big-text'>{game_state['current_phrase']}</div>", unsafe_allow_html=True)
 
-        # Timer
         elapsed = time.time() - game_state["question_start_time"]
         remaining = max(0, 20 - elapsed)
 
         colA, colB = st.columns(2)
         with colA:
-            st.metric("Elapsed", f"{elapsed:.1f}s")
+            st.metric("Time Elapsed", f"{elapsed:.1f}s")
         with colB:
-            st.metric("Remaining", f"{remaining:.1f}s")
+            st.metric("Time Remaining", f"{remaining:.1f}s")
 
-        # =========================
-        # PARTIAL LEADERBOARD REFRESH (Option A1)
-        # =========================
         leaderboard_placeholder = st.empty()
 
         def render_leaderboard():
@@ -219,10 +281,8 @@ if is_teacher:
                             unsafe_allow_html=True
                         )
 
-        # Render once
         render_leaderboard()
 
-        # Refresh ONLY when time hits zero
         if remaining == 0:
             render_leaderboard()
 
@@ -233,11 +293,18 @@ if not is_teacher:
     st.title("⚡ Scripture Speed Quiz")
 
     if not student_name:
-        st.info("Enter your name to play.")
+        st.info("👈 Enter your name in the sidebar to play!")
         st.stop()
 
+    # Auto-refresh when teacher starts a new question
+    if "last_version" not in st.session_state:
+        st.session_state.last_version = game_state["version"]
+    if st.session_state.last_version != game_state["version"]:
+        st.session_state.last_version = game_state["version"]
+        st.rerun()
+
     if game_state["current_phrase"] is None:
-        st.info("Waiting for teacher to start a question.")
+        st.info("⏳ Waiting for the teacher to start a question...")
         st.stop()
 
     st.subheader(f"📖 Question {game_state['question_number']}")
@@ -249,23 +316,38 @@ if not is_teacher:
 
     timer_placeholder = st.empty()
 
-    if game_state["answers_open"] and not already_answered:
+    if game_state["answers_open"] and not already_answered and remaining > 0:
+        if remaining > 14:
+            color = "#28a745"
+        elif remaining > 7:
+            color = "#ffc107"
+        else:
+            color = "#dc3545"
         timer_placeholder.markdown(
-            f"<div class='timer-text'>⏱️ {int(remaining)}</div>",
+            f"""
+            <div style='font-size: 72px; font-weight: bold; color: {color};
+                        text-align: center; animation: pulse 1s infinite;'>
+                ⏱️ {int(remaining)}
+            </div>
+            <div style='text-align: center; font-size: 20px; color: #666; margin-top: -10px;'>
+                Points available: {compute_points(elapsed)}
+            </div>
+            """,
             unsafe_allow_html=True
         )
     elif already_answered:
-        timer_placeholder.markdown("<div class='timer-text'>Answer Submitted</div>", unsafe_allow_html=True)
+        timer_placeholder.markdown("<div class='timer-text'>✅ Answer Submitted</div>", unsafe_allow_html=True)
     else:
-        timer_placeholder.markdown("<div class='timer-text'>Locked</div>", unsafe_allow_html=True)
+        timer_placeholder.markdown("<div class='timer-text'>🔒 Answers Locked</div>", unsafe_allow_html=True)
 
+    st.write("")
     st.write("### Choose the correct reference:")
 
     option_cols = st.columns(2)
     for i, opt in enumerate(game_state["options"]):
         with option_cols[i % 2]:
-            disabled = not game_state["answers_open"] or already_answered or remaining <= 0
-            if st.button(opt, disabled=disabled):
+            disabled = (not game_state["answers_open"]) or already_answered or (remaining <= 0)
+            if st.button(opt, key=f"opt-{opt}-{student_name}", disabled=disabled, use_container_width=True):
                 record_student_answer(game_state, student_name, opt)
                 st.rerun()
 
@@ -274,15 +356,27 @@ if not is_teacher:
     if already_answered:
         info = game_state["student_answers"][student_name]
         if info["correct"]:
-            st.success(f"Correct! You earned {info['points']} points.")
+            st.success(
+                f"✅ Correct! You answered **{info['answer']}** "
+                f"in {info['elapsed']:.1f}s and earned **{info['points']} points**!"
+            )
         else:
-            st.error(f"Incorrect. You answered {info['answer']}.")
+            st.error(
+                f"❌ Incorrect. You answered **{info['answer']}**."
+            )
     else:
-        if remaining <= 0:
-            st.warning("Time is up.")
+        if not game_state["answers_open"] or remaining <= 0:
+            st.warning("⚠️ You did not answer in time or answers are locked.")
 
     total_score = game_state["student_scores"].get(student_name, 0)
-    st.markdown(f"<div class='score-card'>Your Score: {total_score}</div>", unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div class='score-card'>
+            🎯 Your Total Score: <strong>{total_score}</strong> points
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     if game_state["answers_open"] and not already_answered and remaining > 0:
         time.sleep(0.1)
