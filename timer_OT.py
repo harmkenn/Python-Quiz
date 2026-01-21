@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v1.4
+# SHARED SCRIPTURE DATA v1.5
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -455,7 +455,6 @@ if not is_teacher:
         else:
             st.error(
                 f"❌ Incorrect. You answered **{info['answer']}**. "
-                f"The correct answer was **{game_state['correct_ref']}**."
             )
     else:
         if not game_state["answers_open"] or remaining <= 0:
