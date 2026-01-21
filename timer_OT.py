@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v2.0
+# SHARED SCRIPTURE DATA v2.1
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -358,7 +358,8 @@ if not is_teacher:
 
     st.write("---")
 
-    if already_answered:
+    # Show results ONLY after time runs out
+    if already_answered and remaining == 0:
         info = game_state["student_answers"][student_name]
         if info["correct"]:
             st.success(
@@ -367,6 +368,11 @@ if not is_teacher:
             )
         else:
             st.error(f"Incorrect. You answered {info['answer']}.")
+
+    elif already_answered and remaining > 0:
+        st.info("Answer submitted. Waiting for results…")
+
+
     else:
         if remaining <= 0:
             st.warning("Time is up.")
