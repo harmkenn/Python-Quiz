@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v1.1
+# SHARED SCRIPTURE DATA v1.4
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -131,7 +131,6 @@ if "last_refresh" not in st.session_state:
 def get_local_ip():
     """Detect local IP address for QR code."""
     try:
-        import socket
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
@@ -167,6 +166,7 @@ def start_new_question(game_state):
     return game_state
 
 def compute_points(elapsed_seconds: float) -> int:
+    """Points = max(0, 10 - floor(seconds_elapsed / 2))"""
     return max(0, 10 - int(elapsed_seconds // 2))
 
 def record_student_answer(game_state, name: str, answer_ref: str):
@@ -183,7 +183,8 @@ def record_student_answer(game_state, name: str, answer_ref: str):
         elapsed = 0
     
     correct = (answer_ref == game_state["correct_ref"])
-    points = compute_points(elapsed) if correct and elapsed <= 10 else 0
+    # Points only if within 20 seconds, using 1 point every 2 seconds
+    points = compute_points(elapsed) if correct and elapsed <= 20 else 0
     
     game_state["student_answers"][name] = {
         "answer": answer_ref,
@@ -321,6 +322,8 @@ if is_teacher:
         st.subheader(f"📖 Question {game_state['question_number']}")
         st.markdown(f"<div class='big-text'>{game_state['current_phrase']}</div>", unsafe_allow_html=True)
         
+        st.write("")
+        
         if game_state["question_start_time"]:
             elapsed = time.time() - game_state["question_start_time"]
             remaining = max(0, 20 - elapsed)
@@ -392,7 +395,7 @@ if not is_teacher:
     
     if game_state["question_start_time"]:
         elapsed = time.time() - game_state["question_start_time"]
-        remaining = max(0, 10 - elapsed)
+        remaining = max(0, 20 - elapsed)
     else:
         elapsed = 0
         remaining = 0
@@ -404,10 +407,9 @@ if not is_teacher:
     
     if game_state["answers_open"] and not already_answered:
         if remaining > 0:
-            # Color coding based on time remaining
-            if remaining > 7:
+            if remaining > 14:
                 color = "#28a745"  # Green
-            elif remaining > 4:
+            elif remaining > 7:
                 color = "#ffc107"  # Yellow
             else:
                 color = "#dc3545"  # Red
@@ -436,14 +438,6 @@ if not is_teacher:
         col = option_cols[i % 2]
         with col:
             disabled = (not game_state["answers_open"]) or already_answered or (remaining <= 0)
-            
-            button_class = ""
-            if already_answered:
-                student_answer = game_state["student_answers"][student_name]["answer"]
-                if opt == game_state["correct_ref"]:
-                    button_class = "correct-answer"
-                elif opt == student_answer and not game_state["student_answers"][student_name]["correct"]:
-                    button_class = "incorrect-answer"
             
             if st.button(opt, key=f"opt-{opt}-{student_name}", disabled=disabled, use_container_width=True):
                 record_student_answer(game_state, student_name, opt)
@@ -476,5 +470,5 @@ if not is_teacher:
     
     if game_state["answers_open"] and not already_answered and remaining > 0:
         st.caption("💡 Answer quickly for more points!")
-        time.sleep(0.1)  # Faster refresh for smoother countdown
+        time.sleep(0.1)
         st.rerun()
