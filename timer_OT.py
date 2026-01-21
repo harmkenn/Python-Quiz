@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v2.3
+# SHARED SCRIPTURE DATA v2.4
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -209,10 +209,6 @@ else:
 # TEACHER VIEW
 # =========================
 if is_teacher:
-
-    # 🔄 Auto-refresh teacher countdown every 0.5 seconds
-    time.sleep(0.5)
-    st.rerun()
 
     st.title("📋 Teacher Control Panel")
 
