@@ -97,21 +97,51 @@ st.set_page_config(page_title="Classroom Quiz", layout="wide")
 
 # --- IP Detection ---
 def get_local_ip():
+    # Try multiple strategies to find a LAN IP address usable by student devices
     try:
+        # hostname -I is common on Linux
         ips = os.popen("hostname -I").read().split()
         for ip in ips:
-            if ip.startswith("10.") or ip.startswith("192."):
+            if ip and not ip.startswith("127.") and not ip.startswith("169.254"):
                 return ip
-        return "127.0.0.1"
-    except:
-        return "127.0.0.1"
+    except Exception:
+        pass
 
-app_url = f"http://{get_local_ip()}:8501"
+    try:
+        # UDP socket trick (doesn't send packets)
+        import socket
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        if ip and not ip.startswith("127."):
+            return ip
+    except Exception:
+        pass
+
+    try:
+        ip = socket.gethostbyname(socket.gethostname())
+        if ip and not ip.startswith("127."):
+            return ip
+    except Exception:
+        pass
+
+    return "127.0.0.1"
+
+detected_ip = get_local_ip()
+# Allow manual override if auto-detection doesn't pick the correct interface
+override_ip = st.sidebar.text_input("Optional: Network IP to show in QR (leave blank to auto-detect)", value="")
+if override_ip.strip():
+    detected_ip = override_ip.strip()
+
+app_url = f"http://{detected_ip}:8501"
 st.sidebar.title("Offline Quiz v1.3")
 st.sidebar.markdown("## 🔗 Connection Info")
 st.sidebar.write("Connect to teacher hotspot and open:")
 st.sidebar.code(app_url)
 st.sidebar.image(make_qr_image(app_url), caption="📱 Scan to join", use_container_width=True)
+if detected_ip.startswith("127."):
+    st.sidebar.warning("App is bound to localhost. To allow student devices to connect, run Streamlit with --server.address 0.0.0.0 or enter the device IP above.")
 
 mode = st.sidebar.radio("Mode:", ["Student", "Teacher"])
 quiz = load_quiz_from_csv(QUESTIONS_FILE)

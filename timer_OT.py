@@ -111,14 +111,37 @@ st.markdown("""
 # HELPER FUNCTIONS
 # =========================
 def get_local_ip():
+    # Preferred: open a UDP socket to an external address (no traffic sent)
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
         s.close()
-        return ip
-    except:
-        return "localhost"
+        if ip and not ip.startswith("127."):
+            return ip
+    except Exception:
+        pass
+
+    # Fallback: try hostname -I (Linux) and filter loopback/unused addresses
+    try:
+        import os
+        ips = os.popen("hostname -I").read().split()
+        for candidate in ips:
+            if candidate and not candidate.startswith("127.") and not candidate.startswith("169.254"):
+                return candidate
+    except Exception:
+        pass
+
+    # Last resort: resolve hostname
+    try:
+        ip = socket.gethostbyname(socket.gethostname())
+        if ip and not ip.startswith("127."):
+            return ip
+    except Exception:
+        pass
+
+    # If nothing else, return loopback so app still runs locally
+    return "127.0.0.1"
 
 def start_new_question(game_state):
     refs = list(SCRIPTURES.keys())
@@ -179,12 +202,22 @@ game_state = get_game_state()
 st.sidebar.title("⚡ Scripture Speed Quiz")
 
 ip = get_local_ip()
+# Allow manual override in case auto-detection fails or user wants a specific address
+override_ip = st.sidebar.text_input("Optional: Network IP to show in QR (leave blank to auto-detect)", value="")
+if override_ip.strip():
+    ip = override_ip.strip()
+
 url = f"http://{ip}:8501"
+
+# Helpful note: to allow students on the network to connect, run Streamlit bound to all interfaces:
+#   streamlit run timer_OT.py --server.address 0.0.0.0
+if ip.startswith("127.") or ip == "localhost":
+    st.sidebar.warning("App is currently bound to localhost. To allow student devices to connect, run Streamlit with --server.address 0.0.0.0 or enter the teacher device IP above.")
 
 qr = qrcode.make(url)
 buf = BytesIO()
 qr.save(buf, format="PNG")
-st.sidebar.image(buf.getvalue(), caption="Scan to join", width="stretch")
+st.sidebar.image(buf.getvalue(), caption="Scan to join")
 st.sidebar.code(url)
 
 mode = st.sidebar.radio("Who are you?", ["Student", "Teacher"], label_visibility="collapsed")
