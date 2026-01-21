@@ -167,8 +167,7 @@ def start_new_question(game_state):
     return game_state
 
 def compute_points(elapsed_seconds: float) -> int:
-    """Points = max(0, 11 - int(seconds_elapsed))"""
-    return max(0, 11 - int(elapsed_seconds))
+    return max(0, 10 - int(elapsed_seconds // 2))
 
 def record_student_answer(game_state, name: str, answer_ref: str):
     """Record a student's answer if answers are open and they haven't answered yet."""
@@ -322,19 +321,9 @@ if is_teacher:
         st.subheader(f"📖 Question {game_state['question_number']}")
         st.markdown(f"<div class='big-text'>{game_state['current_phrase']}</div>", unsafe_allow_html=True)
         
-        st.write("")
-        st.write("**Options:**")
-        opt_cols = st.columns(2)
-        for i, opt in enumerate(game_state["options"]):
-            with opt_cols[i % 2]:
-                if opt == game_state["correct_ref"]:
-                    st.success(f"✅ {opt} (CORRECT)")
-                else:
-                    st.info(f"❌ {opt}")
-        
         if game_state["question_start_time"]:
             elapsed = time.time() - game_state["question_start_time"]
-            remaining = max(0, 10 - elapsed)
+            remaining = max(0, 20 - elapsed)
             
             timer_col1, timer_col2 = st.columns(2)
             with timer_col1:
@@ -346,24 +335,6 @@ if is_teacher:
                     delta="Time up!" if remaining == 0 else None,
                     delta_color="off" if remaining == 0 else "normal"
                 )
-        
-        st.markdown("---")
-        st.subheader("📊 Student Answers (This Question)")
-        
-        if not game_state["student_answers"]:
-            st.write("⏳ Waiting for answers...")
-        else:
-            rows = []
-            for name, info in sorted(game_state["student_answers"].items(), 
-                                    key=lambda x: x[1]["elapsed"]):
-                rows.append({
-                    "👤 Name": name,
-                    "📝 Answer": info["answer"],
-                    "✓": "✅" if info["correct"] else "❌",
-                    "⏱️ Time": f"{info['elapsed']:.1f}s",
-                    "🎯 Points": info["points"],
-                })
-            st.dataframe(rows, use_container_width=True, hide_index=True)
     
     st.markdown("---")
     st.subheader("🏆 Leaderboard")
