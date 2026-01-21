@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v1.5
+# SHARED SCRIPTURE DATA v1.6
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -100,11 +100,12 @@ st.markdown("""
     margin: 10px 0;
 }
 .leaderboard-card {
+    color: #000 !important;
     padding: 10px;
     margin: 5px 0;
     border-radius: 8px;
-    background: #f8f9fa;
-    border-left: 5px solid #667eea;
+    background: #ffffff !important;
+    border-left: 5px solid #667eea !important;
 }
 .correct-answer {
     background-color: #d4edda !important;
