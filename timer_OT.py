@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v2.4
+# SHARED SCRIPTURE DATA v2.5
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -52,6 +52,7 @@ def get_game_state():
         "student_answers": {},
         "question_number": 0,
         "question_history": [],
+        "teacher_timer_start": None,
         "version": 0,  # triggers student auto-refresh
     }
 
@@ -215,6 +216,7 @@ if is_teacher:
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         if st.button("▶️ Start New Question", use_container_width=True):
+            game_state["teacher_timer_start"] = time.time()
             start_new_question(game_state)
             game_state["version"] += 1  # trigger student auto-refresh
             st.rerun()
@@ -246,6 +248,7 @@ if is_teacher:
             lock_answers(game_state)
             time.sleep(0.3)
             start_new_question(game_state)
+            game_state["teacher_timer_start"] = time.time()
             game_state["version"] += 1
             st.rerun()
 
@@ -264,6 +267,12 @@ if is_teacher:
     )
 
     # Countdown
+    if game_state["teacher_timer_start"] is None:
+        remaining = 20
+    else:
+        elapsed = time.time() - game_state["teacher_timer_start"]
+        remaining = max(0, 20 - elapsed)
+
     elapsed = time.time() - game_state["question_start_time"]
     remaining = max(0, 20 - elapsed)
 
