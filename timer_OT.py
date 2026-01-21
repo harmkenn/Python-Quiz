@@ -41,7 +41,7 @@ TEACHER_PIN = "1234"
 # =========================
 # SHARED GAME STATE
 # =========================
-@st.experimental_singleton
+@st.cache_resource
 def get_game_state():
     return {
         "current_phrase": None,
