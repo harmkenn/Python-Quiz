@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA
+# SHARED SCRIPTURE DATA v1.1
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
