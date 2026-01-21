@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v2.2
+# SHARED SCRIPTURE DATA v2.3
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -52,7 +52,7 @@ def get_game_state():
         "student_answers": {},
         "question_number": 0,
         "question_history": [],
-        "version": 0,  # used to trigger student refresh
+        "version": 0,  # triggers student auto-refresh
     }
 
 # =========================
@@ -171,13 +171,10 @@ def get_leaderboard(game_state):
     return sorted(game_state["student_scores"].items(), key=lambda x: x[1], reverse=True)
 
 # =========================
-# MAIN APP
+# MAIN APP & SIDEBAR SETUP
 # =========================
 game_state = get_game_state()
 
-# =========================
-# SIDEBAR
-# =========================
 st.sidebar.title("⚡ Scripture Speed Quiz")
 
 ip = get_local_ip()
@@ -212,17 +209,24 @@ else:
 # TEACHER VIEW
 # =========================
 if is_teacher:
+
+    # 🔄 Auto-refresh teacher countdown every 0.5 seconds
+    time.sleep(0.5)
+    st.rerun()
+
     st.title("📋 Teacher Control Panel")
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         if st.button("▶️ Start New Question", use_container_width=True):
             start_new_question(game_state)
-            game_state["version"] += 1  # trigger student refresh
+            game_state["version"] += 1  # trigger student auto-refresh
             st.rerun()
+
     with col2:
         if st.button("🔒 Lock Answers", use_container_width=True):
             lock_answers(game_state)
+
     with col3:
         if st.button("🔁 Reset Game", use_container_width=True):
             base = get_game_state()
@@ -240,6 +244,7 @@ if is_teacher:
                 "version": 0,
             })
             st.rerun()
+
     with col4:
         if st.button("⏭️ Next Question", use_container_width=True):
             lock_answers(game_state)
@@ -250,42 +255,59 @@ if is_teacher:
 
     st.markdown("---")
 
+    # No question yet
     if game_state["current_phrase"] is None:
-        st.info("Click Start New Question to begin.")
-    else:
-        st.subheader(f"📖 Question {game_state['question_number']}")
-        st.markdown(f"<div class='big-text'>{game_state['current_phrase']}</div>", unsafe_allow_html=True)
+        st.info("Click **Start New Question** to begin.")
+        st.stop()
 
-        elapsed = time.time() - game_state["question_start_time"]
-        remaining = max(0, 20 - elapsed)
+    # Show scripture phrase
+    st.subheader(f"📖 Question {game_state['question_number']}")
+    st.markdown(
+        f"<div class='big-text'>{game_state['current_phrase']}</div>",
+        unsafe_allow_html=True
+    )
 
-        colA, colB = st.columns(2)
-        with colA:
-            st.metric("Elapsed", f"{elapsed:.1f}s")
-        with colB:
-            st.metric("Remaining", f"{remaining:.1f}s")
+    # Countdown
+    elapsed = time.time() - game_state["question_start_time"]
+    remaining = max(0, 20 - elapsed)
 
-        leaderboard_placeholder = st.empty()
+    colA, colB = st.columns(2)
+    with colA:
+        st.metric("Elapsed", f"{elapsed:.1f}s")
+    with colB:
+        st.metric("Remaining", f"{remaining:.1f}s")
 
-        def render_leaderboard():
-            leaderboard = get_leaderboard(game_state)
-            with leaderboard_placeholder.container():
-                st.subheader("🏆 Leaderboard")
-                if not leaderboard:
-                    st.write("No scores yet.")
-                else:
-                    for rank, (name, score) in enumerate(leaderboard, 1):
-                        medal = "🥇" if rank == 1 else "🥈" if rank == 2 else "🥉" if rank == 3 else f"{rank}."
-                        st.markdown(
-                            f"<div class='leaderboard-card'><strong>{medal} {name}</strong> — {score} points</div>",
-                            unsafe_allow_html=True
-                        )
-        # Manual refresh button
-        if st.button("🔄 Refresh Leaderboard", use_container_width=True):
-            render_leaderboard()
+    # Leaderboard placeholder
+    leaderboard_placeholder = st.empty()
 
-        if remaining == 0:
-            render_leaderboard()
+    def render_leaderboard():
+        leaderboard = get_leaderboard(game_state)
+        with leaderboard_placeholder.container():
+            st.subheader("🏆 Leaderboard")
+            if not leaderboard:
+                st.write("No scores yet.")
+            else:
+                for rank, (name, score) in enumerate(leaderboard, 1):
+                    medal = (
+                        "🥇" if rank == 1 else
+                        "🥈" if rank == 2 else
+                        "🥉" if rank == 3 else f"{rank}."
+                    )
+                    st.markdown(
+                        f"<div class='leaderboard-card'><strong>{medal} {name}</strong> — {score} points</div>",
+                        unsafe_allow_html=True
+                    )
+
+    # Manual refresh button
+    if st.button("🔄 Refresh Leaderboard", use_container_width=True):
+        render_leaderboard()
+
+    # Initial render
+    render_leaderboard()
+
+    # Auto-refresh leaderboard ONLY when timer hits zero
+    if remaining == 0:
+        render_leaderboard()
 
 # =========================
 # STUDENT VIEW
@@ -309,26 +331,34 @@ if not is_teacher:
     if st.button("🔄 Refresh", use_container_width=True):
         st.rerun()
 
+    # No question yet
     if game_state["current_phrase"] is None:
         st.info("Waiting for teacher to start a question.")
         st.stop()
 
+    # Show scripture phrase
     st.subheader(f"📖 Question {game_state['question_number']}")
-    st.markdown(f"<div class='big-text'>{game_state['current_phrase']}</div>", unsafe_allow_html=True)
+    st.markdown(
+        f"<div class='big-text'>{game_state['current_phrase']}</div>",
+        unsafe_allow_html=True
+    )
 
+    # Timer logic
     elapsed = time.time() - game_state["question_start_time"]
     remaining = max(0, 20 - elapsed)
     already_answered = student_name in game_state["student_answers"]
 
+    # Always show countdown
     timer_placeholder = st.empty()
 
-    if game_state["answers_open"] and not already_answered and remaining > 0:
+    if remaining > 0:
         if remaining > 14:
             color = "#28a745"
         elif remaining > 7:
             color = "#ffc107"
         else:
             color = "#dc3545"
+
         timer_placeholder.markdown(
             f"""
             <div style='font-size: 72px; font-weight: bold; color: {color};
@@ -341,25 +371,38 @@ if not is_teacher:
             """,
             unsafe_allow_html=True
         )
-    elif already_answered:
-        timer_placeholder.markdown("<div class='timer-text'>Answer Submitted</div>", unsafe_allow_html=True)
     else:
-        timer_placeholder.markdown("<div class='timer-text'>Locked</div>", unsafe_allow_html=True)
+        timer_placeholder.markdown(
+            "<div class='timer-text'>⏱️ 0</div>",
+            unsafe_allow_html=True
+        )
 
     st.write("")
     st.write("### Choose the correct reference:")
 
+    # Answer buttons
     option_cols = st.columns(2)
     for i, opt in enumerate(game_state["options"]):
         with option_cols[i % 2]:
-            disabled = (not game_state["answers_open"]) or already_answered or (remaining <= 0)
-            if st.button(opt, key=f"opt-{opt}-{student_name}", disabled=disabled, use_container_width=True):
+            disabled = (
+                not game_state["answers_open"]
+                or already_answered
+                or remaining <= 0
+            )
+            if st.button(
+                opt,
+                key=f"opt-{opt}-{student_name}",
+                disabled=disabled,
+                use_container_width=True
+            ):
                 record_student_answer(game_state, student_name, opt)
                 st.rerun()
 
     st.write("---")
 
-    # Show results ONLY after time runs out
+    # =========================
+    # RESULTS (only after timer ends)
+    # =========================
     if already_answered and remaining == 0:
         info = game_state["student_answers"][student_name]
         if info["correct"]:
@@ -373,17 +416,17 @@ if not is_teacher:
     elif already_answered and remaining > 0:
         st.info("Answer submitted. Waiting for results…")
 
+    elif remaining == 0 and not already_answered:
+        st.warning("Time is up.")
 
-    else:
-        if remaining <= 0:
-            st.warning("Time is up.")
-
+    # Score display
     total_score = game_state["student_scores"].get(student_name, 0)
     st.markdown(
         f"<div class='score-card'>Your Score: {total_score}</div>",
         unsafe_allow_html=True
     )
 
+    # Auto-refresh countdown while answering
     if game_state["answers_open"] and not already_answered and remaining > 0:
         time.sleep(0.1)
         st.rerun()
