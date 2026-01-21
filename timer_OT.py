@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v1.8
+# SHARED SCRIPTURE DATA v1.9
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -198,9 +198,9 @@ if mode == "Teacher":
     pin = st.sidebar.text_input("Enter teacher PIN:", type="password")
     if pin == TEACHER_PIN:
         is_teacher = True
-        st.sidebar.success("✅ Teacher mode")
+        st.sidebar.success("Teacher mode")
     elif pin:
-        st.sidebar.error("❌ Incorrect PIN")
+        st.sidebar.error("Incorrect PIN")
 else:
     student_name = st.sidebar.text_input("Your name:", max_chars=30)
     if student_name:
@@ -245,13 +245,13 @@ if is_teacher:
             lock_answers(game_state)
             time.sleep(0.3)
             start_new_question(game_state)
-            game_state["version"] += 1  # trigger student refresh
+            game_state["version"] += 1
             st.rerun()
 
     st.markdown("---")
 
     if game_state["current_phrase"] is None:
-        st.info("🎮 Click **Start New Question** to begin.")
+        st.info("Click Start New Question to begin.")
     else:
         st.subheader(f"📖 Question {game_state['question_number']}")
         st.markdown(f"<div class='big-text'>{game_state['current_phrase']}</div>", unsafe_allow_html=True)
@@ -261,9 +261,9 @@ if is_teacher:
 
         colA, colB = st.columns(2)
         with colA:
-            st.metric("Time Elapsed", f"{elapsed:.1f}s")
+            st.metric("Elapsed", f"{elapsed:.1f}s")
         with colB:
-            st.metric("Time Remaining", f"{remaining:.1f}s")
+            st.metric("Remaining", f"{remaining:.1f}s")
 
         leaderboard_placeholder = st.empty()
 
@@ -293,18 +293,19 @@ if not is_teacher:
     st.title("⚡ Scripture Speed Quiz")
 
     if not student_name:
-        st.info("👈 Enter your name in the sidebar to play!")
+        st.info("Enter your name to play.")
         st.stop()
 
-    # Auto-refresh when teacher starts a new question
+    # 🔄 Auto-refresh when teacher starts a new question
     if "last_version" not in st.session_state:
         st.session_state.last_version = game_state["version"]
+
     if st.session_state.last_version != game_state["version"]:
         st.session_state.last_version = game_state["version"]
         st.rerun()
 
     if game_state["current_phrase"] is None:
-        st.info("⏳ Waiting for the teacher to start a question...")
+        st.info("Waiting for teacher to start a question.")
         st.stop()
 
     st.subheader(f"📖 Question {game_state['question_number']}")
@@ -336,9 +337,9 @@ if not is_teacher:
             unsafe_allow_html=True
         )
     elif already_answered:
-        timer_placeholder.markdown("<div class='timer-text'>✅ Answer Submitted</div>", unsafe_allow_html=True)
+        timer_placeholder.markdown("<div class='timer-text'>Answer Submitted</div>", unsafe_allow_html=True)
     else:
-        timer_placeholder.markdown("<div class='timer-text'>🔒 Answers Locked</div>", unsafe_allow_html=True)
+        timer_placeholder.markdown("<div class='timer-text'>Locked</div>", unsafe_allow_html=True)
 
     st.write("")
     st.write("### Choose the correct reference:")
@@ -357,24 +358,18 @@ if not is_teacher:
         info = game_state["student_answers"][student_name]
         if info["correct"]:
             st.success(
-                f"✅ Correct! You answered **{info['answer']}** "
-                f"in {info['elapsed']:.1f}s and earned **{info['points']} points**!"
+                f"Correct! You answered {info['answer']} in {info['elapsed']:.1f}s "
+                f"and earned {info['points']} points."
             )
         else:
-            st.error(
-                f"❌ Incorrect. You answered **{info['answer']}**."
-            )
+            st.error(f"Incorrect. You answered {info['answer']}.")
     else:
-        if not game_state["answers_open"] or remaining <= 0:
-            st.warning("⚠️ You did not answer in time or answers are locked.")
+        if remaining <= 0:
+            st.warning("Time is up.")
 
     total_score = game_state["student_scores"].get(student_name, 0)
     st.markdown(
-        f"""
-        <div class='score-card'>
-            🎯 Your Total Score: <strong>{total_score}</strong> points
-        </div>
-        """,
+        f"<div class='score-card'>Your Score: {total_score}</div>",
         unsafe_allow_html=True
     )
 
