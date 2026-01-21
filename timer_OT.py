@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v1.9
+# SHARED SCRIPTURE DATA v2.0
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -302,6 +302,10 @@ if not is_teacher:
 
     if st.session_state.last_version != game_state["version"]:
         st.session_state.last_version = game_state["version"]
+        st.rerun()
+
+    # 🔄 Manual refresh button
+    if st.button("🔄 Refresh", use_container_width=True):
         st.rerun()
 
     if game_state["current_phrase"] is None:
