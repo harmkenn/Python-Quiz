@@ -6,7 +6,7 @@ import qrcode
 from io import BytesIO
 
 # =========================
-# SHARED SCRIPTURE DATA v2.1
+# SHARED SCRIPTURE DATA v2.2
 # =========================
 SCRIPTURES = {
     "Moses 1:39": "This is my work and my glory—to bring to pass the immortality and eternal life of man.",
@@ -280,8 +280,9 @@ if is_teacher:
                             f"<div class='leaderboard-card'><strong>{medal} {name}</strong> — {score} points</div>",
                             unsafe_allow_html=True
                         )
-
-        render_leaderboard()
+        # Manual refresh button
+        if st.button("🔄 Refresh Leaderboard", use_container_width=True):
+            render_leaderboard()
 
         if remaining == 0:
             render_leaderboard()
