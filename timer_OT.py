@@ -419,8 +419,17 @@ if not is_teacher:
     st.write("### Choose the correct reference:")
 
     # Answer buttons
+    # Show a per-student shuffled order, stable for the same student+question
+    options = game_state.get("options", []).copy()
+    try:
+        rnd = random.Random(f"{student_name}-{game_state['question_number']}")
+        rnd.shuffle(options)
+    except Exception:
+        # fallback: use shared order
+        options = game_state.get("options", [])
+
     option_cols = st.columns(2)
-    for i, opt in enumerate(game_state["options"]):
+    for i, opt in enumerate(options):
         with option_cols[i % 2]:
             disabled = (
                 not game_state["answers_open"]
