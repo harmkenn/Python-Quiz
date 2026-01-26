@@ -7,7 +7,7 @@ import socket
 from state import BUZZ_STATE, TEAM_NAMES
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-#v2.5
+#v2.6
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
 # ---------------------------------------------------------
@@ -270,7 +270,9 @@ if st.session_state.current_question:
     else:
         render_timer()
 
-    # Buzzer status
+    # ---------------------------------------------------------
+    # AUTO-HIGHLIGHT TEAM THAT BUZZED FIRST
+    # ---------------------------------------------------------
     first_buzz = BUZZ_STATE.get()
     if first_buzz:
         buzz_name = first_buzz["team"]
