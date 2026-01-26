@@ -4,10 +4,10 @@ import qrcode
 import io
 import socket
 
-from state import BUZZ_STATE
+from state import BUZZ_STATE, TEAM_NAMES
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-# v2.3
+#v2.5
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
 # ---------------------------------------------------------
@@ -141,6 +141,7 @@ def render_team_buttons():
 
     for i in range(4):
         color = TEAM_COLORS[i]
+        name = TEAM_NAMES[i]
         is_current = (i == st.session_state.current_team)
 
         if is_current:
@@ -170,11 +171,11 @@ def render_team_buttons():
             """
 
         with cols[i]:
-            if st.button(f"Team {i+1}", key=f"team-btn-{i}"):
+            if st.button(name, key=f"team-btn-{i}"):
                 st.session_state.current_team = i
                 st.rerun()
 
-            st.markdown(f"<div style='{style}'>Team {i+1}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='{style}'>{name}</div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # SIDEBAR: QR CODE + SCORES
@@ -182,7 +183,7 @@ def render_team_buttons():
 st.sidebar.header("Team Scores")
 
 for i in range(4):
-    st.sidebar.write(f"Team {i+1}: {st.session_state.team_scores[i]}")
+    st.sidebar.write(f"{TEAM_NAMES[i]}: {st.session_state.team_scores[i]}")
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("Buzzer Link")
@@ -272,11 +273,13 @@ if st.session_state.current_question:
     # Buzzer status
     first_buzz = BUZZ_STATE.get()
     if first_buzz:
-        try:
-            team_num = int(first_buzz["team"].split()[-1]) - 1
-            st.session_state.current_team = team_num
-        except:
-            pass
+        buzz_name = first_buzz["team"]
+
+        # Find which team slot matches this name
+        for i in range(4):
+            if TEAM_NAMES[i] == buzz_name:
+                st.session_state.current_team = i
+                break
 
         st.markdown(
             f"""
@@ -290,7 +293,7 @@ if st.session_state.current_question:
                 border-radius:10px;
                 margin-bottom:1rem;
             ">
-                🔔 {first_buzz['team']} BUZZED IN FIRST!
+                🔔 {buzz_name} BUZZED IN FIRST!
             </div>
             """,
             unsafe_allow_html=True
