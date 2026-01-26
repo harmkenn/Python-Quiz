@@ -8,12 +8,9 @@ from state import BUZZ_STATE
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
 
-# -----------------------------
-# CONFIG
-# -----------------------------
-TIMER_DURATION = 20  # seconds
-
-
+# ---------------------------------------------------------
+# AUTO-DETECT LOCAL IP FOR QR CODE
+# ---------------------------------------------------------
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -25,10 +22,22 @@ def get_local_ip():
         s.close()
     return IP
 
-
 LOCAL_IP = get_local_ip()
 BUZZER_URL = f"http://{LOCAL_IP}:8501/buzzer"
 
+# ---------------------------------------------------------
+# TEAM COLORS (4 TEAMS MAX)
+# ---------------------------------------------------------
+TEAM_COLORS = [
+    "#3b82f6",  # Team 1 - Blue
+    "#ef4444",  # Team 2 - Red
+    "#22c55e",  # Team 3 - Green
+    "#a855f7",  # Team 4 - Purple
+]
+
+# ---------------------------------------------------------
+# JEOPARDY QUESTIONS
+# ---------------------------------------------------------
 categories = {
     "Old Testament": {
         100: {"q": "This man built an ark to save his family and animals from the flood.", "a": "Who is Noah?"},
@@ -74,14 +83,11 @@ categories = {
     }
 }
 
-# -----------------------------
+# ---------------------------------------------------------
 # SESSION STATE INIT
-# -----------------------------
+# ---------------------------------------------------------
 if "team_scores" not in st.session_state:
-    st.session_state.team_scores = {}
-
-if "num_teams" not in st.session_state:
-    st.session_state.num_teams = 4
+    st.session_state.team_scores = {i: 0 for i in range(4)}
 
 if "current_team" not in st.session_state:
     st.session_state.current_team = 0
@@ -101,25 +107,23 @@ if "timer_start" not in st.session_state:
 if "timer_running" not in st.session_state:
     st.session_state.timer_running = False
 
-
-# -----------------------------
+# ---------------------------------------------------------
 # TIMER HELPERS
-# -----------------------------
+# ---------------------------------------------------------
+TIMER_DURATION = 20
+
 def start_timer():
     st.session_state.timer_start = time.time()
     st.session_state.timer_running = True
 
-
 def stop_timer():
     st.session_state.timer_running = False
-
 
 def get_time_left():
     if not st.session_state.timer_running or st.session_state.timer_start is None:
         return TIMER_DURATION
     elapsed = time.time() - st.session_state.timer_start
     return max(0, TIMER_DURATION - int(elapsed))
-
 
 def timer_color(seconds_left):
     if seconds_left > TIMER_DURATION * 0.6:
@@ -129,27 +133,51 @@ def timer_color(seconds_left):
     else:
         return "#ef4444"
 
+# ---------------------------------------------------------
+# TEAM BUTTONS (TOP OF SCREEN)
+# ---------------------------------------------------------
+def render_team_buttons():
+    cols = st.columns(4)
 
-# -----------------------------
-# SIDEBAR: TEAMS + QR
-# -----------------------------
-st.sidebar.header("Teams")
+    for i in range(4):
+        color = TEAM_COLORS[i]
+        is_current = (i == st.session_state.current_team)
 
-st.session_state.num_teams = st.sidebar.number_input(
-    "Number of Teams", 1, 10, st.session_state.num_teams
-)
+        style = f"""
+            padding: 1rem;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: bold;
+            color: white;
+            background-color: {color};
+            margin: 0.25rem;
+            font-size: 1.4rem;
+        """
 
-for i in range(st.session_state.num_teams):
-    if i not in st.session_state.team_scores:
-        st.session_state.team_scores[i] = 0
+        if is_current:
+            style += """
+                box-shadow: 0 0 25px white;
+                border: 4px solid white;
+                transform: scale(1.05);
+            """
 
-for team, score in st.session_state.team_scores.items():
-    st.sidebar.write(f"Team {team + 1}: {score}")
+        with cols[i]:
+            if st.button(f"Team {i+1}", key=f"team-btn-{i}"):
+                st.session_state.current_team = i
+                st.rerun()
+
+            st.markdown(f"<div style='{style}'>Team {i+1}</div>", unsafe_allow_html=True)
+
+# ---------------------------------------------------------
+# SIDEBAR: QR CODE + SCORES
+# ---------------------------------------------------------
+st.sidebar.header("Team Scores")
+
+for i in range(4):
+    st.sidebar.write(f"Team {i+1}: {st.session_state.team_scores[i]}")
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("Buzzer Link")
-
-st.sidebar.write("Have each team scan this QR code:")
 
 qr = qrcode.QRCode(box_size=4, border=2)
 qr.add_data(BUZZER_URL)
@@ -161,14 +189,17 @@ st.sidebar.image(buf.getvalue(), use_column_width=True)
 
 st.sidebar.code(BUZZER_URL, language="text")
 
-# -----------------------------
-# MAIN TITLE
-# -----------------------------
+# ---------------------------------------------------------
+# MAIN UI
+# ---------------------------------------------------------
 st.title("📘 Scripture Jeopardy — Teacher Control")
 
-# -----------------------------
+render_team_buttons()
+st.markdown("---")
+
+# ---------------------------------------------------------
 # JEOPARDY BOARD
-# -----------------------------
+# ---------------------------------------------------------
 if st.session_state.current_question is None:
     cols = st.columns(len(categories))
 
@@ -184,9 +215,9 @@ if st.session_state.current_question is None:
                     start_timer()
                     st.rerun()
 
-# -----------------------------
-# CURRENT QUESTION + BUZZER
-# -----------------------------
+# ---------------------------------------------------------
+# QUESTION + BUZZER DISPLAY
+# ---------------------------------------------------------
 if st.session_state.current_question:
     cat, points = st.session_state.current_question
     qdata = categories[cat][points]
@@ -220,12 +251,33 @@ if st.session_state.current_question:
         stop_timer()
 
     # Buzzer status
-    st.markdown("### 🔔 Buzzer Status")
     first_buzz = BUZZ_STATE.get()
-    if first_buzz is None:
-        st.info("No team has buzzed in yet.")
+    if first_buzz:
+        try:
+            team_num = int(first_buzz["team"].split()[-1]) - 1
+            st.session_state.current_team = team_num
+        except:
+            pass
+
+        st.markdown(
+            f"""
+            <div style="
+                background:#22c55e;
+                color:white;
+                padding:1rem;
+                text-align:center;
+                font-size:2rem;
+                font-weight:700;
+                border-radius:10px;
+                margin-bottom:1rem;
+            ">
+                🔔 {first_buzz['team']} BUZZED IN FIRST!
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
     else:
-        st.success(f"First buzz: **{first_buzz['team']}**")
+        st.info("No team has buzzed in yet.")
 
     col1, col2, col3, col4 = st.columns(4)
 
@@ -254,23 +306,23 @@ if st.session_state.current_question:
 
         colA, colB, colC = st.columns(3)
         with colA:
-            if st.button("✅ Mark Correct for Current Team"):
+            if st.button("✅ Correct"):
                 st.session_state.team_scores[st.session_state.current_team] += points
                 st.session_state.answered_questions.add((cat, points))
                 st.session_state.current_question = None
                 st.session_state.show_answer = False
-                st.session_state.current_team = (st.session_state.current_team + 1) % st.session_state.num_teams
                 st.rerun()
+
         with colB:
-            if st.button("❌ Mark Wrong for Current Team"):
+            if st.button("❌ Wrong"):
                 st.session_state.team_scores[st.session_state.current_team] -= points
                 st.session_state.answered_questions.add((cat, points))
                 st.session_state.current_question = None
                 st.session_state.show_answer = False
-                st.session_state.current_team = (st.session_state.current_team + 1) % st.session_state.num_teams
                 st.rerun()
+
         with colC:
-            if st.button("➡️ Skip / No Score Change"):
+            if st.button("➡️ Skip"):
                 st.session_state.answered_questions.add((cat, points))
                 st.session_state.current_question = None
                 st.session_state.show_answer = False
