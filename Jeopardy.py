@@ -1,77 +1,11 @@
 import streamlit as st
-import random
 import time
 
-# --- Page Setup ---
 st.set_page_config(page_title="Scripture Jeopardy", layout="wide")
 
-st.markdown("""
-<style>
-.jeopardy-board { 
-    display: grid; 
-    gap: 10px; 
-    margin: 20px 0; 
-}
-.category-header { 
-    background: #1f4e79; 
-    color: white; 
-    padding: 15px; 
-    text-align: center; 
-    font-weight: bold; 
-    font-size: 18px;
-    border-radius: 5px;
-}
-.point-button { 
-    background: #2e5984; 
-    color: white; 
-    padding: 20px; 
-    text-align: center; 
-    font-size: 24px; 
-    font-weight: bold; 
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer;
-    min-height: 80px;
-}
-.point-button:hover { background: #3d6fa3; }
-.answered { 
-    background: #666 !important; 
-    color: #999 !important; 
-    cursor: not-allowed !important;
-}
-.team-score { 
-    font-size: 24px; 
-    font-weight: bold; 
-    text-align: center; 
-    padding: 15px;
-    border-radius: 10px;
-    margin: 10px;
-}
-.current-team { 
-    border: 3px solid #FFD700; 
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-}
-.question-display {
-    background: #f0f2f6;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 20px;
-    margin: 20px 0;
-}
-.answer-display {
-    background: #e8f5e8;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 18px;
-    margin: 10px 0;
-    border-left: 5px solid #28a745;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# --- Game Data ---
+# ---------------------------------------------------------
+# YOUR QUESTIONS (EXACTLY AS PROVIDED)
+# ---------------------------------------------------------
 categories = {
     "Old Testament": {
         100: {"q": "This man built an ark to save his family and animals from the flood.", "a": "Who is Noah?"},
@@ -117,151 +51,136 @@ categories = {
     }
 }
 
-# --- Initialize Game State ---
-if "jeopardy_initialized" not in st.session_state:
-    st.session_state.jeopardy_initialized = False
+# ---------------------------------------------------------
+# SESSION STATE INIT
+# ---------------------------------------------------------
+if "team_scores" not in st.session_state:
+    st.session_state.team_scores = {}
 
-def initialize_game():
-    st.session_state.answered_questions = set()
-    st.session_state.current_question = None
-    st.session_state.show_answer = False
-    st.session_state.team_scores = [0] * st.session_state.num_teams
+if "num_teams" not in st.session_state:
+    st.session_state.num_teams = 2
+
+if "current_team" not in st.session_state:
     st.session_state.current_team = 0
-    st.session_state.question_value = 0
-    st.session_state.jeopardy_initialized = True
 
-# --- Sidebar Setup ---
-st.sidebar.header("🎯 Game Setup")
-st.session_state.num_teams = st.sidebar.slider("Number of teams:", 2, 6, 3, step=1)
+if "current_question" not in st.session_state:
+    st.session_state.current_question = None
 
-# Team colors
-team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400", "#9C27B0", "#FF9800"]
+if "answered_questions" not in st.session_state:
+    st.session_state.answered_questions = set()
 
-if st.sidebar.button("🔁 Start New Game") or not st.session_state.jeopardy_initialized:
-    initialize_game()
-    st.rerun()
+if "show_answer" not in st.session_state:
+    st.session_state.show_answer = False
 
-# --- Main Game Display ---
-st.title("📚 Scripture Jeopardy")
+if "timer_start" not in st.session_state:
+    st.session_state.timer_start = None
 
-# Display team scores
-st.markdown("### Team Scores")
-score_cols = st.columns(st.session_state.num_teams)
+if "timer_running" not in st.session_state:
+    st.session_state.timer_running = False
+
+TIMER_DURATION = 20
+
+
+# ---------------------------------------------------------
+# TIMER FUNCTIONS
+# ---------------------------------------------------------
+def start_timer():
+    st.session_state.timer_start = time.time()
+    st.session_state.timer_running = True
+
+
+def stop_timer():
+    st.session_state.timer_running = False
+
+
+def get_time_left():
+    if not st.session_state.timer_running or st.session_state.timer_start is None:
+        return TIMER_DURATION
+    elapsed = time.time() - st.session_state.timer_start
+    return max(0, TIMER_DURATION - int(elapsed))
+
+
+# ---------------------------------------------------------
+# TEAM SETUP
+# ---------------------------------------------------------
+st.sidebar.header("Team Setup")
+st.session_state.num_teams = st.sidebar.number_input("Number of Teams", 1, 10, st.session_state.num_teams)
+
 for i in range(st.session_state.num_teams):
-    with score_cols[i]:
-        team_class = "current-team" if i == st.session_state.current_team else ""
-        color = team_colors[i % len(team_colors)]
-        st.markdown(f"""
-        <div class='team-score {team_class}' style='background-color: {color}20; border: 2px solid {color}'>
-            <div style='color: {color}'>Team {i+1}</div>
-            <div style='color: {color}; font-size: 28px'>${st.session_state.team_scores[i]}</div>
-        </div>
-        """, unsafe_allow_html=True)
+    if i not in st.session_state.team_scores:
+        st.session_state.team_scores[i] = 0
 
-# Current team indicator
-st.markdown(f"### 🎯 Current Team: **Team {st.session_state.current_team + 1}**")
+st.sidebar.write("Scores:")
+for team, score in st.session_state.team_scores.items():
+    st.sidebar.write(f"Team {team + 1}: {score}")
 
-# Display current question if one is selected
+
+# ---------------------------------------------------------
+# GAME BOARD (JEOPARDY GRID)
+# ---------------------------------------------------------
+st.title("📘 Scripture Jeopardy — Teacher Control")
+
+if st.session_state.current_question is None:
+    cols = st.columns(len(categories))
+
+    for idx, (cat, values) in enumerate(categories.items()):
+        with cols[idx]:
+            st.markdown(f"### {cat}")
+            for points, qa in values.items():
+                disabled = (cat, points) in st.session_state.answered_questions
+                if st.button(f"${points}", key=f"{cat}-{points}", disabled=disabled):
+                    st.session_state.current_question = (cat, points)
+                    st.session_state.show_answer = False
+                    start_timer()
+                    st.rerun()
+
+
+# ---------------------------------------------------------
+# QUESTION DISPLAY
+# ---------------------------------------------------------
 if st.session_state.current_question:
-    category, points = st.session_state.current_question
-    question_data = categories[category][points]
-    
-    st.markdown(f"### Category: {category} - ${points}")
-    st.markdown(f"""
-    <div class='question-display'>
-        <strong>Question:</strong><br>
-        {question_data['q']}
-    </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns([1, 1, 1])
-    
+    cat, points = st.session_state.current_question
+    qdata = categories[cat][points]
+
+    st.markdown(f"## {cat} — ${points}")
+    st.markdown(f"### {qdata['q']}")
+
+    # Timer
+    time_left = get_time_left()
+    st.markdown(f"# ⏱️ {time_left}")
+
+    if time_left == 0:
+        stop_timer()
+
+    col1, col2, col3 = st.columns(3)
+
     with col1:
-        if st.button("✅ Correct Answer", key="correct"):
+        if st.button("✅ Correct"):
             st.session_state.team_scores[st.session_state.current_team] += points
-            st.session_state.answered_questions.add((category, points))
+            st.session_state.answered_questions.add((cat, points))
             st.session_state.show_answer = True
             st.rerun()
-    
+
     with col2:
-        if st.button("❌ Wrong Answer", key="wrong"):
+        if st.button("❌ Wrong"):
             st.session_state.team_scores[st.session_state.current_team] -= points
             st.session_state.current_team = (st.session_state.current_team + 1) % st.session_state.num_teams
             st.session_state.show_answer = True
             st.rerun()
-    
+
     with col3:
-        if st.button("👁️ Show Answer", key="show_answer"):
+        if st.button("👁️ Show Answer"):
             st.session_state.show_answer = True
             st.rerun()
-    
+
     if st.session_state.show_answer:
-        st.markdown(f"""
-        <div class='answer-display'>
-            <strong>Answer:</strong> {question_data['a']}
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("➡️ Next Question", key="next"):
+        st.markdown(f"### ✅ Answer: {qdata['a']}")
+
+        if st.button("➡️ Next Question"):
             st.session_state.current_question = None
             st.session_state.show_answer = False
             st.session_state.current_team = (st.session_state.current_team + 1) % st.session_state.num_teams
             st.rerun()
 
-else:
-    # Display the Jeopardy board
-    st.markdown("### Game Board")
-    
-    # Create the board layout
-    board_cols = st.columns(len(categories))
-    
-    # Category headers
-    for i, category in enumerate(categories.keys()):
-        with board_cols[i]:
-            st.markdown(f"<div class='category-header'>{category}</div>", unsafe_allow_html=True)
-    
-    # Point values and questions
-    for points in [100, 200, 300, 400, 500]:
-        point_cols = st.columns(len(categories))
-        for i, category in enumerate(categories.keys()):
-            with point_cols[i]:
-                if (category, points) in st.session_state.answered_questions:
-                    st.markdown(f"<div class='point-button answered'>${points}</div>", unsafe_allow_html=True)
-                else:
-                    if st.button(f"${points}", key=f"{category}_{points}"):
-                        st.session_state.current_question = (category, points)
-                        st.session_state.question_value = points
-                        st.session_state.show_answer = False
-                        st.rerun()
-
-# Game completion check
-total_questions = len(categories) * 5
-answered_questions = len(st.session_state.answered_questions)
-
-if answered_questions == total_questions:
-    st.success("🎉 Game Complete!")
-    winner_score = max(st.session_state.team_scores)
-    winners = [i+1 for i, score in enumerate(st.session_state.team_scores) if score == winner_score]
-    
-    if len(winners) == 1:
-        st.info(f"🏆 Winner: Team {winners[0]} with ${winner_score}!")
-    else:
-        st.info(f"🏆 Tie between Teams {', '.join(map(str, winners))} with ${winner_score} each!")
-
-# Progress indicator
-progress = answered_questions / total_questions
-st.progress(progress)
-st.caption(f"Questions answered: {answered_questions}/{total_questions}")
-
-# Manual team switching (in case needed)
-st.sidebar.markdown("---")
-st.sidebar.markdown("### Manual Controls")
-if st.sidebar.button("⏭️ Skip to Next Team"):
-    st.session_state.current_team = (st.session_state.current_team + 1) % st.session_state.num_teams
-    st.rerun()
-
-# Reset current question
-if st.sidebar.button("🔄 Clear Current Question"):
-    st.session_state.current_question = None
-    st.session_state.show_answer = False
-    st.rerun()
+    if st.session_state.timer_running:
+        st.rerun()
