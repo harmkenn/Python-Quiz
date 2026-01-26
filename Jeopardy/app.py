@@ -340,4 +340,4 @@ if st.session_state.current_question:
                 st.rerun()
 
     if st.session_state.timer_running:
-        st.experimental_rerun()
+        st.rerun()
