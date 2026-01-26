@@ -7,7 +7,7 @@ import socket
 from state import BUZZ_STATE
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-#v2.1
+#v2.2
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
 # ---------------------------------------------------------
