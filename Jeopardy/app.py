@@ -7,7 +7,7 @@ import socket
 from state import BUZZ_STATE
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-
+#v2.1
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
 # ---------------------------------------------------------
@@ -143,22 +143,32 @@ def render_team_buttons():
         color = TEAM_COLORS[i]
         is_current = (i == st.session_state.current_team)
 
-        style = f"""
-            padding: 1rem;
-            text-align: center;
-            border-radius: 10px;
-            font-weight: bold;
-            color: white;
-            background-color: {color};
-            margin: 0.25rem;
-            font-size: 1.4rem;
-        """
-
         if is_current:
-            style += """
-                box-shadow: 0 0 25px white;
+            # ACTIVE TEAM — filled button
+            style = f"""
+                padding: 1rem;
+                text-align: center;
+                border-radius: 10px;
+                font-weight: bold;
+                color: white;
+                background-color: {color};
+                margin: 0.25rem;
+                font-size: 1.4rem;
                 border: 4px solid white;
                 transform: scale(1.05);
+            """
+        else:
+            # NON-ACTIVE TEAM — outline only
+            style = f"""
+                padding: 1rem;
+                text-align: center;
+                border-radius: 10px;
+                font-weight: bold;
+                color: {color};
+                background-color: transparent;
+                margin: 0.25rem;
+                font-size: 1.4rem;
+                border: 3px solid {color};
             """
 
         with cols[i]:
@@ -167,6 +177,7 @@ def render_team_buttons():
                 st.rerun()
 
             st.markdown(f"<div style='{style}'>Team {i+1}</div>", unsafe_allow_html=True)
+
 
 # ---------------------------------------------------------
 # SIDEBAR: QR CODE + SCORES
