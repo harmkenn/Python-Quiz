@@ -183,7 +183,7 @@ if "timer_running" not in st.session_state:
 # ---------------------------------------------------------
 # TIMER HELPERS
 # ---------------------------------------------------------
-TIMER_DURATION = 20
+TIMER_DURATION = 10
 
 def start_timer():
     st.session_state.timer_start = time.time()
@@ -215,6 +215,7 @@ def render_team_buttons():
     for i in range(4):
         color = TEAM_COLORS[i]
         name = TEAM_NAMES[i]
+        score = st.session_state.team_scores[i]
         is_current = (i == st.session_state.current_team)
 
         if is_current:
@@ -249,16 +250,11 @@ def render_team_buttons():
                 st.rerun()
 
             st.markdown(f"<div style='{style}'>{name}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='text-align: center; font-size: 1.2rem; font-weight: bold; color: {color};'>${score}</div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# SIDEBAR: QR CODE + SCORES
+# SIDEBAR: QR CODE + BUZZER LINK
 # ---------------------------------------------------------
-st.sidebar.header("Team Scores")
-
-for i in range(4):
-    st.sidebar.write(f"{TEAM_NAMES[i]}: {st.session_state.team_scores[i]}")
-
-st.sidebar.markdown("---")
 st.sidebar.subheader("Buzzer Link")
 
 qr = qrcode.QRCode(box_size=4, border=2)
@@ -267,7 +263,7 @@ qr.make(fit=True)
 img = qr.make_image(fill_color="black", back_color="white")
 buf = io.BytesIO()
 img.save(buf, format="PNG")
-st.sidebar.image(buf.getvalue(), use_column_width=True)
+st.sidebar.image(buf.getvalue(), width=300)
 
 st.sidebar.code(BUZZER_URL, language="text")
 
@@ -294,9 +290,10 @@ if st.session_state.current_question is None:
         with cols[idx]:
             st.markdown(f"### {cat}")
             for points, qa in values.items():
-                disabled = (cat, points) in st.session_state.answered_questions
+                points_int = int(points)
+                disabled = (cat, points_int) in st.session_state.answered_questions
                 if st.button(f"${points}", key=f"{cat}-{points}", disabled=disabled):
-                    st.session_state.current_question = (cat, points)
+                    st.session_state.current_question = (cat, points_int)
                     st.session_state.show_answer = False
                     BUZZ_STATE.clear()
                     start_timer()
@@ -307,7 +304,7 @@ if st.session_state.current_question is None:
 # ---------------------------------------------------------
 if st.session_state.current_question:
     cat, points = st.session_state.current_question
-    qdata = categories[cat][points]
+    qdata = categories[cat][str(points)]
 
     st.markdown(f"## {cat} — ${points}")
     st.markdown(f"### {qdata['q']}")
