@@ -7,7 +7,7 @@ import socket
 from state import BUZZ_STATE, TEAM_NAMES
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-#v2.6
+#v2.8
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
 # ---------------------------------------------------------
@@ -204,6 +204,11 @@ st.sidebar.code(BUZZER_URL, language="text")
 st.title("📘 Scripture Jeopardy — Teacher Control")
 
 render_team_buttons()
+
+# NEW: Refresh button
+if st.button("🔄 Refresh Teams"):
+    st.rerun()
+
 st.markdown("---")
 
 # ---------------------------------------------------------
