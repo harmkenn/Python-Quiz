@@ -7,7 +7,7 @@ import socket
 from state import BUZZ_STATE
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-#v2.2
+# v2.3
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
 # ---------------------------------------------------------
@@ -144,7 +144,6 @@ def render_team_buttons():
         is_current = (i == st.session_state.current_team)
 
         if is_current:
-            # ACTIVE TEAM — filled button
             style = f"""
                 padding: 1rem;
                 text-align: center;
@@ -158,7 +157,6 @@ def render_team_buttons():
                 transform: scale(1.05);
             """
         else:
-            # NON-ACTIVE TEAM — outline only
             style = f"""
                 padding: 1rem;
                 text-align: center;
@@ -177,7 +175,6 @@ def render_team_buttons():
                 st.rerun()
 
             st.markdown(f"<div style='{style}'>Team {i+1}</div>", unsafe_allow_html=True)
-
 
 # ---------------------------------------------------------
 # SIDEBAR: QR CODE + SCORES
@@ -236,30 +233,41 @@ if st.session_state.current_question:
     st.markdown(f"## {cat} — ${points}")
     st.markdown(f"### {qdata['q']}")
 
-    # Timer
-    time_left = get_time_left()
-    color = timer_color(time_left)
-    st.markdown(
-        f"""
-        <div style="
-            font-size:5rem;
-            font-weight:800;
-            text-align:center;
-            padding:0.5rem 1rem;
-            border-radius:1rem;
-            margin:1rem auto;
-            background-color:{color};
-            color:white;
-            width:60%;
-        ">
-            {time_left}
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    # Smooth timer container
+    timer_placeholder = st.empty()
 
-    if time_left == 0 and st.session_state.timer_running:
-        stop_timer()
+    def render_timer():
+        time_left = get_time_left()
+        color = timer_color(time_left)
+        timer_placeholder.markdown(
+            f"""
+            <div style="
+                font-size:5rem;
+                font-weight:800;
+                text-align:center;
+                padding:0.5rem 1rem;
+                border-radius:1rem;
+                margin:1rem auto;
+                background-color:{color};
+                color:white;
+                width:60%;
+            ">
+                {time_left}
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    # Live countdown loop
+    if st.session_state.timer_running:
+        for _ in range(200):  # enough iterations for 20 seconds
+            render_timer()
+            time.sleep(0.2)
+            if get_time_left() == 0:
+                st.session_state.timer_running = False
+                break
+    else:
+        render_timer()
 
     # Buzzer status
     first_buzz = BUZZ_STATE.get()
@@ -338,6 +346,3 @@ if st.session_state.current_question:
                 st.session_state.current_question = None
                 st.session_state.show_answer = False
                 st.rerun()
-
-    if st.session_state.timer_running:
-        st.rerun()
