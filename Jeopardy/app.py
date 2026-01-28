@@ -10,7 +10,7 @@ from state import BUZZ_STATE, TEAM_NAMES
 from question_bank import question_bank
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-# v3.0 — Dynamic Question Bank Edition
+# v3.2 — Dynamic Question Bank Edition
 
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
