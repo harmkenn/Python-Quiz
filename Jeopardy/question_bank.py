@@ -48,88 +48,101 @@ question_bank = [
     {"category": "Doctrine & Covenants", "q": "Joseph Smith brought forth the Book of Mormon by God’s power.", "a": "Doctrine and Covenants 135:3"},
 
     # -------------------------------
-    # Pearl of Great Price
+    # Old Testament Prophets
     # -------------------------------
-    {"category": "Pearl of Great Price", "q": "God’s work and glory is to bring to pass immortality and eternal life.", "a": "Moses 1:39"},
-    {"category": "Pearl of Great Price", "q": "Zion is of one heart and one mind.", "a": "Moses 7:18"},
-    {"category": "Pearl of Great Price", "q": "Abraham’s seed will bear the Priesthood to all nations.", "a": "Abraham 2:9–11"},
-    {"category": "Pearl of Great Price", "q": "Spirits were organized before the world was.", "a": "Abraham 3:22–23"},
+    {"category": "Old Testament Prophets", "q": "God’s work and glory is to bring to pass immortality and eternal life.", "a": "Moses 1:39"},
+    {"category": "Old Testament Prophets", "q": "Zion is of one heart and one mind.", "a": "Moses 7:18"},
+    {"category": "Old Testament Prophets", "q": "Abraham’s seed will bear the Priesthood to all nations.", "a": "Abraham 2:9–11"},
+    {"category": "Old Testament Prophets", "q": "Spirits were organized before the world was.", "a": "Abraham 3:22–23"},
+    {"category": "Old Testament Prophets", "q": "God created man in His own image.", "a": "Genesis 1:26–27"},
+    {"category": "Old Testament Prophets", "q": "A man shall cleave unto his wife and be one.", "a": "Genesis 2:24"},
+    {"category": "Old Testament Prophets", "q": "Joseph resisted temptation, refusing to sin against God.", "a": "Genesis 39:9"},
+    {"category": "Old Testament Prophets", "q": "The Ten Commandments.", "a": "Exodus 20:3–17"},
+    {"category": "Old Testament Prophets", "q": "Choose you this day whom ye will serve.", "a": "Joshua 24:15"},
+    {"category": "Old Testament Prophets", "q": "Who shall stand in God’s holy place?", "a": "Psalm 24:3–4"},
+    {"category": "Old Testament Prophets", "q": "Trust in the Lord with all your heart.", "a": "Proverbs 3:5–6"},
+    {"category": "Old Testament Prophets", "q": "Though sins be as scarlet, they can be white as snow.", "a": "Isaiah 1:18"},
+    {"category": "Old Testament Prophets", "q": "Woe unto them that call evil good and good evil.", "a": "Isaiah 5:20"},
+    {"category": "Old Testament Prophets", "q": "A marvelous work and a wonder.", "a": "Isaiah 29:13–14"},
+    {"category": "Old Testament Prophets", "q": "Christ bore our griefs and carried our sorrows.", "a": "Isaiah 53:3–5"},
+    {"category": "Old Testament Prophets", "q": "Blessings of a proper fast.", "a": "Isaiah 58:6–7"},
+    {"category": "Old Testament Prophets", "q": "Call the Sabbath a delight.", "a": "Isaiah 58:13–14"},
+    {"category": "Old Testament Prophets", "q": "Before I formed thee, I ordained thee a prophet.", "a": "Jeremiah 1:4–5"},
+    {"category": "Old Testament Prophets", "q": "The prophet is a watchman unto the house of Israel.", "a": "Ezekiel 3:16–17"},
+    {"category": "Old Testament Prophets", "q": "The Bible and Book of Mormon shall become one.", "a": "Ezekiel 37:15–17"},
+    {"category": "Old Testament Prophets", "q": "God will set up a kingdom that will never be destroyed.", "a": "Daniel 2:44–45"},
+    {"category": "Old Testament Prophets", "q": "The Lord reveals His secrets to His prophets.", "a": "Amos 3:7"},
+    {"category": "Old Testament Prophets", "q": "Blessings of paying tithing.", "a": "Malachi 3:8–10"},
+    {"category": "Old Testament Prophets", "q": "Elijah will turn the hearts of the children to their fathers.", "a": "Malachi 4:5–6"},
 
     # -------------------------------
-    # Old Testament
+    # Basic Doctrine & Scripture (Additions)
     # -------------------------------
-    {"category": "Old Testament", "q": "God created man in His own image.", "a": "Genesis 1:26–27"},
-    {"category": "Old Testament", "q": "A man shall cleave unto his wife and be one.", "a": "Genesis 2:24"},
-    {"category": "Old Testament", "q": "Joseph resisted temptation, refusing to sin against God.", "a": "Genesis 39:9"},
-    {"category": "Old Testament", "q": "The Ten Commandments.", "a": "Exodus 20:3–17"},
-    {"category": "Old Testament", "q": "Choose you this day whom ye will serve.", "a": "Joshua 24:15"},
+    {"category": "Basic Doctrine & Scripture", "q": "What is the name of God’s plan for His children?", "a": "The Plan of Salvation"},
+    {"category": "Basic Doctrine & Scripture", "q": "What gift is received after baptism?", "a": "The Gift of the Holy Ghost"},
+    {"category": "Basic Doctrine & Scripture", "q": "What is the first ordinance of the gospel?", "a": "Baptism"},
+    {"category": "Basic Doctrine & Scripture", "q": "What is the second ordinance of the gospel?", "a": "Confirmation"},
+    {"category": "Basic Doctrine & Scripture", "q": "What is the sacred agreement made at baptism called?", "a": "A covenant"},
+    {"category": "Basic Doctrine & Scripture", "q": "What book contains modern revelations?", "a": "Doctrine and Covenants"},
+    {"category": "Basic Doctrine & Scripture", "q": "What book contains writings of ancient American prophets?", "a": "The Book of Mormon"},
+    {"category": "Basic Doctrine & Scripture", "q": "What is the first book of the Bible?", "a": "Genesis"},
+    {"category": "Basic Doctrine & Scripture", "q": "What is the last book of the Bible?", "a": "Revelation"},
+    {"category": "Basic Doctrine & Scripture", "q": "What is the name of the LDS hymnbook?", "a": "Hymns"},
 
     # -------------------------------
-    # Prophets & Writings
+    # Plan of Salvation (Additions)
     # -------------------------------
-    {"category": "Prophets & Writings", "q": "Who shall stand in God’s holy place?", "a": "Psalm 24:3–4"},
-    {"category": "Prophets & Writings", "q": "Trust in the Lord with all your heart.", "a": "Proverbs 3:5–6"},
-    {"category": "Prophets & Writings", "q": "Though sins be as scarlet, they can be white as snow.", "a": "Isaiah 1:18"},
-    {"category": "Prophets & Writings", "q": "Woe unto them that call evil good and good evil.", "a": "Isaiah 5:20"},
-    {"category": "Prophets & Writings", "q": "A marvelous work and a wonder.", "a": "Isaiah 29:13–14"},
-    {"category": "Prophets & Writings", "q": "Christ bore our griefs and carried our sorrows.", "a": "Isaiah 53:3–5"},
-    {"category": "Prophets & Writings", "q": "Blessings of a proper fast.", "a": "Isaiah 58:6–7"},
-    {"category": "Prophets & Writings", "q": "Call the Sabbath a delight.", "a": "Isaiah 58:13–14"},
-    {"category": "Prophets & Writings", "q": "Before I formed thee, I ordained thee a prophet.", "a": "Jeremiah 1:4–5"},
-    {"category": "Prophets & Writings", "q": "The prophet is a watchman unto the house of Israel.", "a": "Ezekiel 3:16–17"},
-    {"category": "Prophets & Writings", "q": "The Bible and Book of Mormon shall become one.", "a": "Ezekiel 37:15–17"},
-    {"category": "Prophets & Writings", "q": "God will set up a kingdom that will never be destroyed.", "a": "Daniel 2:44–45"},
-    {"category": "Prophets & Writings", "q": "The Lord reveals His secrets to His prophets.", "a": "Amos 3:7"},
-    {"category": "Prophets & Writings", "q": "Blessings of paying tithing.", "a": "Malachi 3:8–10"},
-    {"category": "Prophets & Writings", "q": "Elijah will turn the hearts of the children to their fathers.", "a": "Malachi 4:5–6"},
+    {"category": "Plan of Salvation", "q": "Where do spirits go after death?", "a": "Spirit world"},
+    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the sun?", "a": "Celestial kingdom"},
+    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the moon?", "a": "Terrestrial kingdom"},
+    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the stars?", "a": "Telestial kingdom"},
+    {"category": "Plan of Salvation", "q": "What event reunites the body and spirit forever?", "a": "Resurrection"},
+    {"category": "Plan of Salvation", "q": "What event allowed mortality and agency?", "a": "The Fall"},
+    {"category": "Plan of Salvation", "q": "What happens before entering a kingdom of glory?", "a": "Judgment"},
+    {"category": "Plan of Salvation", "q": "Where does God live?", "a": "The Celestial Kingdom"},
+    {"category": "Plan of Salvation", "q": "Where did Adam and Eve live before the Fall?", "a": "The Garden of Eden"},
+    {"category": "Plan of Salvation", "q": "Where do righteous spirits go after death?", "a": "Spirit Paradise"},
 
     # -------------------------------
-    # Basic Doctrine & Scripture
+    # Priesthood & Organization (Additions)
     # -------------------------------
-    {"category": "Basic Doctrine & Scripture", "q": "What are the four standard works of scripture?", "a": "The Bible, Book of Mormon, Doctrine and Covenants, and Pearl of Great Price"},
-    {"category": "Basic Doctrine & Scripture", "q": "Who was the first prophet of this dispensation?", "a": "Joseph Smith"},
-    {"category": "Basic Doctrine & Scripture", "q": "What year was the Church organized?", "a": "April 6, 1830"},
-    {"category": "Basic Doctrine & Scripture", "q": "Where was the Church organized?", "a": "Fayette, New York"},
-    {"category": "Basic Doctrine & Scripture", "q": "What are the first principles and ordinances of the gospel?", "a": "Faith, Repentance, Baptism, Gift of the Holy Ghost"},
-
-    # -------------------------------
-    # Book of Mormon
-    # -------------------------------
-    {"category": "Book of Mormon", "q": "Who was the last Nephite prophet to write in the Book of Mormon?", "a": "Moroni"},
-    {"category": "Book of Mormon", "q": "Who were the three witnesses to the Book of Mormon?", "a": "Oliver Cowdery, David Whitmer, Martin Harris"},
-    {"category": "Book of Mormon", "q": "When did the Nephites arrive in the promised land?", "a": "Around 600 BC"},
-    {"category": "Book of Mormon", "q": "Who were Nephi’s brothers?", "a": "Laman, Lemuel, Sam, Jacob, Joseph"},
-    {"category": "Book of Mormon", "q": "Which king was converted by Ammon?", "a": "King Lamoni"},
-    {"category": "Book of Mormon", "q": "Which military leader raised the Title of Liberty?", "a": "Captain Moroni"},
-
-    # -------------------------------
-    # Church History
-    # -------------------------------
-    {"category": "Church History", "q": "Where was Joseph Smith born?", "a": "Sharon, Vermont"},
-    {"category": "Church History", "q": "What was the First Vision?", "a": "Joseph Smith saw God the Father and Jesus Christ in 1820"},
-    {"category": "Church History", "q": "Who restored priesthood keys to Joseph Smith?", "a": "Moses, Elias, Elijah, John the Baptist, Peter, James, John"},
-    {"category": "Church History", "q": "What is the current youth program called?", "a": "For the Strength of Youth (FSY) / Children and Youth"},
-    {"category": "Church History", "q": "How many temples exist today?", "a": "Over 350 (operating, announced, or under construction)"},
-
-    # -------------------------------
-    # Articles of Faith (General)
-    # -------------------------------
-    {"category": "Articles of Faith (General)", "q": "How many Articles of Faith are there?", "a": "13"},
-    {"category": "Articles of Faith (General)", "q": "What does the first Article of Faith teach?", "a": "Belief in God the Father, His Son, and the Holy Ghost"},
-    {"category": "Articles of Faith (General)", "q": "What does the 13th Article of Faith emphasize?", "a": "Being honest, true, chaste, benevolent, virtuous, and doing good"},
-
-    # -------------------------------
-    # Priesthood & Organization
-    # -------------------------------
-    {"category": "Priesthood & Organization", "q": "What are the two priesthoods?", "a": "Aaronic and Melchizedek"},
-    {"category": "Priesthood & Organization", "q": "At what age can young men receive the Aaronic Priesthood?", "a": "Age 12"},
-    {"category": "Priesthood & Organization", "q": "What are the offices in the Aaronic Priesthood?", "a": "Deacon, Teacher, Priest"},
+    {"category": "Priesthood & Organization", "q": "Which priesthood administers the sacrament?", "a": "Aaronic Priesthood"},
+    {"category": "Priesthood & Organization", "q": "Which priesthood office can baptize?", "a": "Priest"},
+    {"category": "Priesthood & Organization", "q": "Which priesthood office can confer the Holy Ghost?", "a": "Elder"},
+    {"category": "Priesthood & Organization", "q": "Which priesthood holds the keys of all spiritual blessings?", "a": "Melchizedek Priesthood"},
     {"category": "Priesthood & Organization", "q": "Who holds all priesthood keys today?", "a": "The President of the Church"},
+    {"category": "Priesthood & Organization", "q": "What is the name of the women’s organization?", "a": "Relief Society"},
+    {"category": "Priesthood & Organization", "q": "What is the name of the children’s organization?", "a": "Primary"},
+    {"category": "Priesthood & Organization", "q": "What is the name of the youth organization for young men?", "a": "Aaronic Priesthood Quorums"},
+    {"category": "Priesthood & Organization", "q": "What is the name of the youth organization for young women?", "a": "Young Women"},
+    {"category": "Priesthood & Organization", "q": "What is the name of the Church’s missionary organization?", "a": "The Missionary Program"},
 
     # -------------------------------
-    # Plan of Salvation
+    # Book of Mormon (Additions)
     # -------------------------------
-    {"category": "Plan of Salvation", "q": "What are the three kingdoms of glory?", "a": "Celestial, Terrestrial, Telestial"},
-    {"category": "Plan of Salvation", "q": "What is the purpose of mortal life?", "a": "To gain a body, be tested, and prepare to meet God"},
-    {"category": "Plan of Salvation", "q": "What happens in the spirit world after death?", "a": "Spirits go to paradise or prison to await resurrection"},
+    {"category": "Book of Mormon", "q": "Who was the first prophet in the Book of Mormon?", "a": "Lehi"},
+    {"category": "Book of Mormon", "q": "Who were Nephi’s rebellious brothers?", "a": "Laman and Lemuel"},
+    {"category": "Book of Mormon", "q": "Who built the ship that carried Lehi’s family to the promised land?", "a": "Nephi"},
+    {"category": "Book of Mormon", "q": "Who visited the Nephites after His resurrection?", "a": "Jesus Christ"},
+    {"category": "Book of Mormon", "q": "Who hid the plates in the Hill Cumorah?", "a": "Moroni"},
+    {"category": "Book of Mormon", "q": "Who abridged the Nephite records?", "a": "Mormon"},
+    {"category": "Book of Mormon", "q": "Who was converted by Ammon?", "a": "King Lamoni"},
+    {"category": "Book of Mormon", "q": "Who raised the Title of Liberty?", "a": "Captain Moroni"},
+    {"category": "Book of Mormon", "q": "When did the Nephites arrive in the promised land?", "a": "Around 600 BC"},
+    {"category": "Book of Mormon", "q": "Who were the three witnesses to the Book of Mormon?", "a": "Oliver Cowdery, David Whitmer, Martin Harris"},
+
+    # -------------------------------
+    # Church History (Additions)
+    # -------------------------------
+    {"category": "Church History", "q": "Where did the First Vision occur?", "a": "Sacred Grove"},
+    {"category": "Church History", "q": "What year did Joseph Smith receive the First Vision?", "a": "1820"},
+    {"category": "Church History", "q": "Who restored the Aaronic Priesthood?", "a": "John the Baptist"},
+    {"category": "Church History", "q": "Who restored the Melchizedek Priesthood?", "a": "Peter, James, and John"},
+    {"category": "Church History", "q": "What temple was dedicated in 1836?", "a": "Kirtland Temple"},
+    {"category": "Church History", "q": "What city became Church headquarters after Kirtland?", "a": "Nauvoo"},
+    {"category": "Church History", "q": "Who led the Saints west after Joseph Smith’s death?", "a": "Brigham Young"},
+    {"category": "Church History", "q": "Where was Joseph Smith born?", "a": "Sharon, Vermont"},
+    {"category": "Church History", "q": "What year was the Church organized?", "a": "1830"}, 
+    {"category": "Church History", "q": "Where was the Church organized?", "a": "Fayette, New York"},
+
 ]
