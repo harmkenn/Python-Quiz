@@ -64,34 +64,44 @@ if "timer_running" not in st.session_state:
     st.session_state.timer_running = False
 
 # ---------------------------------------------------------
-# DYNAMIC JEOPARDY BOARD (from question_bank.py)
+# DYNAMIC JEOPARDY BOARD (5 random categories × 5 questions each)
 # ---------------------------------------------------------
-if "game_questions" not in st.session_state:
-    st.session_state.game_questions = random.sample(question_bank, 25)
+import random
+from collections import defaultdict
 
-selected_questions = st.session_state.game_questions
+# Build a dictionary: category → list of questions
+category_map = defaultdict(list)
+for q in question_bank:
+    category_map[q["category"]].append(q)
 
-def group_by_category(questions):
-    grouped = defaultdict(list)
-    for q in questions:
-        grouped[q["category"]].append(q)
-    return grouped
+# Only run once per game
+if "selected_categories" not in st.session_state:
+    # 1. Pick 5 random categories
+    all_categories = list(category_map.keys())
+    st.session_state.selected_categories = random.sample(all_categories, 5)
 
-grouped = group_by_category(selected_questions)
-
-# Ensure exactly 5 categories
-final_categories = dict(list(grouped.items())[:5])
-
-def format_for_board(categories):
+    # 2. For each category, pick 5 random questions
     board = {}
-    for cat, qs in categories.items():
+    for cat in st.session_state.selected_categories:
+        questions = category_map[cat]
+
+        # Ensure at least 5 questions exist
+        if len(questions) < 5:
+            # If a category is too small, randomly repeat questions
+            chosen = random.choices(questions, k=5)
+        else:
+            chosen = random.sample(questions, 5)
+
+        # Assign Jeopardy point values
         board[cat] = {}
-        for i, q in enumerate(qs[:5]):
+        for i, q in enumerate(chosen):
             points = str((i + 1) * 100)
             board[cat][points] = {"q": q["q"], "a": q["a"]}
-    return board
 
-categories = format_for_board(final_categories)
+    st.session_state.jeopardy_board = board
+
+# Use the generated board
+categories = st.session_state.jeopardy_board
 
 # ---------------------------------------------------------
 # TIMER HELPERS
