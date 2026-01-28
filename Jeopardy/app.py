@@ -3,11 +3,15 @@ import time
 import qrcode
 import io
 import socket
+import random
+from collections import defaultdict
 
 from state import BUZZ_STATE, TEAM_NAMES
+from question_bank import question_bank
 
 st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-#v2.9
+# v3.0 — Dynamic Question Bank Edition
+
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
 # ---------------------------------------------------------
@@ -36,127 +40,6 @@ TEAM_COLORS = [
 ]
 
 # ---------------------------------------------------------
-# JEOPARDY QUESTIONS
-# ---------------------------------------------------------
-categories = {
-  "Pearl of Great Price": {
-    "100": {
-      "q": "This verse teaches that God’s work and glory is to bring to pass the immortality and eternal life of man.",
-      "a": "Moses 1:39"
-    },
-    "200": {
-      "q": "This scripture describes Zion as a people of 'one heart and one mind.'",
-      "a": "Moses 7:18"
-    },
-    "300": {
-      "q": "These verses contain the Lord’s promise that Abraham’s seed would 'bear this ministry and Priesthood unto all nations.'",
-      "a": "Abraham 2:9–11"
-    },
-    "400": {
-      "q": "These verses teach that spirits 'were organized before the world was.'",
-      "a": "Abraham 3:22–23"
-    },
-    "500": {
-      "q": "This Article of Faith declares belief in God the Eternal Father, His Son Jesus Christ, and the Holy Ghost.",
-      "a": "Article of Faith 1"
-    }
-  },
-
-  "Old Testament": {
-    "100": {
-      "q": "This scripture teaches that God created man in His own image.",
-      "a": "Genesis 1:26–27"
-    },
-    "200": {
-      "q": "This verse teaches that a man shall 'cleave unto his wife: and they shall be one.'",
-      "a": "Genesis 2:24"
-    },
-    "300": {
-      "q": "Joseph asks, 'How then can I do this great wickedness, and sin against God?' in this verse.",
-      "a": "Genesis 39:9"
-    },
-    "400": {
-      "q": "This passage contains the Ten Commandments.",
-      "a": "Exodus 20:3–17"
-    },
-    "500": {
-      "q": "This verse includes the declaration, 'Choose you this day whom ye will serve.'",
-      "a": "Joshua 24:15"
-    }
-  },
-
-  "Wisdom & Prophets": {
-    "100": {
-      "q": "These verses teach that those with clean hands and a pure heart may stand in the Lord’s holy place.",
-      "a": "Psalm 24:3–4"
-    },
-    "200": {
-      "q": "This scripture teaches us to trust in the Lord with all our heart and promises He will direct our paths.",
-      "a": "Proverbs 3:5–6"
-    },
-    "300": {
-      "q": "This verse teaches that though sins be as scarlet, they can become white as snow.",
-      "a": "Isaiah 1:18"
-    },
-    "400": {
-      "q": "This Article of Faith teaches that men will be punished for their own sins, not for Adam’s transgression.",
-      "a": "Article of Faith 2"
-    },
-    "500": {
-      "q": "This Article of Faith teaches that all mankind may be saved through the Atonement of Christ by obedience to the laws and ordinances of the gospel.",
-      "a": "Article of Faith 3"
-    }
-  },
-
-  "Gospel Principles": {
-    "100": {
-      "q": "This Article of Faith lists the first principles and ordinances of the gospel: faith, repentance, baptism, and the gift of the Holy Ghost.",
-      "a": "Article of Faith 4"
-    },
-    "200": {
-      "q": "This Article of Faith teaches that a man must be called of God by prophecy and by the laying on of hands to preach the gospel.",
-      "a": "Article of Faith 5"
-    },
-    "300": {
-      "q": "This Article of Faith affirms belief in the same organization that existed in the Primitive Church, including apostles and prophets.",
-      "a": "Article of Faith 6"
-    },
-    "400": {
-      "q": "This Article of Faith declares belief in spiritual gifts such as tongues, prophecy, revelation, visions, and healing.",
-      "a": "Article of Faith 7"
-    },
-    "500": {
-      "q": "This Article of Faith states belief in the Bible as far as it is translated correctly and also in the Book of Mormon as the word of God.",
-      "a": "Article of Faith 8"
-    }
-  },
-
-  "Restoration & Latter-day Beliefs": {
-    "100": {
-      "q": "This Article of Faith teaches that God has revealed, does now reveal, and will yet reveal many great and important things.",
-      "a": "Article of Faith 9"
-    },
-    "200": {
-      "q": "This Article of Faith teaches about the literal gathering of Israel, the restoration of the Ten Tribes, and the building of Zion on the American continent.",
-      "a": "Article of Faith 10"
-    },
-    "300": {
-      "q": "This Article of Faith claims the privilege of worshiping God according to the dictates of one’s own conscience and allowing all men the same privilege.",
-      "a": "Article of Faith 11"
-    },
-    "400": {
-      "q": "This Article of Faith teaches obedience, honor, and sustaining the law, including being subject to rulers and magistrates.",
-      "a": "Article of Faith 12"
-    },
-    "500": {
-      "q": "This Article of Faith teaches that we seek after anything virtuous, lovely, of good report, or praiseworthy.",
-      "a": "Article of Faith 13"
-    }
-  }
-}
-
-
-# ---------------------------------------------------------
 # SESSION STATE INIT
 # ---------------------------------------------------------
 if "team_scores" not in st.session_state:
@@ -179,6 +62,36 @@ if "timer_start" not in st.session_state:
 
 if "timer_running" not in st.session_state:
     st.session_state.timer_running = False
+
+# ---------------------------------------------------------
+# DYNAMIC JEOPARDY BOARD (from question_bank.py)
+# ---------------------------------------------------------
+if "game_questions" not in st.session_state:
+    st.session_state.game_questions = random.sample(question_bank, 25)
+
+selected_questions = st.session_state.game_questions
+
+def group_by_category(questions):
+    grouped = defaultdict(list)
+    for q in questions:
+        grouped[q["category"]].append(q)
+    return grouped
+
+grouped = group_by_category(selected_questions)
+
+# Ensure exactly 5 categories
+final_categories = dict(list(grouped.items())[:5])
+
+def format_for_board(categories):
+    board = {}
+    for cat, qs in categories.items():
+        board[cat] = {}
+        for i, q in enumerate(qs[:5]):
+            points = str((i + 1) * 100)
+            board[cat][points] = {"q": q["q"], "a": q["a"]}
+    return board
+
+categories = format_for_board(final_categories)
 
 # ---------------------------------------------------------
 # TIMER HELPERS
@@ -250,7 +163,10 @@ def render_team_buttons():
                 st.rerun()
 
             st.markdown(f"<div style='{style}'>{name}</div>", unsafe_allow_html=True)
-            st.markdown(f"<div style='text-align: center; font-size: 1.2rem; font-weight: bold; color: {color};'>${score}</div>", unsafe_allow_html=True)
+            st.markdown(
+                f"<div style='text-align: center; font-size: 1.2rem; font-weight: bold; color: {color};'>${score}</div>",
+                unsafe_allow_html=True
+            )
 
 # ---------------------------------------------------------
 # SIDEBAR: QR CODE + BUZZER LINK
@@ -274,7 +190,6 @@ st.title("📘 Scripture Jeopardy — Teacher Control")
 
 render_team_buttons()
 
-# NEW: Refresh button
 if st.button("🔄 Refresh Teams"):
     st.rerun()
 
@@ -309,7 +224,6 @@ if st.session_state.current_question:
     st.markdown(f"## {cat} — ${points}")
     st.markdown(f"### {qdata['q']}")
 
-    # Smooth timer container
     timer_placeholder = st.empty()
 
     def render_timer():
@@ -334,9 +248,8 @@ if st.session_state.current_question:
             unsafe_allow_html=True,
         )
 
-    # Live countdown loop
     if st.session_state.timer_running:
-        for _ in range(200):  # enough iterations for 20 seconds
+        for _ in range(200):
             render_timer()
             time.sleep(0.2)
             if get_time_left() == 0:
@@ -345,14 +258,10 @@ if st.session_state.current_question:
     else:
         render_timer()
 
-    # ---------------------------------------------------------
-    # AUTO-HIGHLIGHT TEAM THAT BUZZED FIRST
-    # ---------------------------------------------------------
     first_buzz = BUZZ_STATE.get()
     if first_buzz:
         buzz_name = first_buzz["team"]
 
-        # Find which team slot matches this name
         for i in range(4):
             if TEAM_NAMES[i] == buzz_name:
                 st.session_state.current_team = i
