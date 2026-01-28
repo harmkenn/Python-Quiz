@@ -82,4 +82,54 @@ question_bank = [
     {"category": "Prophets & Writings", "q": "The Lord reveals His secrets to His prophets.", "a": "Amos 3:7"},
     {"category": "Prophets & Writings", "q": "Blessings of paying tithing.", "a": "Malachi 3:8–10"},
     {"category": "Prophets & Writings", "q": "Elijah will turn the hearts of the children to their fathers.", "a": "Malachi 4:5–6"},
+
+    # -------------------------------
+    # Basic Doctrine & Scripture
+    # -------------------------------
+    {"category": "Basic Doctrine & Scripture", "q": "What are the four standard works of scripture?", "a": "The Bible, Book of Mormon, Doctrine and Covenants, and Pearl of Great Price"},
+    {"category": "Basic Doctrine & Scripture", "q": "Who was the first prophet of this dispensation?", "a": "Joseph Smith"},
+    {"category": "Basic Doctrine & Scripture", "q": "What year was the Church organized?", "a": "April 6, 1830"},
+    {"category": "Basic Doctrine & Scripture", "q": "Where was the Church organized?", "a": "Fayette, New York"},
+    {"category": "Basic Doctrine & Scripture", "q": "What are the first principles and ordinances of the gospel?", "a": "Faith, Repentance, Baptism, Gift of the Holy Ghost"},
+
+    # -------------------------------
+    # Book of Mormon
+    # -------------------------------
+    {"category": "Book of Mormon", "q": "Who was the last Nephite prophet to write in the Book of Mormon?", "a": "Moroni"},
+    {"category": "Book of Mormon", "q": "Who were the three witnesses to the Book of Mormon?", "a": "Oliver Cowdery, David Whitmer, Martin Harris"},
+    {"category": "Book of Mormon", "q": "When did the Nephites arrive in the promised land?", "a": "Around 600 BC"},
+    {"category": "Book of Mormon", "q": "Who were Nephi’s brothers?", "a": "Laman, Lemuel, Sam, Jacob, Joseph"},
+    {"category": "Book of Mormon", "q": "Which king was converted by Ammon?", "a": "King Lamoni"},
+    {"category": "Book of Mormon", "q": "Which military leader raised the Title of Liberty?", "a": "Captain Moroni"},
+
+    # -------------------------------
+    # Church History
+    # -------------------------------
+    {"category": "Church History", "q": "Where was Joseph Smith born?", "a": "Sharon, Vermont"},
+    {"category": "Church History", "q": "What was the First Vision?", "a": "Joseph Smith saw God the Father and Jesus Christ in 1820"},
+    {"category": "Church History", "q": "Who restored priesthood keys to Joseph Smith?", "a": "Moses, Elias, Elijah, John the Baptist, Peter, James, John"},
+    {"category": "Church History", "q": "What is the current youth program called?", "a": "For the Strength of Youth (FSY) / Children and Youth"},
+    {"category": "Church History", "q": "How many temples exist today?", "a": "Over 350 (operating, announced, or under construction)"},
+
+    # -------------------------------
+    # Articles of Faith (General)
+    # -------------------------------
+    {"category": "Articles of Faith (General)", "q": "How many Articles of Faith are there?", "a": "13"},
+    {"category": "Articles of Faith (General)", "q": "What does the first Article of Faith teach?", "a": "Belief in God the Father, His Son, and the Holy Ghost"},
+    {"category": "Articles of Faith (General)", "q": "What does the 13th Article of Faith emphasize?", "a": "Being honest, true, chaste, benevolent, virtuous, and doing good"},
+
+    # -------------------------------
+    # Priesthood & Organization
+    # -------------------------------
+    {"category": "Priesthood & Organization", "q": "What are the two priesthoods?", "a": "Aaronic and Melchizedek"},
+    {"category": "Priesthood & Organization", "q": "At what age can young men receive the Aaronic Priesthood?", "a": "Age 12"},
+    {"category": "Priesthood & Organization", "q": "What are the offices in the Aaronic Priesthood?", "a": "Deacon, Teacher, Priest"},
+    {"category": "Priesthood & Organization", "q": "Who holds all priesthood keys today?", "a": "The President of the Church"},
+
+    # -------------------------------
+    # Plan of Salvation
+    # -------------------------------
+    {"category": "Plan of Salvation", "q": "What are the three kingdoms of glory?", "a": "Celestial, Terrestrial, Telestial"},
+    {"category": "Plan of Salvation", "q": "What is the purpose of mortal life?", "a": "To gain a body, be tested, and prepare to meet God"},
+    {"category": "Plan of Salvation", "q": "What happens in the spirit world after death?", "a": "Spirits go to paradise or prison to await resurrection"},
 ]
