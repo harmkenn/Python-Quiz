@@ -183,7 +183,7 @@ if "timer_running" not in st.session_state:
 # ---------------------------------------------------------
 # TIMER HELPERS
 # ---------------------------------------------------------
-TIMER_DURATION = 10
+TIMER_DURATION = 15
 
 def start_timer():
     st.session_state.timer_start = time.time()
