@@ -129,7 +129,37 @@ question_bank = [
     {"category": "Book of Mormon", "q": "Who was converted by Ammon?", "a": "King Lamoni"},
     {"category": "Book of Mormon", "q": "Who raised the Title of Liberty?", "a": "Captain Moroni"},
     {"category": "Book of Mormon", "q": "When did the Nephites arrive in the promised land?", "a": "Around 600 BC"},
-    {"category": "Book of Mormon", "q": "Who were the three witnesses to the Book of Mormon?", "a": "Oliver Cowdery, David Whitmer, Martin Harris"},
+    {"category": "Book of Mormon", "q": "Who was the first king of the Lamanites mentioned in the Book of Mormon?", "a": "Laman"}, 
+    {"category": "Book of Mormon", "q": "Who was the prophet who warned King Noah to repent?", "a": "Abinadi"}, 
+    {"category": "Book of Mormon", "q": "Who translated the Jaredite record?", "a": "Moroni"}, 
+    {"category": "Book of Mormon", "q": "Who was Alma the Younger’s missionary companion?", "a": "Amulek"}, 
+    {"category": "Book of Mormon", "q": "Who was the chief judge who resigned to preach the gospel?", "a": "Alma the Younger"}, 
+    {"category": "Book of Mormon", "q": "Who was the last Jaredite king?", "a": "Coriantumr"}, 
+    {"category": "Book of Mormon", "q": "Who preached from the city wall because he was not allowed inside?", "a": "Samuel the Lamanite"}, 
+    {"category": "Book of Mormon", "q": "Who defeated Zerahemnah in battle?", "a": "Captain Moroni"}, 
+    {"category": "Book of Mormon", "q": "Who kept the records after Nephi?", "a": "Jacob"}, 
+    {"category": "Book of Mormon", "q": "Who saw the vision of the tree of life?", "a": "Lehi"}, 
+    {"category": "Book of Mormon", "q": "What was the name of the Nephite capital city?", "a": "Zarahemla"}, 
+    {"category": "Book of Mormon", "q": "What land did Lehi’s family first settle in after arriving?", "a": "The land of Nephi"}, 
+    {"category": "Book of Mormon", "q": "What city did the Lamanites destroy after rejecting the prophets?", "a": "Ammonihah"}, 
+    {"category": "Book of Mormon", "q": "What land did the Anti-Nephi-Lehies flee to for protection?", "a": "The land of Jershon"}, 
+    {"category": "Book of Mormon", "q": "What hill did Mormon hide the records in?", "a": "Hill Cumorah"}, 
+    {"category": "Book of Mormon", "q": "What event caused the destruction before Christ appeared to the Nephites?", "a": "The great storm and earthquakes at His death"}, 
+    {"category": "Book of Mormon", "q": "What did the Anti-Nephi-Lehies bury as a covenant of peace?", "a": "Their weapons"}, 
+    {"category": "Book of Mormon", "q": "What sign was given of Christ’s birth?", "a": "A day and a night and a day with no darkness"}, 
+    {"category": "Book of Mormon", "q": "What sign was given of Christ’s death?", "a": "Three days of darkness"}, 
+    {"category": "Book of Mormon", "q": "What item did Nephi break that forced him to make a new one?", "a": "His bow"}, 
+    {"category": "Book of Mormon", "q": "What group refused to take up arms because of their covenant?", "a": "The Anti-Nephi-Lehies"}, 
+    {"category": "Book of Mormon", "q": "What did King Benjamin say all people are?", "a": "Unprofitable servants"}, 
+    {"category": "Book of Mormon", "q": "What did Alma compare the word of God to?", "a": "A seed"}, 
+    {"category": "Book of Mormon", "q": "What did the brother of Jared see when the Lord touched the stones?", "a": "The finger of the Lord"}, 
+    {"category": "Book of Mormon", "q": "What did the Liahona work according to?", "a": "Faith and diligence"}, 
+    {"category": "Book of Mormon", "q": "What were the interpreters used to translate the plates called?", "a": "Urim and Thummim"}, 
+    {"category": "Book of Mormon", "q": "What were the small plates primarily used for?", "a": "Spiritual matters and prophecies"}, 
+    {"category": "Book of Mormon", "q": "What were the large plates primarily used for?", "a": "History and wars"}, 
+    {"category": "Book of Mormon", "q": "What record did Ether write?", "a": "The Jaredite record"}, 
+    {"category": "Book of Mormon", "q": "What object guided Lehi’s family in the wilderness?", "a": "The Liahona"},
+    
 
     # -------------------------------
     # Church History (Additions)
@@ -144,5 +174,50 @@ question_bank = [
     {"category": "Church History", "q": "Where was Joseph Smith born?", "a": "Sharon, Vermont"},
     {"category": "Church History", "q": "What year was the Church organized?", "a": "1830"}, 
     {"category": "Church History", "q": "Where was the Church organized?", "a": "Fayette, New York"},
+    {"category": "Church History", "q": "Who were the three witnesses to the Book of Mormon?", "a": "Oliver Cowdery, David Whitmer, Martin Harris"},
+
+    {"category": "Church History", "q": "In what year was Joseph Smith born?", "a": "1805"},
+    {"category": "Church History", "q": "Where was Joseph Smith born?", "a": "Sharon, Vermont"},
+    {"category": "Church History", "q": "In what year did Joseph Smith receive the First Vision?", "a": "1820"},
+    {"category": "Church History", "q": "What year was the Church organized?", "a": "1830"},
+    {"category": "Church History", "q": "Where was the Church organized?", "a": "Fayette, New York"},
+
+    {"category": "Church History", "q": "What year did Brigham Young lead the Saints to the Salt Lake Valley?", "a": "1847"},
+    {"category": "Church History", "q": "What U.S. territory did Brigham Young serve as governor of?", "a": "Utah Territory"},
+    {"category": "Church History", "q": "What city did Brigham Young help establish as Church headquarters?", "a": "Salt Lake City"},
+
+    {"category": "Church History", "q": "Which prophet was with Joseph and Hyrum in Carthage Jail?", "a": "John Taylor"},
+    {"category": "Church History", "q": "What hymn did John Taylor write?", "a": "A Poor Wayfaring Man of Grief"},
+
+    {"category": "Church History", "q": "Which prophet issued the Manifesto ending plural marriage?", "a": "Wilford Woodruff"},
+    {"category": "Church History", "q": "Which prophet dedicated the Salt Lake Temple?", "a": "Wilford Woodruff"},
+
+    {"category": "Church History", "q": "Which prophet taught 'As man now is, God once was'?", "a": "Lorenzo Snow"},
+    {"category": "Church History", "q": "Which prophet emphasized tithing to relieve Church debt?", "a": "Lorenzo Snow"},
+
+    {"category": "Church History", "q": "Which prophet received the vision of the spirit world (D&C 138)?", "a": "Joseph F. Smith"},
+    {"category": "Church History", "q": "Which prophet was the son of Hyrum Smith?", "a": "Joseph F. Smith"},
+
+    {"category": "Church History", "q": "Which prophet emphasized the Word of Wisdom and self-reliance?", "a": "Heber J. Grant"},
+    {"category": "Church History", "q": "Which prophet served as a mission president in Japan?", "a": "Heber J. Grant"},
+
+    {"category": "Church History", "q": "Which prophet said 'Every member a missionary'?", "a": "David O. McKay"},
+    {"category": "Church History", "q": "Which prophet dedicated the Swiss Temple, the first in Europe?", "a": "David O. McKay"},
+
+    {"category": "Church History", "q": "Which prophet received the revelation extending priesthood to all worthy males?", "a": "Spencer W. Kimball"},
+    {"category": "Church History", "q": "Which prophet wrote 'The Miracle of Forgiveness'?", "a": "Spencer W. Kimball"},
+
+    {"category": "Church History", "q": "Which prophet served as U.S. Secretary of Agriculture?", "a": "Ezra Taft Benson"},
+    {"category": "Church History", "q": "Which prophet emphasized reading the Book of Mormon daily?", "a": "Ezra Taft Benson"},
+
+    {"category": "Church History", "q": "Which prophet announced the Perpetual Education Fund?", "a": "Gordon B. Hinckley"},
+    {"category": "Church History", "q": "Which prophet dedicated more temples than any other?", "a": "Gordon B. Hinckley"},
+
+    {"category": "Church History", "q": "Which prophet was known for visiting widows and giving personal service?", "a": "Thomas S. Monson"},
+    {"category": "Church History", "q": "Which prophet became president in 2008?", "a": "Thomas S. Monson"},
+
+    {"category": "Church History", "q": "What was President Russell M. Nelson’s profession before becoming an apostle?", "a": "Heart surgeon"},
+    {"category": "Church History", "q": "How many children does President Russell M. Nelson have?", "a": "10"},
+
 
 ]
