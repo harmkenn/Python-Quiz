@@ -131,7 +131,7 @@ question_bank = [
     {"category": "Book of Mormon", "q": "When did the Nephites arrive in the promised land?", "a": "Around 600 BC"},
     {"category": "Book of Mormon", "q": "Who was the first king of the Lamanites mentioned in the Book of Mormon?", "a": "Laman"}, 
     {"category": "Book of Mormon", "q": "Who was the prophet who warned King Noah to repent?", "a": "Abinadi"}, 
-    {"category": "Book of Mormon", "q": "Who translated the Jaredite record?", "a": "Moroni"}, 
+    {"category": "Book of Mormon", "q": "Who translated the Jaredite record?", "a": "King Mosiah; Abridged byMoroni"}, 
     {"category": "Book of Mormon", "q": "Who was Alma the Younger’s missionary companion?", "a": "Amulek"}, 
     {"category": "Book of Mormon", "q": "Who was the chief judge who resigned to preach the gospel?", "a": "Alma the Younger"}, 
     {"category": "Book of Mormon", "q": "Who was the last Jaredite king?", "a": "Coriantumr"}, 
