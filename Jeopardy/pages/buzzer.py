@@ -25,12 +25,21 @@ if st.button("Save Team Name"):
     else:
         # If this phone has not been assigned a team slot yet
         if st.session_state.assigned_team_index is None:
-            # Find first available slot
-            for i in range(4):
-                if TEAM_NAMES[i].startswith("Team "):  # default placeholder
-                    TEAM_NAMES[i] = team_name.strip()
+            # 1. Check if this team name already exists (reconnect)
+            found_existing = False
+            for i, name in TEAM_NAMES.items():
+                if name == team_name.strip():
                     st.session_state.assigned_team_index = i
+                    found_existing = True
                     break
+            
+            # 2. If not found, find first available slot
+            if not found_existing:
+                for i in range(4):
+                    if TEAM_NAMES[i].startswith("Team "):  # default placeholder
+                        TEAM_NAMES[i] = team_name.strip()
+                        st.session_state.assigned_team_index = i
+                        break
         else:
             # Update existing slot
             TEAM_NAMES[st.session_state.assigned_team_index] = team_name.strip()
