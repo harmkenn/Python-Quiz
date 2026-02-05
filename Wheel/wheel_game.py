@@ -50,33 +50,23 @@ def start_new_round():
 def guess_letter(letter):
     st.session_state.w_guessed_letters.add(letter)
     
-    # Calculate score
     phrase = st.session_state.w_puzzle["text"].upper()
     count = phrase.count(letter)
     
     if count > 0:
-        # Award points: 100 per occurrence
         points = count * 100
         st.session_state.w_team_scores[st.session_state.w_current_team] += points
         
-        # Check if fully solved by letters
-        unique_chars_in_phrase = set(c for c in phrase if c.isalpha())
-        if unique_chars_in_phrase.issubset(st.session_state.w_guessed_letters):
+        unique_chars = set(c for c in phrase if c.isalpha())
+        if unique_chars.issubset(st.session_state.w_guessed_letters):
             st.session_state.w_revealed = True
             st.balloons()
-    else:
-        # Optional: Pass turn on wrong guess? 
-        # For now, we just don't award points.
-        pass
 
 def solve_puzzle(guess_text):
     target = st.session_state.w_puzzle["text"].upper()
-    # Normalize spaces/punctuation for lenient checking if desired, 
-    # but exact match is usually best for "Solving".
-    if guess_text.upper().strip() == target:
-        st.session_state.w_team_scores[st.session_state.w_current_team] += 500 # Bonus
+    if guess_text.upper().strip() == target.strip():
+        st.session_state.w_team_scores[st.session_state.w_current_team] += 500
         st.session_state.w_revealed = True
-        # Fill in all letters
         for char in target:
             if char.isalpha():
                 st.session_state.w_guessed_letters.add(char)
@@ -141,7 +131,10 @@ st.markdown("---")
 
 # --- The Puzzle Board ---
 category = st.session_state.w_puzzle["category"]
-text = st.session_state.w_puzzle["text"].upper()
+
+# FIX: Normalize puzzle text to remove newlines, tabs, double spaces
+raw_text = st.session_state.w_puzzle["text"].upper()
+text = " ".join(raw_text.split())
 
 st.subheader(f"Category: {category}")
 
@@ -157,10 +150,8 @@ board_html = """
 
 for char in text:
     if char == " ":
-        # Space between words
         board_html += '<div style="width: 40px;"></div>'
     elif not char.isalpha():
-        # Punctuation shows automatically
         board_html += f"""
             <div style="
                 width: 50px; height: 60px; 
@@ -169,10 +160,9 @@ for char in text:
             ">{char}</div>
         """
     else:
-        # Letter: Check if guessed or revealed
         is_visible = (char in st.session_state.w_guessed_letters) or st.session_state.w_revealed
         display_char = char if is_visible else ""
-        bg_color = "#3b82f6" if is_visible else "#334155" # Blue if seen, Slate if hidden
+        bg_color = "#3b82f6" if is_visible else "#334155"
         
         board_html += f"""
             <div style="
@@ -191,12 +181,10 @@ st.markdown(board_html, unsafe_allow_html=True)
 st.markdown("---")
 
 # --- Keyboard & Controls ---
-
 col_left, col_right = st.columns([2, 1])
 
 with col_left:
     st.write("### Guess a Letter")
-    # Alphabet rows
     rows = [
         "ABCDEFGHI",
         "JKLMNOPQR",

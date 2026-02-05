@@ -386,7 +386,9 @@ if not is_teacher:
     # No question yet
     if game_state["current_phrase"] is None:
         st.info("Waiting for teacher to start a question.")
-        st.stop()
+        time.sleep(1)
+        st.rerun()
+        # st.stop() is implicit after rerun, but good practice to leave if logic follows
 
     # Show scripture phrase
     st.subheader(f"📖 Question {game_state['question_number']}")
