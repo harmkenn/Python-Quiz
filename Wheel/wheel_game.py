@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-
+#v1.2
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -71,6 +71,10 @@ def guess_letter(letter):
         if unique_chars.issubset(st.session_state.w_guessed_letters):
             st.session_state.w_revealed = True
             st.balloons()
+    else:
+        # If the letter does not exist, cycle to the next team
+        st.warning(f"Letter '{letter}' is not in the puzzle. Next team's turn!")
+        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
 def solve_puzzle(guess_text):
     # Normalize both target and guess to handle whitespace consistently
