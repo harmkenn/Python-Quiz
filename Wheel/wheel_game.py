@@ -4,17 +4,15 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#v1.2
+#V1.3
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
 TEAM_NAMES = ["Team 1", "Team 2", "Team 3", "Team 4"]
 TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
-# The puzzle bank is now imported from puzzle_bank.py
-# PUZZLE_BANK is no longer defined here.
-
 VOWEL_COST = 200  # Cost to buy a vowel
+RANDOM_VALUES = [100, 200, 300, 400, 500]  # Possible random point values
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
@@ -34,6 +32,9 @@ if "w_guessed_letters" not in st.session_state:
 if "w_revealed" not in st.session_state:
     st.session_state.w_revealed = False
 
+if "w_random_value" not in st.session_state:
+    st.session_state.w_random_value = None
+
 # ---------------------------------------------------------
 # GAME LOGIC
 # ---------------------------------------------------------
@@ -42,8 +43,17 @@ def start_new_round():
     st.session_state.w_puzzle = puzzle_obj
     st.session_state.w_guessed_letters = set()
     st.session_state.w_revealed = False
+    st.session_state.w_random_value = None
+
+def spin_random_value():
+    st.session_state.w_random_value = random.choice(RANDOM_VALUES)
 
 def guess_letter(letter):
+    # Check if the random value has been spun
+    if st.session_state.w_random_value is None:
+        st.error("Spin for a random value first!")
+        return
+
     # Check if the letter is a vowel
     if letter in "AEIOU":
         # Ensure the team has enough money to buy the vowel
@@ -62,8 +72,8 @@ def guess_letter(letter):
     count = phrase.count(letter)
     
     if count > 0:
-        # Award points for consonants (vowels don't give points)
-        points = count * 100
+        # Award points based on the random value
+        points = count * st.session_state.w_random_value
         st.session_state.w_team_scores[st.session_state.w_current_team] += points
         
         # Check if all letters have been guessed
@@ -75,6 +85,9 @@ def guess_letter(letter):
         # If the letter does not exist, cycle to the next team
         st.warning(f"Letter '{letter}' is not in the puzzle. Next team's turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
+
+    # Reset random value after guessing
+    st.session_state.w_random_value = None
 
 def solve_puzzle(guess_text):
     # Normalize both target and guess to handle whitespace consistently
@@ -142,6 +155,17 @@ for i in range(4):
         if st.button(f"Select {TEAM_NAMES[i]}", key=f"sel_team_{i}"):
             st.session_state.w_current_team = i
             st.rerun()
+
+st.markdown("---")
+
+# --- Random Value Spinner ---
+st.write("### Spin for a Random Value")
+if st.button("🎰 Spin Random Value"):
+    spin_random_value()
+    st.rerun()
+
+if st.session_state.w_random_value is not None:
+    st.success(f"Random Value: {st.session_state.w_random_value}")
 
 st.markdown("---")
 
@@ -219,7 +243,7 @@ with col_right:
             solve_puzzle(solve_attempt)
             st.rerun()
 
-    st.info("Scoring: 100 points per letter found. 500 points bonus for solving.")
+    st.info("Scoring: Random value determines points per letter. 500 points bonus for solving.")
 
 # --- Confetti on Win ---
 if st.session_state.w_revealed:
