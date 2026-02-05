@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#1.5
+#v1.6
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -157,7 +157,12 @@ for i in range(4):
 st.markdown("---")
 
 # --- Random Value Spinner ---
-st.write("### Current Random Value")
+st.write("### Spin for a Random Value")
+if st.session_state.w_random_value is None:
+    if st.button("🎰 Spin Random Value"):
+        spin_random_value()
+        st.rerun()
+
 if st.session_state.w_random_value is not None:
     st.success(f"Current Random Value: {st.session_state.w_random_value}")
 else:
