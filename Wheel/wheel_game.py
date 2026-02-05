@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#v1.6
+#1.7
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -63,6 +63,9 @@ def guess_letter(letter):
         else:
             # Deduct the cost of the vowel
             st.session_state.w_team_scores[st.session_state.w_current_team] -= VOWEL_COST
+            st.session_state.w_guessed_letters.add(letter)  # Add the vowel to guessed letters
+            st.info(f"Vowel '{letter}' guessed. $200 deducted.")
+            return  # Exit the function without adding points
 
     # Add the guessed letter to the set of guessed letters
     st.session_state.w_guessed_letters.add(letter)
@@ -72,7 +75,7 @@ def guess_letter(letter):
     count = phrase.count(letter)
     
     if count > 0:
-        # Award points based on the random value
+        # Award points based on the random value for consonants
         points = count * st.session_state.w_random_value
         st.session_state.w_team_scores[st.session_state.w_current_team] += points
         
