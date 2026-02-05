@@ -1,6 +1,7 @@
 import streamlit as st
 import random
 import time
+from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
 
@@ -10,15 +11,8 @@ st.set_page_config(page_title="Scripture Wheel", layout="wide")
 TEAM_NAMES = ["Team 1", "Team 2", "Team 3", "Team 4"]
 TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
-PUZZLE_BANK = [
-    {"category": "Verse", "text": "IN THE BEGINNING GOD CREATED THE HEAVENS AND THE EARTH"},
-    {"category": "Verse", "text": "I CAN DO ALL THINGS THROUGH CHRIST WHO STRENGTHENS ME"},
-    {"category": "Person", "text": "JOHN THE BAPTIST"},
-    {"category": "Place", "text": "GARDEN OF EDEN"},
-    {"category": "Phrase", "text": "FRUIT OF THE SPIRIT"},
-    {"category": "Miracle", "text": "WALKING ON WATER"},
-    {"category": "Commandment", "text": "HONOR YOUR FATHER AND MOTHER"},
-]
+# The puzzle bank is now imported from puzzle_bank.py
+# PUZZLE_BANK is no longer defined here.
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
