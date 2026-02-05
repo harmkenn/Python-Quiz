@@ -1,18 +1,26 @@
 import streamlit as st
 import random
 import time
-from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-
+# v1.1
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
 TEAM_NAMES = ["Team 1", "Team 2", "Team 3", "Team 4"]
 TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
-# The puzzle bank is now imported from puzzle_bank.py
-# PUZZLE_BANK is no longer defined here.
+PUZZLE_BANK = [
+    {"category": "Verse", "text": "IN THE BEGINNING GOD CREATED THE HEAVENS AND THE EARTH"},
+    {"category": "Verse", "text": "I CAN DO ALL THINGS THROUGH CHRIST WHO STRENGTHENS ME"},
+    {"category": "Person", "text": "JOHN THE BAPTIST"},
+    {"category": "Place", "text": "GARDEN OF EDEN"},
+    {"category": "Phrase", "text": "FRUIT OF THE SPIRIT"},
+    {"category": "Miracle", "text": "WALKING ON WATER"},
+    {"category": "Commandment", "text": "HONOR YOUR FATHER AND MOTHER"},
+]
+
+VOWEL_COST = 200  # Cost to buy a vowel
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
@@ -42,15 +50,29 @@ def start_new_round():
     st.session_state.w_revealed = False
 
 def guess_letter(letter):
+    # Check if the letter is a vowel
+    if letter in "AEIOU":
+        # Ensure the team has enough money to buy the vowel
+        if st.session_state.w_team_scores[st.session_state.w_current_team] < VOWEL_COST:
+            st.error("Not enough money to buy a vowel!")
+            return
+        else:
+            # Deduct the cost of the vowel
+            st.session_state.w_team_scores[st.session_state.w_current_team] -= VOWEL_COST
+
+    # Add the guessed letter to the set of guessed letters
     st.session_state.w_guessed_letters.add(letter)
     
+    # Check occurrences of the letter in the puzzle
     phrase = st.session_state.w_puzzle["text"].upper()
     count = phrase.count(letter)
     
     if count > 0:
+        # Award points for consonants (vowels don't give points)
         points = count * 100
         st.session_state.w_team_scores[st.session_state.w_current_team] += points
         
+        # Check if all letters have been guessed
         unique_chars = set(c for c in phrase if c.isalpha())
         if unique_chars.issubset(st.session_state.w_guessed_letters):
             st.session_state.w_revealed = True
@@ -180,8 +202,13 @@ with col_left:
         c_cols = st.columns(len(row_chars))
         for idx, char in enumerate(row_chars):
             with c_cols[idx]:
+                # Disable button if letter is already guessed or puzzle is revealed
                 disabled = (char in st.session_state.w_guessed_letters) or st.session_state.w_revealed
-                if st.button(char, key=f"btn_{char}", disabled=disabled):
+                
+                # Add a label for vowels to indicate cost
+                label = f"{char} ($200)" if char in "AEIOU" else char
+                
+                if st.button(label, key=f"btn_{char}", disabled=disabled):
                     guess_letter(char)
                     st.rerun()
 
