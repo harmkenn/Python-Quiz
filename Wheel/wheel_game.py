@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#1.7
+#1.8
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -34,6 +34,9 @@ if "w_revealed" not in st.session_state:
 
 if "w_random_value" not in st.session_state:
     st.session_state.w_random_value = None
+
+if "w_day_totals" not in st.session_state:
+    st.session_state.w_day_totals = [0, 0, 0, 0]
 
 # ---------------------------------------------------------
 # GAME LOGIC
@@ -90,19 +93,26 @@ def guess_letter(letter):
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
         spin_random_value()  # Automatically spin for the next team
 
-def solve_puzzle(guess_text):
-    # Normalize both target and guess to handle whitespace consistently
-    target = " ".join(st.session_state.w_puzzle["text"].upper().split())
-    guess = " ".join(guess_text.upper().split())
-    if guess == target:
+def solve_puzzle(correct):
+    if correct:
+        # Award 500 points to the current team
         st.session_state.w_team_scores[st.session_state.w_current_team] += 500
+        
+        # Add the team's score to their day total (initialize if not present)
+        if "w_day_totals" not in st.session_state:
+            st.session_state.w_day_totals = [0, 0, 0, 0]
+        st.session_state.w_day_totals[st.session_state.w_current_team] += st.session_state.w_team_scores[st.session_state.w_current_team]
+        
+        # Reset all team scores to zero for the next puzzle
+        st.session_state.w_team_scores = [0, 0, 0, 0]
+        
+        # Mark the puzzle as solved and prepare for the next round
         st.session_state.w_revealed = True
-        for char in target:
-            if char.isalpha():
-                st.session_state.w_guessed_letters.add(char)
-        st.balloons()
+        st.success(f"Team {TEAM_NAMES[st.session_state.w_current_team]} solved the puzzle! Their score has been added to their day total.")
     else:
-        st.error("Incorrect solve attempt!")
+        # Cycle to the next team
+        st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} guessed incorrectly. Next team's turn!")
+        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
 # ---------------------------------------------------------
 # UI COMPONENTS
@@ -148,7 +158,8 @@ for i in range(4):
                 font-size: 1.2rem;
             ">
                 {TEAM_NAMES[i]}<br>
-                <span style="font-size: 1.5rem">${st.session_state.w_team_scores[i]}</span>
+                <span style="font-size: 1.5rem">${st.session_state.w_team_scores[i]}</span><br>
+                Day Total: ${st.session_state.w_day_totals[i]}
             </div>
             """, 
             unsafe_allow_html=True
@@ -240,12 +251,15 @@ with col_left:
 
 with col_right:
     st.write("### Solve the Puzzle")
-    with st.form("solve_form"):
-        solve_attempt = st.text_input("Enter the full phrase:")
-        submitted = st.form_submit_button("SOLVE!")
-        if submitted:
-            solve_puzzle(solve_attempt)
-            st.rerun()
+    st.info("Click 'Correct' if the team solved the puzzle correctly, or 'Incorrect' if they guessed wrong.")
+    
+    # Solve buttons
+    if st.button("✅ Correct"):
+        solve_puzzle(correct=True)
+        st.rerun()
+    if st.button("❌ Incorrect"):
+        solve_puzzle(correct=False)
+        st.rerun()
 
     st.info("Scoring: Random value determines points per letter. 500 points bonus for solving.")
 
