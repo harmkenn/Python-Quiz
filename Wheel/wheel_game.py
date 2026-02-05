@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#V1.3
+#V1.4
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -86,9 +86,6 @@ def guess_letter(letter):
         st.warning(f"Letter '{letter}' is not in the puzzle. Next team's turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
-    # Reset random value after guessing
-    st.session_state.w_random_value = None
-
 def solve_puzzle(guess_text):
     # Normalize both target and guess to handle whitespace consistently
     target = " ".join(st.session_state.w_puzzle["text"].upper().split())
@@ -165,7 +162,9 @@ if st.button("🎰 Spin Random Value"):
     st.rerun()
 
 if st.session_state.w_random_value is not None:
-    st.success(f"Random Value: {st.session_state.w_random_value}")
+    st.success(f"Current Random Value: {st.session_state.w_random_value}")
+else:
+    st.info("Spin to get a random value!")
 
 st.markdown("---")
 
