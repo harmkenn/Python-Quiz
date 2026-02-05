@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#1.8
+#v1.9
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -12,7 +12,7 @@ TEAM_NAMES = ["Team 1", "Team 2", "Team 3", "Team 4"]
 TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
 VOWEL_COST = 200  # Cost to buy a vowel
-RANDOM_VALUES = [100, 200, 300, 400, 500]  # Possible random point values
+RANDOM_VALUES = [100, 200, 300, 400, 500, "Lose Turn"]  # Possible random point values
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
@@ -177,7 +177,13 @@ if st.session_state.w_random_value is None:
         spin_random_value()
         st.rerun()
 
-if st.session_state.w_random_value is not None:
+if st.session_state.w_random_value == "Lose Turn":
+    st.warning("You landed on 'Lose Turn'! Click the button below to cycle to the next team.")
+    if st.button("➡️ Next Team"):
+        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
+        st.session_state.w_random_value = None  # Reset spinner value
+        st.rerun()
+elif st.session_state.w_random_value is not None:
     st.success(f"Current Random Value: {st.session_state.w_random_value}")
 else:
     st.info("Spin to get a random value!")
