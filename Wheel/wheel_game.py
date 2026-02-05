@@ -63,8 +63,10 @@ def guess_letter(letter):
             st.balloons()
 
 def solve_puzzle(guess_text):
-    target = st.session_state.w_puzzle["text"].upper()
-    if guess_text.upper().strip() == target.strip():
+    # Normalize both target and guess to handle whitespace consistently
+    target = " ".join(st.session_state.w_puzzle["text"].upper().split())
+    guess = " ".join(guess_text.upper().split())
+    if guess == target:
         st.session_state.w_team_scores[st.session_state.w_current_team] += 500
         st.session_state.w_revealed = True
         for char in target:
@@ -142,38 +144,27 @@ board_html = """
 <div style="
     display: flex; 
     flex-wrap: wrap; 
-    gap: 10px; 
+    gap: 20px; 
     justify-content: center; 
     margin: 20px 0;
 ">
 """
 
-for char in text:
-    if char == " ":
-        board_html += '<div style="width: 40px;"></div>'
-    elif not char.isalpha():
-        board_html += f"""
-            <div style="
-                width: 50px; height: 60px; 
-                display: flex; align-items: center; justify-content: center;
-                font-size: 2rem; font-weight: bold; color: white;
-            ">{char}</div>
-        """
-    else:
-        is_visible = (char in st.session_state.w_guessed_letters) or st.session_state.w_revealed
-        display_char = char if is_visible else ""
-        bg_color = "#3b82f6" if is_visible else "#334155"
-        
-        board_html += f"""
-            <div style="
-                width: 50px; height: 60px; 
-                background-color: {bg_color}; 
-                border-radius: 5px;
-                display: flex; align-items: center; justify-content: center;
-                font-size: 2.5rem; font-weight: bold; color: white;
-                box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-            ">{display_char}</div>
-        """
+# Split text into words to prevent line breaks inside words
+words = text.split(" ")
+
+for word in words:
+    board_html += '<div style="display: flex; gap: 5px;">'
+    for char in word:
+        if not char.isalpha():
+            board_html += f'<div style="width: 50px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white;">{char}</div>'
+        else:
+            is_visible = (char in st.session_state.w_guessed_letters) or st.session_state.w_revealed
+            display_char = char if is_visible else ""
+            bg_color = "#3b82f6" if is_visible else "#334155"
+            
+            board_html += f'<div style="width: 50px; height: 60px; background-color: {bg_color}; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: white; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);">{display_char}</div>'
+    board_html += '</div>'
 
 board_html += "</div>"
 st.markdown(board_html, unsafe_allow_html=True)
