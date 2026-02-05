@@ -1,6 +1,6 @@
 # question_bank.py
 
-question_bank = [
+PUZZLE_BANK = [
 
     # -------------------------------
     # ARTICLES OF FAITH
