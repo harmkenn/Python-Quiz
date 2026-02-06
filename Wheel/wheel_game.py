@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#v2.1
+#v2.2
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -147,8 +147,6 @@ if not st.session_state.w_puzzle:
     start_new_round()
     st.rerun()
 
-st.markdown("---")
-
 # --- Scoreboard ---
 with st.sidebar:
     st.write("### Team Scores")
@@ -182,8 +180,6 @@ with st.sidebar:
             st.session_state.w_current_team = i
             st.rerun()
 
-st.markdown("---")
-
 # --- Random Value Spinner ---
 st.write("### Spin for a Random Value")
 if st.session_state.w_random_value is None:
@@ -201,8 +197,6 @@ elif st.session_state.w_random_value is not None:
     st.success(f"Current Random Value: {st.session_state.w_random_value}")
 else:
     st.info("Spin to get a random value!")
-
-st.markdown("---")
 
 # --- The Puzzle Board ---
 category = st.session_state.w_puzzle["category"]
