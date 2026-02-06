@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#v1.9
+#v2.0
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -66,9 +66,22 @@ def guess_letter(letter):
         else:
             # Deduct the cost of the vowel
             st.session_state.w_team_scores[st.session_state.w_current_team] -= VOWEL_COST
-            st.session_state.w_guessed_letters.add(letter)  # Add the vowel to guessed letters
-            st.info(f"Vowel '{letter}' guessed. $200 deducted.")
-            return  # Exit the function without adding points
+            
+            # Check if the vowel exists in the puzzle
+            phrase = st.session_state.w_puzzle["text"].upper()
+            count = phrase.count(letter)
+            
+            if count == 0:
+                # Vowel does not exist, lose turn
+                st.warning(f"Vowel '{letter}' is not in the puzzle. Team {TEAM_NAMES[st.session_state.w_current_team]} loses their turn!")
+                st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
+                spin_random_value()  # Automatically spin for the next team
+                return
+            else:
+                # Vowel exists, reveal it
+                st.session_state.w_guessed_letters.add(letter)
+                st.info(f"Vowel '{letter}' guessed correctly!")
+                return  # Exit the function without adding points
 
     # Add the guessed letter to the set of guessed letters
     st.session_state.w_guessed_letters.add(letter)
@@ -89,30 +102,9 @@ def guess_letter(letter):
             st.balloons()
     else:
         # If the letter does not exist, cycle to the next team
-        st.warning(f"Letter '{letter}' is not in the puzzle. Next team's turn!")
+        st.warning(f"Letter '{letter}' is not in the puzzle. Team {TEAM_NAMES[st.session_state.w_current_team]} loses their turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
         spin_random_value()  # Automatically spin for the next team
-
-def solve_puzzle(correct):
-    if correct:
-        # Award 500 points to the current team
-        st.session_state.w_team_scores[st.session_state.w_current_team] += 500
-        
-        # Add the team's score to their day total (initialize if not present)
-        if "w_day_totals" not in st.session_state:
-            st.session_state.w_day_totals = [0, 0, 0, 0]
-        st.session_state.w_day_totals[st.session_state.w_current_team] += st.session_state.w_team_scores[st.session_state.w_current_team]
-        
-        # Reset all team scores to zero for the next puzzle
-        st.session_state.w_team_scores = [0, 0, 0, 0]
-        
-        # Mark the puzzle as solved and prepare for the next round
-        st.session_state.w_revealed = True
-        st.success(f"Team {TEAM_NAMES[st.session_state.w_current_team]} solved the puzzle! Their score has been added to their day total.")
-    else:
-        # Cycle to the next team
-        st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} guessed incorrectly. Next team's turn!")
-        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
 # ---------------------------------------------------------
 # UI COMPONENTS
