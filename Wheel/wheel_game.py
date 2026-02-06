@@ -1,12 +1,12 @@
 import streamlit as st
 import random
 import time
-import smtplib
-from email.mime.text import MIMEText
+import qrcode
+from io import BytesIO
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v2.8
+# v3.0
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -16,11 +16,7 @@ TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
 VOWEL_COST = 200  # Cost to buy a vowel
 RANDOM_VALUES = [100, 200, 300, 400, 500, "Lose Turn"]  # Possible random point values
-
-# Email Configuration
-SENDER_EMAIL = "your_email@gmail.com"  # Replace with your email
-SENDER_PASSWORD = "your_email_password"  # Replace with your email password
-TEACHER_EMAIL = "teacher_email@gmail.com"  # Replace with the teacher's email
+QR_PASSWORD = "secure_password"  # Password to decode the QR code
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
@@ -147,24 +143,24 @@ def solve_puzzle(correct):
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
 # ---------------------------------------------------------
-# EMAIL FUNCTIONALITY
+# QR CODE FUNCTIONALITY
 # ---------------------------------------------------------
-def send_puzzle_answer_via_email():
-    try:
-        # Create the email message
-        msg = MIMEText(f"The answer to the puzzle is: {st.session_state.w_puzzle['text']}")
-        msg["Subject"] = "Puzzle Answer"
-        msg["From"] = SENDER_EMAIL
-        msg["To"] = TEACHER_EMAIL
-
-        # Connect to the SMTP server and send the email
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(SENDER_EMAIL, SENDER_PASSWORD)
-            server.sendmail(SENDER_EMAIL, TEACHER_EMAIL, msg.as_string())
-        
-        st.success("Puzzle answer sent to the teacher's email!")
-    except Exception as e:
-        st.error(f"Failed to send email: {e}")
+def generate_qr_code():
+    # Combine puzzle solution and password into QR code data
+    qr_data = f"Puzzle Solution: {st.session_state.w_puzzle['text']}\nPassword: {QR_PASSWORD}"
+    
+    # Generate QR code
+    qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
+    qr.add_data(qr_data)
+    qr.make(fit=True)
+    
+    # Convert QR code to image
+    img = qr.make_image(fill_color="black", back_color="white")
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
+    
+    return buffer
 
 # ---------------------------------------------------------
 # UI COMPONENTS
@@ -178,8 +174,10 @@ with c1:
         start_new_round()
         st.rerun()
 with c2:
-    if st.button("📧 Email Puzzle Answer"):
-        send_puzzle_answer_via_email()
+    if st.button("📱 Generate QR Code"):
+        qr_buffer = generate_qr_code()
+        st.image(qr_buffer, caption="Scan this QR code to view the puzzle solution.")
+        st.download_button("Download QR Code", qr_buffer, "puzzle_solution_qr.png", "image/png")
 
 if not st.session_state.w_puzzle:
     start_new_round()
