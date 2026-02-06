@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#v2.0
+#v2.1
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -106,6 +106,27 @@ def guess_letter(letter):
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
         spin_random_value()  # Automatically spin for the next team
 
+def solve_puzzle(correct):
+    if correct:
+        # Award 500 points to the current team
+        st.session_state.w_team_scores[st.session_state.w_current_team] += 500
+        
+        # Add the team's score to their day total (initialize if not present)
+        if "w_day_totals" not in st.session_state:
+            st.session_state.w_day_totals = [0, 0, 0, 0]
+        st.session_state.w_day_totals[st.session_state.w_current_team] += st.session_state.w_team_scores[st.session_state.w_current_team]
+        
+        # Reset all team scores to zero for the next puzzle
+        st.session_state.w_team_scores = [0, 0, 0, 0]
+        
+        # Mark the puzzle as solved and prepare for the next round
+        st.session_state.w_revealed = True
+        st.success(f"Team {TEAM_NAMES[st.session_state.w_current_team]} solved the puzzle! Their score has been added to their day total.")
+    else:
+        # Cycle to the next team
+        st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} guessed incorrectly. Next team's turn!")
+        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
+
 # ---------------------------------------------------------
 # UI COMPONENTS
 # ---------------------------------------------------------
@@ -129,14 +150,14 @@ if not st.session_state.w_puzzle:
 st.markdown("---")
 
 # --- Scoreboard ---
-cols = st.columns(4)
-for i in range(4):
-    is_active = (i == st.session_state.w_current_team)
-    border = "4px solid white" if is_active else f"2px solid {TEAM_COLORS[i]}"
-    bg = TEAM_COLORS[i] if is_active else "transparent"
-    text_color = "white" if is_active else TEAM_COLORS[i]
-    
-    with cols[i]:
+with st.sidebar:
+    st.write("### Team Scores")
+    for i in range(4):
+        is_active = (i == st.session_state.w_current_team)
+        border = "4px solid white" if is_active else f"2px solid {TEAM_COLORS[i]}"
+        bg = TEAM_COLORS[i] if is_active else "transparent"
+        text_color = "white" if is_active else TEAM_COLORS[i]
+        
         st.markdown(
             f"""
             <div style="
@@ -148,6 +169,7 @@ for i in range(4):
                 text-align: center;
                 font-weight: bold;
                 font-size: 1.2rem;
+                margin-bottom: 10px;
             ">
                 {TEAM_NAMES[i]}<br>
                 <span style="font-size: 1.5rem">${st.session_state.w_team_scores[i]}</span><br>
