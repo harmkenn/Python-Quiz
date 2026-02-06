@@ -2,9 +2,10 @@ import streamlit as st
 import random
 import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
+from twilio.rest import Client  # Optional: For SMS functionality
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#v2.2
+#v2.3
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -13,6 +14,12 @@ TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
 VOWEL_COST = 200  # Cost to buy a vowel
 RANDOM_VALUES = [100, 200, 300, 400, 500, "Lose Turn"]  # Possible random point values
+
+# Twilio configuration (optional)
+TWILIO_ACCOUNT_SID = "your_account_sid"
+TWILIO_AUTH_TOKEN = "your_auth_token"
+TWILIO_PHONE_NUMBER = "your_twilio_phone_number"
+TEACHER_PHONE_NUMBER = "your_phone_number"
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
@@ -37,6 +44,9 @@ if "w_random_value" not in st.session_state:
 
 if "w_day_totals" not in st.session_state:
     st.session_state.w_day_totals = [0, 0, 0, 0]
+
+if "teacher_logged_in" not in st.session_state:
+    st.session_state.teacher_logged_in = False
 
 # ---------------------------------------------------------
 # GAME LOGIC
@@ -128,6 +138,25 @@ def solve_puzzle(correct):
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
 # ---------------------------------------------------------
+# TEACHER LOGIN PAGE
+# ---------------------------------------------------------
+def teacher_login():
+    if not st.session_state.teacher_logged_in:
+        st.write("### Teacher Login")
+        password = st.text_input("Enter Password", type="password")
+        if st.button("Login"):
+            if password == "secure_password":  # Replace with a secure password
+                st.session_state.teacher_logged_in = True
+                st.success("Login successful!")
+            else:
+                st.error("Incorrect password!")
+    else:
+        st.write("### Teacher Dashboard")
+        st.write(f"The answer to the puzzle is: {st.session_state.w_puzzle['text']}")
+        if st.button("📱 Send Puzzle Answer to Phone"):
+            send_puzzle_answer_via_sms(st.session_state.w_puzzle["text"])
+
+# ---------------------------------------------------------
 # UI COMPONENTS
 # ---------------------------------------------------------
 st.title("🎡 Scripture Wheel")
@@ -146,6 +175,10 @@ with c2:
 if not st.session_state.w_puzzle:
     start_new_round()
     st.rerun()
+
+# --- Teacher Login ---
+if st.button("🔑 Teacher Login"):
+    teacher_login()
 
 # --- Scoreboard ---
 with st.sidebar:
