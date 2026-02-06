@@ -138,11 +138,14 @@ def solve_puzzle(correct):
         # Mark the puzzle as solved and prepare for the next round
         st.session_state.w_revealed = True
         st.success(f"Team {TEAM_NAMES[st.session_state.w_current_team]} solved the puzzle! Their score has been added to their day total.")
+        
+        # Display the scriptural reference
+        reference = st.session_state.w_puzzle.get("reference", "No reference available")
+        st.write(f"**Scriptural Reference:** {reference}")
     else:
         # Cycle to the next team
         st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} guessed incorrectly. Next team's turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
-
 # ---------------------------------------------------------
 # HASHING AND QR CODE LOGIC
 # ---------------------------------------------------------
