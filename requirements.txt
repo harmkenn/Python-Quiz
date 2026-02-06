@@ -6,3 +6,4 @@ streamlit
 qrcode
 pandas
 streamlit_autorefresh
+qrcode[pil]
