@@ -2,10 +2,10 @@ import streamlit as st
 import random
 import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
-from twilio.rest import Client  # Optional: For SMS functionality
+
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#v2.3
+#v2.4
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -14,12 +14,6 @@ TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
 VOWEL_COST = 200  # Cost to buy a vowel
 RANDOM_VALUES = [100, 200, 300, 400, 500, "Lose Turn"]  # Possible random point values
-
-# Twilio configuration (optional)
-TWILIO_ACCOUNT_SID = "your_account_sid"
-TWILIO_AUTH_TOKEN = "your_auth_token"
-TWILIO_PHONE_NUMBER = "your_twilio_phone_number"
-TEACHER_PHONE_NUMBER = "your_phone_number"
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
