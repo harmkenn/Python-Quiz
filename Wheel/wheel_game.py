@@ -7,7 +7,7 @@ from io import BytesIO
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.4
+# v3.5
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -145,7 +145,7 @@ def solve_puzzle(correct):
     else:
         # Cycle to the next team
         st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} guessed incorrectly. Next team's turn!")
-        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES))
+        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 # ---------------------------------------------------------
 # HASHING AND QR CODE LOGIC
 # ---------------------------------------------------------
