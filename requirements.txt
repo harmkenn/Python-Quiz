@@ -8,5 +8,4 @@ pandas
 streamlit_autorefresh
 qrcode[pil]
 pillow
-pyzbar
-zbar
+opencv-python
