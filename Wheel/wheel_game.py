@@ -2,11 +2,12 @@ import streamlit as st
 import random
 import time
 import qrcode
+import hashlib
 from io import BytesIO
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.1
+# v3.2
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -16,7 +17,7 @@ TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
 VOWEL_COST = 200  # Cost to buy a vowel
 RANDOM_VALUES = [100, 200, 300, 400, 500, "Lose Turn"]  # Possible random point values
-QR_PASSWORD = "secure_password"  # Password to decode the QR code
+QR_CODE = "5795"  # 4-digit code for decoding
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
@@ -143,11 +144,16 @@ def solve_puzzle(correct):
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
 # ---------------------------------------------------------
-# QR CODE FUNCTIONALITY
+# HASHING AND QR CODE LOGIC
 # ---------------------------------------------------------
-def generate_qr_code():
-    # Combine puzzle solution and password into QR code data
-    qr_data = f"Puzzle Solution: {st.session_state.w_puzzle['text']}\nPassword: {5795}"
+def hash_phrase(phrase):
+    """Hash the phrase using SHA-256."""
+    hashed = hashlib.sha256(phrase.encode()).hexdigest()
+    return hashed
+
+def generate_qr_code(hashed_phrase, qr_code):
+    """Generate a QR code with the hashed phrase and 4-digit code."""
+    qr_data = f"Hashed Phrase: {hashed_phrase}\nCode: {qr_code}"
     
     # Generate QR code
     qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
@@ -175,9 +181,18 @@ with c1:
         st.rerun()
 with c2:
     if st.button("📱 Generate QR Code"):
-        qr_buffer = generate_qr_code()
-        st.image(qr_buffer, caption="Scan this QR code to view the puzzle solution.")
-        st.download_button("Download QR Code", qr_buffer, "puzzle_solution_qr.png", "image/png")
+        if st.session_state.w_puzzle:
+            # Hash the puzzle solution
+            hashed_phrase = hash_phrase(st.session_state.w_puzzle["text"])
+            
+            # Generate QR code
+            qr_buffer = generate_qr_code(hashed_phrase, QR_CODE)
+            
+            # Display QR code
+            st.image(qr_buffer, caption="Scan this QR code to decode the puzzle solution.")
+            st.download_button("Download QR Code", qr_buffer, "puzzle_solution_qr.png", "image/png")
+        else:
+            st.error("No puzzle solution available! Please start a new puzzle.")
 
 if not st.session_state.w_puzzle:
     start_new_round()
