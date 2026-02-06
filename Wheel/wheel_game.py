@@ -165,7 +165,8 @@ with c1:
 with c2:
     # --- Teacher Login ---
     if st.button("🔑 Teacher Login"):
-        teacher_login()rerun()
+        teacher_login()
+        st.rerun()
 
 if not st.session_state.w_puzzle:
     start_new_round()
