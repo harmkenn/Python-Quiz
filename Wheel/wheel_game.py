@@ -1,10 +1,12 @@
 import streamlit as st
 import random
 import time
+import smtplib
+from email.mime.text import MIMEText
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v2.7
+# v2.8
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -14,6 +16,11 @@ TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
 VOWEL_COST = 200  # Cost to buy a vowel
 RANDOM_VALUES = [100, 200, 300, 400, 500, "Lose Turn"]  # Possible random point values
+
+# Email Configuration
+SENDER_EMAIL = "your_email@gmail.com"  # Replace with your email
+SENDER_PASSWORD = "your_email_password"  # Replace with your email password
+TEACHER_EMAIL = "teacher_email@gmail.com"  # Replace with the teacher's email
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
@@ -39,9 +46,6 @@ if "w_random_value" not in st.session_state:
 if "w_day_totals" not in st.session_state:
     st.session_state.w_day_totals = [0, 0, 0, 0]
 
-if "teacher_logged_in" not in st.session_state:
-    st.session_state.teacher_logged_in = False
-
 # ---------------------------------------------------------
 # GAME LOGIC
 # ---------------------------------------------------------
@@ -59,6 +63,13 @@ def guess_letter(letter):
     # Check if the random value has been spun
     if st.session_state.w_random_value is None:
         st.error("Spin for a random value first!")
+        return
+
+    # Handle "Lose Turn" spinner outcome
+    if st.session_state.w_random_value == "Lose Turn":
+        st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} loses their turn!")
+        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
+        spin_random_value()  # Automatically spin for the next team
         return
 
     # Check if the letter is a vowel
@@ -95,9 +106,13 @@ def guess_letter(letter):
     count = phrase.count(letter)
     
     if count > 0:
-        # Award points based on the random value for consonants
-        points = count * st.session_state.w_random_value
-        st.session_state.w_team_scores[st.session_state.w_current_team] += points
+        # Ensure random value is numeric before calculating points
+        if isinstance(st.session_state.w_random_value, int):
+            points = count * st.session_state.w_random_value
+            st.session_state.w_team_scores[st.session_state.w_current_team] += points
+        else:
+            st.error("Invalid random value! Please spin again.")
+            return
         
         # Check if all letters have been guessed
         unique_chars = set(c for c in phrase if c.isalpha())
@@ -132,24 +147,24 @@ def solve_puzzle(correct):
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
 # ---------------------------------------------------------
-# TEACHER LOGIN PAGE
+# EMAIL FUNCTIONALITY
 # ---------------------------------------------------------
-def teacher_login():
-    if not st.session_state.teacher_logged_in:
-        st.write("### Teacher Login")
-        password = st.text_input("Enter Password", type="password")
-        if st.button("Login"):
-            if password == "5795":  # Replace with a secure password
-                st.session_state.teacher_logged_in = True
-                st.success("Login successful!")
-            else:
-                st.error("Incorrect password! Please try again.")
-    else:
-        st.write("### Teacher Dashboard")
-        st.write(f"The answer to the puzzle is: {st.session_state.w_puzzle['text']}")
-        if st.button("Logout"):
-            st.session_state.teacher_logged_in = False
-            st.success("You have logged out.")
+def send_puzzle_answer_via_email():
+    try:
+        # Create the email message
+        msg = MIMEText(f"The answer to the puzzle is: {st.session_state.w_puzzle['text']}")
+        msg["Subject"] = "Puzzle Answer"
+        msg["From"] = SENDER_EMAIL
+        msg["To"] = TEACHER_EMAIL
+
+        # Connect to the SMTP server and send the email
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(SENDER_EMAIL, SENDER_PASSWORD)
+            server.sendmail(SENDER_EMAIL, TEACHER_EMAIL, msg.as_string())
+        
+        st.success("Puzzle answer sent to the teacher's email!")
+    except Exception as e:
+        st.error(f"Failed to send email: {e}")
 
 # ---------------------------------------------------------
 # UI COMPONENTS
@@ -163,8 +178,8 @@ with c1:
         start_new_round()
         st.rerun()
 with c2:
-    if st.button("🔑 Teacher Login"):
-        teacher_login()
+    if st.button("📧 Email Puzzle Answer"):
+        send_puzzle_answer_via_email()
 
 if not st.session_state.w_puzzle:
     start_new_round()
