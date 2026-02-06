@@ -3,9 +3,9 @@ import random
 import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
-
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-#v2.4
+# v2.5
+
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
 # ---------------------------------------------------------
@@ -139,16 +139,17 @@ def teacher_login():
         st.write("### Teacher Login")
         password = st.text_input("Enter Password", type="password")
         if st.button("Login"):
-            if password == "secure_password":  # Replace with a secure password
+            if password == "5795":  # Replace with a secure password
                 st.session_state.teacher_logged_in = True
                 st.success("Login successful!")
             else:
-                st.error("Incorrect password!")
+                st.error("Incorrect password! Please try again.")
     else:
         st.write("### Teacher Dashboard")
         st.write(f"The answer to the puzzle is: {st.session_state.w_puzzle['text']}")
-        if st.button("📱 Send Puzzle Answer to Phone"):
-            send_puzzle_answer_via_sms(st.session_state.w_puzzle["text"])
+        if st.button("Logout"):
+            st.session_state.teacher_logged_in = False
+            st.success("You have logged out.")
 
 # ---------------------------------------------------------
 # UI COMPONENTS
