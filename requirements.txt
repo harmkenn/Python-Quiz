@@ -9,3 +9,4 @@ streamlit_autorefresh
 qrcode[pil]
 pillow
 opencv-python
+cv2
