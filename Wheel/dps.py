@@ -1,29 +1,22 @@
 import streamlit as st
 import qrcode
 from PIL import Image
-import base64
+import hashlib
 
-st.set_page_config(page_title="QR Code Reader", layout="wide")
+st.set_page_config(page_title="QR Code Decoder", layout="wide")
+#v1.0
+# ---------------------------------------------------------
+# HASHING LOGIC
+# ---------------------------------------------------------
+def hash_phrase(phrase):
+    """Hash the phrase using SHA-256."""
+    hashed = hashlib.sha256(phrase.encode()).hexdigest()
+    return hashed
 
-# ---------------------------------------------------------
-# SCRAMBLING AND UNSCRAMBLING LOGIC
-# ---------------------------------------------------------
-def scramble_text(text, shift=3):
-    """Scramble text by shifting characters."""
-    scrambled = "".join(chr((ord(char) + shift) % 256) for char in text)
-    return scrambled
-
-def unscramble_text(text, shift=3):
-    """Unscramble text by reversing the character shift."""
-    unscrambled = "".join(chr((ord(char) - shift) % 256) for char in text)
-    return unscrambled
-
-# ---------------------------------------------------------
-# QR CODE READER LOGIC
-# ---------------------------------------------------------
 def decode_qr_code(image):
-    """Decode the QR code and extract the data."""
+    """Decode the QR code and extract the hashed phrase and code."""
     try:
+        # Open the QR code image
         qr = qrcode.QRCode()
         decoded_data = qr.decode(image)
         return decoded_data
@@ -34,7 +27,7 @@ def decode_qr_code(image):
 # ---------------------------------------------------------
 # STREAMLIT UI
 # ---------------------------------------------------------
-st.title("📱 QR Code Reader and Puzzle Solution Decoder")
+st.title("🔓 QR Code Decoder for Puzzle Solution")
 
 # Upload QR Code
 uploaded_file = st.file_uploader("Upload QR Code Image", type=["png", "jpg", "jpeg"])
@@ -48,25 +41,25 @@ if uploaded_file:
     qr_data = decode_qr_code(image)
     if qr_data:
         st.success("QR Code decoded successfully!")
-        st.write("Scrambled Data from QR Code:")
+        st.write("Data from QR Code:")
         st.code(qr_data)
 
-        # Extract scrambled puzzle solution and password
+        # Extract hashed phrase and code
         try:
             data_lines = qr_data.split("\n")
-            scrambled_solution = data_lines[0].split(": ")[1]
-            qr_password = data_lines[1].split(": ")[1]
+            hashed_phrase = data_lines[0].split(": ")[1]
+            qr_code = data_lines[1].split(": ")[1]
 
-            # Ask for password to unscramble
-            st.write("Enter the password to unscramble the puzzle solution:")
-            entered_password = st.text_input("Password", type="password")
+            # Ask for 4-digit code to verify
+            st.write("Enter the 4-digit code to decode the puzzle solution:")
+            entered_code = st.text_input("Code", type="password")
 
-            if st.button("Unscramble Solution"):
-                if entered_password == qr_password:
-                    unscrambled_solution = unscramble_text(scrambled_solution)
-                    st.success("Puzzle Solution Unscrambled Successfully!")
-                    st.write(f"The puzzle solution is: {unscrambled_solution}")
+            if st.button("Decode Solution"):
+                if entered_code == qr_code:
+                    st.success("Code verified successfully!")
+                    st.write(f"The hashed phrase is: {hashed_phrase}")
+                    st.info("Note: The original phrase cannot be retrieved from the hash directly.")
                 else:
-                    st.error("Incorrect password! Please try again.")
+                    st.error("Incorrect code! Unable to decode the solution.")
         except Exception as e:
             st.error(f"Failed to process QR code data: {e}")
