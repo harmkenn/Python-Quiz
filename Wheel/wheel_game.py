@@ -6,7 +6,7 @@ from io import BytesIO
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.0
+# v3.1
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -147,7 +147,7 @@ def solve_puzzle(correct):
 # ---------------------------------------------------------
 def generate_qr_code():
     # Combine puzzle solution and password into QR code data
-    qr_data = f"Puzzle Solution: {st.session_state.w_puzzle['text']}\nPassword: {QR_PASSWORD}"
+    qr_data = f"Puzzle Solution: {st.session_state.w_puzzle['text']}\nPassword: {5795}"
     
     # Generate QR code
     qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
