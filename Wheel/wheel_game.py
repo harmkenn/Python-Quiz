@@ -7,7 +7,7 @@ from io import BytesIO
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.3
+# v3.4
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
