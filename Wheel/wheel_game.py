@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v2.6
+# v2.7
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -163,16 +163,12 @@ with c1:
         start_new_round()
         st.rerun()
 with c2:
-    # --- Teacher Login ---
     if st.button("🔑 Teacher Login"):
         teacher_login()
-        st.rerun()
 
 if not st.session_state.w_puzzle:
     start_new_round()
     st.rerun()
-
-
 
 # --- Scoreboard ---
 with st.sidebar:
