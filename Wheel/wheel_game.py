@@ -1,9 +1,6 @@
 import streamlit as st
 import random
 import time
-import qrcode
-import hashlib
-from io import BytesIO
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
@@ -17,7 +14,6 @@ TEAM_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7"]
 
 VOWEL_COST = 200  # Cost to buy a vowel
 RANDOM_VALUES = [100, 200, 300, 400, 500, "Lose Turn"]  # Possible random point values
-QR_CODE = "5795"  # 4-digit code for decoding
 
 # ---------------------------------------------------------
 # SESSION STATE INITIALIZATION
@@ -147,59 +143,21 @@ def solve_puzzle(correct):
         st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} guessed incorrectly. Next team's turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 # ---------------------------------------------------------
-# HASHING AND QR CODE LOGIC
-# ---------------------------------------------------------
-def hash_phrase(phrase):
-    """Hash the phrase using SHA-256."""
-    hashed = hashlib.sha256(phrase.encode()).hexdigest()
-    return hashed
-
-def generate_qr_code(hashed_phrase, qr_code):
-    """Generate a QR code with the hashed phrase and 4-digit code."""
-    qr_data = f"Hashed Phrase: {hashed_phrase}\nCode: {qr_code}"
-    
-    # Generate QR code
-    qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
-    qr.add_data(qr_data)
-    qr.make(fit=True)
-    
-    # Convert QR code to image
-    img = qr.make_image(fill_color="black", back_color="white")
-    buffer = BytesIO()
-    img.save(buffer, format="PNG")
-    buffer.seek(0)
-    
-    return buffer
-
-# ---------------------------------------------------------
 # UI COMPONENTS
 # ---------------------------------------------------------
-st.title("🎡 Scripture Wheel")
+c1, c2 = st.columns([2, 1])
 
-# --- Top Bar: Controls ---
-c1, c2 = st.columns([3, 1])
 with c1:
+    st.title("🎡 Scripture Wheel")
+
+    # --- Top Bar: Controls ---
     if st.button("🔄 New Puzzle"):
         start_new_round()
         st.rerun()
-with c2:
-    if st.button("📱 Generate QR Code"):
-        if st.session_state.w_puzzle:
-            # Hash the puzzle solution
-            hashed_phrase = hash_phrase(st.session_state.w_puzzle["text"])
-            
-            # Generate QR code
-            qr_buffer = generate_qr_code(hashed_phrase, QR_CODE)
-            
-            # Display QR code
-            st.image(qr_buffer, caption="Scan this QR code to decode the puzzle solution.")
-            st.download_button("Download QR Code", qr_buffer, "puzzle_solution_qr.png", "image/png")
-        else:
-            st.error("No puzzle solution available! Please start a new puzzle.")
 
-if not st.session_state.w_puzzle:
-    start_new_round()
-    st.rerun()
+    if not st.session_state.w_puzzle:
+        start_new_round()
+        st.rerun()
 
 # --- Scoreboard ---
 with st.sidebar:
@@ -235,22 +193,23 @@ with st.sidebar:
             st.rerun()
 
 # --- Random Value Spinner ---
-st.write("### Spin for a Random Value")
-if st.session_state.w_random_value is None:
-    if st.button("🎰 Spin Random Value"):
-        spin_random_value()
-        st.rerun()
+with c2:
+    st.write("### Spin for a Random Value")
+    if st.session_state.w_random_value is None:
+        if st.button("🎰 Spin Random Value"):
+            spin_random_value()
+            st.rerun()
 
-if st.session_state.w_random_value == "Lose Turn":
-    st.warning("You landed on 'Lose Turn'! Click the button below to cycle to the next team.")
-    if st.button("➡️ Next Team"):
-        st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
-        st.session_state.w_random_value = None  # Reset spinner value
-        st.rerun()
-elif st.session_state.w_random_value is not None:
-    st.success(f"Current Random Value: {st.session_state.w_random_value}")
-else:
-    st.info("Spin to get a random value!")
+    if st.session_state.w_random_value == "Lose Turn":
+        st.warning("You landed on 'Lose Turn'! Click the button below to cycle to the next team.")
+        if st.button("➡️ Next Team"):
+            st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
+            st.session_state.w_random_value = None  # Reset spinner value
+            st.rerun()
+    elif st.session_state.w_random_value is not None:
+        st.success(f"Current Random Value: {st.session_state.w_random_value}")
+    else:
+        st.info("Spin to get a random value!")
 
 # --- The Puzzle Board ---
 category = st.session_state.w_puzzle["category"]
@@ -319,7 +278,7 @@ with col_left:
 
 with col_right:
     st.write("### Solve the Puzzle")
-    st.info("Click 'Correct' if the team solved the puzzle correctly, or 'Incorrect' if they guessed wrong.")
+    #st.info("Click 'Correct' if the team solved the puzzle correctly, or 'Incorrect' if they guessed wrong.")
     
     # Solve buttons
     if st.button("✅ Correct"):
@@ -329,11 +288,11 @@ with col_right:
         solve_puzzle(correct=False)
         st.rerun()
 
-    st.info("Scoring: Random value determines points per letter. 500 points bonus for solving.")
+    #st.info("Scoring: Random value determines points per letter. 500 points bonus for solving.")
 
 # --- Confetti on Win ---
 if st.session_state.w_revealed:
-    st.success(f"Puzzle Solved! The phrase was: {st.session_state.w_puzzle['text']}")
+    st.success(f"Puzzle Solved! The phrase was: {st.session_state.w_puzzle['text']} ({st.session_state.w_puzzle.get('reference', 'No reference')})")
     if st.button("Next Puzzle ➡️"):
         start_new_round()
         st.rerun()
