@@ -159,19 +159,20 @@ def render_team_buttons():
 # ---------------------------------------------------------
 # SIDEBAR: QR CODE + BUZZER LINK
 # ---------------------------------------------------------
-st.sidebar.subheader("Buzzer Link")
-
-qr = qrcode.QRCode(box_size=4, border=2)
-qr.add_data(BUZZER_URL)
-qr.make(fit=True)
-img = qr.make_image(fill_color="black", back_color="white")
-buf = io.BytesIO()
-img.save(buf, format="PNG")
-st.sidebar.image(buf.getvalue(), width=300)
-
-st.sidebar.code(BUZZER_URL, language="text")
     
 def app():
+    st.sidebar.subheader("Buzzer Link")
+
+    qr = qrcode.QRCode(box_size=4, border=2)
+    qr.add_data(BUZZER_URL)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    st.sidebar.image(buf.getvalue(), width=300)
+
+    st.sidebar.code(BUZZER_URL, language="text")
+
     # ---------------------------------------------------------
     # SESSION STATE INIT
     # ---------------------------------------------------------

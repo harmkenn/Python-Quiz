@@ -6,15 +6,6 @@ import time
 if __name__ == "__main__":
     st.set_page_config(page_title="Scripture Match", layout="wide")
 
-st.markdown("""
-<style>
-.big-font { font-size: 20px !important; text-align: center; }
-.stButton button { height: 100px; width: 100%; font-size: 20px; white-space: normal; word-wrap: break-word; }
-.team-current { font-weight: 700; color: green; }
-.score-label { font-size: 24px; font-weight: bold; text-align: center; }
-.row-space { margin-top: 25px; }  /* 👈 space between rows */
-</style>
-""", unsafe_allow_html=True)
 
 # --- Scripture Data ---
 scriptures = {
@@ -67,6 +58,16 @@ def index_to_letter(index):
         return chr(65 + (index % 26)) * ((index // 26) + 1)
 
 def app():
+    st.markdown("""
+    <style>
+    .big-font { font-size: 20px !important; text-align: center; }
+    .stButton button { height: 100px; width: 100%; font-size: 20px; white-space: normal; word-wrap: break-word; }
+    .team-current { font-weight: 700; color: green; }
+    .score-label { font-size: 24px; font-weight: bold; text-align: center; }
+    .row-space { margin-top: 25px; }  /* 👈 space between rows */
+    </style>
+    """, unsafe_allow_html=True)
+
     # --- Sidebar: Game Setup ---
     st.sidebar.header("🎮 Game Setup")
     num_pairs = st.sidebar.slider("Number of scripture pairs:", 6, len(scriptures), 6, step=1)
