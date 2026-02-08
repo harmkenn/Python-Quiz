@@ -38,19 +38,24 @@ def main():
     previous_game = st.session_state.current_game
 
     with st.sidebar:
-        st.header("🚀 Game Launcher")
-        if st.button("🏠 Home", use_container_width=True):
-            st.session_state.current_game = "Home"
-        
-        st.markdown("---")
-        st.subheader("Select Game")
-        
-        if st.button("🧩 Matching", use_container_width=True):
-            st.session_state.current_game = "Matching"
-        if st.button("📘 Jeopardy", use_container_width=True):
-            st.session_state.current_game = "Jeopardy"
-        if st.button("🎡 Wheel", use_container_width=True):
-            st.session_state.current_game = "Wheel"
+
+
+        # Compact pulldown selector for choosing the game
+        display_map = {
+            "Home": "🏠 Home",
+            "Matching": "🧩 Matching",
+            "Jeopardy": "📘 Jeopardy",
+            "Wheel": "🎡 Wheel",
+        }
+        options = [display_map[k] for k in ["Home", "Matching", "Jeopardy", "Wheel"]]
+
+        # Determine current index for the selectbox
+        current_display = display_map.get(st.session_state.get("current_game", "Home"), "🏠 Home")
+        selected_display = st.selectbox("Select Game", options, index=options.index(current_display), key="game_selector", help="Choose a game to launch")
+
+        # Map back to internal game key
+        display_to_key = {v: k for k, v in display_map.items()}
+        st.session_state.current_game = display_to_key.get(selected_display, "Home")
 
     # If the game selection has changed, clear the old game's state and rerun.
     if st.session_state.current_game != previous_game:

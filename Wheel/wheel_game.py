@@ -143,156 +143,163 @@ def solve_puzzle(correct):
         st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} guessed incorrectly. Next team's turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 # ---------------------------------------------------------
+# ---------------------------------------------------------
 # UI COMPONENTS
 # ---------------------------------------------------------
-c1, c2 = st.columns([2, 1])
 
-with c1:
-    st.title("🎡 Scripture Wheel")
+def app():
+    c1, c2 = st.columns([2, 1])
 
-    # --- Top Bar: Controls ---
-    if st.button("🔄 New Puzzle"):
-        start_new_round()
-        st.rerun()
+    with c1:
+        st.title("🎡 Scripture Wheel")
 
-    if not st.session_state.w_puzzle:
-        start_new_round()
-        st.rerun()
-
-# --- Scoreboard ---
-with st.sidebar:
-    st.write("### Team Scores")
-    for i in range(4):
-        is_active = (i == st.session_state.w_current_team)
-        border = "4px solid white" if is_active else f"2px solid {TEAM_COLORS[i]}"
-        bg = TEAM_COLORS[i] if is_active else "transparent"
-        text_color = "white" if is_active else TEAM_COLORS[i]
-        
-        st.markdown(
-            f"""
-            <div style="
-                border: {border};
-                background-color: {bg};
-                color: {text_color};
-                border-radius: 10px;
-                padding: 10px;
-                text-align: center;
-                font-weight: bold;
-                font-size: 1.2rem;
-                margin-bottom: 10px;
-            ">
-                {TEAM_NAMES[i]}<br>
-                <span style="font-size: 1.5rem">${st.session_state.w_team_scores[i]}</span><br>
-                Day Total: ${st.session_state.w_day_totals[i]}
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
-        if st.button(f"Select {TEAM_NAMES[i]}", key=f"sel_team_{i}"):
-            st.session_state.w_current_team = i
+        # --- Top Bar: Controls ---
+        if st.button("🔄 New Puzzle"):
+            start_new_round()
             st.rerun()
 
-# --- Random Value Spinner ---
-with c2:
-    st.write("### Spin for a Random Value")
-    if st.session_state.w_random_value is None:
-        if st.button("🎰 Spin Random Value"):
-            spin_random_value()
+        if not st.session_state.w_puzzle:
+            start_new_round()
             st.rerun()
 
-    if st.session_state.w_random_value == "Lose Turn":
-        st.warning("You landed on 'Lose Turn'! Click the button below to cycle to the next team.")
-        if st.button("➡️ Next Team"):
-            st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
-            st.session_state.w_random_value = None  # Reset spinner value
-            st.rerun()
-    elif st.session_state.w_random_value is not None:
-        st.success(f"Current Random Value: {st.session_state.w_random_value}")
-    else:
-        st.info("Spin to get a random value!")
-
-# --- The Puzzle Board ---
-category = st.session_state.w_puzzle["category"]
-
-# FIX: Normalize puzzle text to remove newlines, tabs, double spaces
-raw_text = st.session_state.w_puzzle["text"].upper()
-text = " ".join(raw_text.split())
-
-st.subheader(f"Category: {category}")
-
-board_html = """
-<div style="
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 20px; 
-    justify-content: center; 
-    margin: 20px 0;
-">
-"""
-
-# Split text into words to prevent line breaks inside words
-words = text.split(" ")
-
-for word in words:
-    board_html += '<div style="display: flex; gap: 5px;">'
-    for char in word:
-        if not char.isalpha():
-            board_html += f'<div style="width: 50px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white;">{char}</div>'
-        else:
-            is_visible = (char in st.session_state.w_guessed_letters) or st.session_state.w_revealed
-            display_char = char if is_visible else ""
-            bg_color = "#3b82f6" if is_visible else "#334155"
+    # --- Scoreboard ---
+    with st.sidebar:
+        st.write("### Team Scores")
+        for i in range(4):
+            is_active = (i == st.session_state.w_current_team)
+            border = "4px solid white" if is_active else f"2px solid {TEAM_COLORS[i]}"
+            bg = TEAM_COLORS[i] if is_active else "transparent"
+            text_color = "white" if is_active else TEAM_COLORS[i]
             
-            board_html += f'<div style="width: 50px; height: 60px; background-color: {bg_color}; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: white; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);">{display_char}</div>'
-    board_html += '</div>'
+            st.markdown(
+                f"""
+                <div style="
+                    border: {border};
+                    background-color: {bg};
+                    color: {text_color};
+                    border-radius: 10px;
+                    padding: 10px;
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                    margin-bottom: 10px;
+                ">
+                    {TEAM_NAMES[i]}<br>
+                    <span style="font-size: 1.5rem">${st.session_state.w_team_scores[i]}</span><br>
+                    Day Total: ${st.session_state.w_day_totals[i]}
+                </div>
+                """, 
+                unsafe_allow_html=True
+            )
+            if st.button(f"Select {TEAM_NAMES[i]}", key=f"sel_team_{i}"):
+                st.session_state.w_current_team = i
+                st.rerun()
 
-board_html += "</div>"
-st.markdown(board_html, unsafe_allow_html=True)
+    # --- Random Value Spinner ---
+    with c2:
+        st.write("### Spin for a Random Value")
+        if st.session_state.w_random_value is None:
+            if st.button("🎰 Spin Random Value"):
+                spin_random_value()
+                st.rerun()
 
-st.markdown("---")
+        if st.session_state.w_random_value == "Lose Turn":
+            st.warning("You landed on 'Lose Turn'! Click the button below to cycle to the next team.")
+            if st.button("➡️ Next Team"):
+                st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
+                st.session_state.w_random_value = None  # Reset spinner value
+                st.rerun()
+        elif st.session_state.w_random_value is not None:
+            st.success(f"Current Random Value: {st.session_state.w_random_value}")
+        else:
+            st.info("Spin to get a random value!")
 
-# --- Keyboard & Controls ---
-col_left, col_right = st.columns([2, 1])
+    # --- The Puzzle Board ---
+    category = st.session_state.w_puzzle["category"]
 
-with col_left:
-    st.write("### Guess a Letter")
-    rows = [
-        "ABCDEFGHI",
-        "JKLMNOPQR",
-        "STUVWXYZ"
-    ]
-    
-    for row_chars in rows:
-        c_cols = st.columns(len(row_chars))
-        for idx, char in enumerate(row_chars):
-            with c_cols[idx]:
-                # Disable button if letter is already guessed or puzzle is revealed
-                disabled = (char in st.session_state.w_guessed_letters) or st.session_state.w_revealed
+    # FIX: Normalize puzzle text to remove newlines, tabs, double spaces
+    raw_text = st.session_state.w_puzzle["text"].upper()
+    text = " ".join(raw_text.split())
+
+    st.subheader(f"Category: {category}")
+
+    board_html = """
+    <div style="
+        display: flex; 
+        flex-wrap: wrap; 
+        gap: 20px; 
+        justify-content: center; 
+        margin: 20px 0;
+    ">
+    """
+
+    # Split text into words to prevent line breaks inside words
+    words = text.split(" ")
+
+    for word in words:
+        board_html += '<div style="display: flex; gap: 5px;">'
+        for char in word:
+            if not char.isalpha():
+                board_html += f'<div style="width: 50px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white;">{char}</div>'
+            else:
+                is_visible = (char in st.session_state.w_guessed_letters) or st.session_state.w_revealed
+                display_char = char if is_visible else ""
+                bg_color = "#3b82f6" if is_visible else "#334155"
                 
-                # Add a label for vowels to indicate cost
-                label = f"{char} ($200)" if char in "AEIOU" else char
-                
-                if st.button(label, key=f"btn_{char}", disabled=disabled):
-                    guess_letter(char)
-                    st.rerun()
+                board_html += f'<div style="width: 50px; height: 60px; background-color: {bg_color}; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: white; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);">{display_char}</div>'
+        board_html += '</div>'
 
-with col_right:
-    st.write("### Solve the Puzzle")
-    #st.info("Click 'Correct' if the team solved the puzzle correctly, or 'Incorrect' if they guessed wrong.")
-    
-    # Solve buttons
-    if st.button("✅ Correct"):
-        solve_puzzle(correct=True)
-        st.rerun()
-    if st.button("❌ Incorrect"):
-        solve_puzzle(correct=False)
-        st.rerun()
+    board_html += "</div>"
+    st.markdown(board_html, unsafe_allow_html=True)
 
-    #st.info("Scoring: Random value determines points per letter. 500 points bonus for solving.")
+    st.markdown("---")
 
-# --- Confetti on Win ---
-if st.session_state.w_revealed:
-    st.success(f"Puzzle Solved! The phrase was: {st.session_state.w_puzzle['text']} ({st.session_state.w_puzzle.get('reference', 'No reference')})")
-    if st.button("Next Puzzle ➡️"):
-        start_new_round()
-        st.rerun()
+    # --- Keyboard & Controls ---
+    col_left, col_right = st.columns([2, 1])
+
+    with col_left:
+        st.write("### Guess a Letter")
+        rows = [
+            "ABCDEFGHI",
+            "JKLMNOPQR",
+            "STUVWXYZ"
+        ]
+        
+        for row_chars in rows:
+            c_cols = st.columns(len(row_chars))
+            for idx, char in enumerate(row_chars):
+                with c_cols[idx]:
+                    # Disable button if letter is already guessed or puzzle is revealed
+                    disabled = (char in st.session_state.w_guessed_letters) or st.session_state.w_revealed
+                    
+                    # Add a label for vowels to indicate cost
+                    label = f"{char} ($200)" if char in "AEIOU" else char
+                    
+                    if st.button(label, key=f"btn_{char}", disabled=disabled):
+                        guess_letter(char)
+                        st.rerun()
+
+    with col_right:
+        st.write("### Solve the Puzzle")
+        #st.info("Click 'Correct' if the team solved the puzzle correctly, or 'Incorrect' if they guessed wrong.")
+        
+        # Solve buttons
+        if st.button("✅ Correct"):
+            solve_puzzle(correct=True)
+            st.rerun()
+        if st.button("❌ Incorrect"):
+            solve_puzzle(correct=False)
+            st.rerun()
+
+        #st.info("Scoring: Random value determines points per letter. 500 points bonus for solving.")
+
+    # --- Confetti on Win ---
+    if st.session_state.w_revealed:
+        st.success(f"Puzzle Solved! The phrase was: {st.session_state.w_puzzle['text']} ({st.session_state.w_puzzle.get('reference', 'No reference')})")
+        if st.button("Next Puzzle ➡️"):
+            start_new_round()
+            st.rerun()
+
+
+if __name__ == "__main__":
+    app()
