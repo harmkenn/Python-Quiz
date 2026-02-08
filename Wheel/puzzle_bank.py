@@ -2,19 +2,19 @@ PUZZLE_BANK = [
     # -------------------------------
     # ARTICLES OF FAITH
     # -------------------------------
-    {"category": "Articles of Faith", "text": "BELIEF IN GOD AND THE HOLY GHOST", "reference": "John 14:26"},
-    {"category": "Articles of Faith", "text": "MEN PUNISHED FOR OWN SINS", "reference": "Ezekiel 18:20"},
-    {"category": "Articles of Faith", "text": "SALVATION THROUGH CHRIST", "reference": "Acts 4:12"},
-    {"category": "Articles of Faith", "text": "FIRST PRINCIPLES AND ORDINANCES", "reference": "Hebrews 6:1-2"},
-    {"category": "Articles of Faith", "text": "CALLED OF GOD BY PROPHECY", "reference": "Hebrews 5:4"},
-    {"category": "Articles of Faith", "text": "PRIMITIVE CHURCH ORGANIZATION", "reference": "Ephesians 4:11-12"},
-    {"category": "Articles of Faith", "text": "SPIRITUAL GIFTS LIKE PROPHECY", "reference": "1 Corinthians 12:7-10"},
-    {"category": "Articles of Faith", "text": "BIBLE AND BOOK OF MORMON", "reference": "Ezekiel 37:16-17"},
-    {"category": "Articles of Faith", "text": "GOD REVEALS MANY THINGS", "reference": "Amos 3:7"},
-    {"category": "Articles of Faith", "text": "GATHERING OF ISRAEL", "reference": "Isaiah 11:12"},
+    {"category": "Articles of Faith", "text": "BELIEF IN GOD AND THE HOLY GHOST", "reference": "Articles of Faith 1"},
+    {"category": "Articles of Faith", "text": "MEN PUNISHED FOR OWN SINS", "reference": "Articles of Faith 2"},
+    {"category": "Articles of Faith", "text": "SALVATION THROUGH CHRIST", "reference": "Articles of Faith 3"},
+    {"category": "Articles of Faith", "text": "FIRST PRINCIPLES AND ORDINANCES", "reference": "Articles of Faith 4"},
+    {"category": "Articles of Faith", "text": "CALLED OF GOD BY PROPHECY", "reference": "Articles of Faith 5"},
+    {"category": "Articles of Faith", "text": "PRIMITIVE CHURCH ORGANIZATION", "reference": "Articles of Faith 6"},
+    {"category": "Articles of Faith", "text": "SPIRITUAL GIFTS LIKE PROPHECY", "reference": "Articles of Faith 7"},
+    {"category": "Articles of Faith", "text": "BIBLE AND BOOK OF MORMON", "reference": "Articles of Faith 8"},
+    {"category": "Articles of Faith", "text": "GOD REVEALS MANY THINGS", "reference": "Articles of Faith 9"},
+    {"category": "Articles of Faith", "text": "GATHERING OF ISRAEL", "reference": "Articles of Faith 10"},
     {"category": "Articles of Faith", "text": "WORSHIP ACCORDING TO CONSCIENCE", "reference": "Articles of Faith 11"},
     {"category": "Articles of Faith", "text": "OBEY AND HONOR THE LAW", "reference": "Articles of Faith 12"},
-    {"category": "Articles of Faith", "text": "SEEK VIRTUE AND PRAISEWORTHY THINGS", "reference": "Philippians 4:8"},
+    {"category": "Articles of Faith", "text": "SEEK VIRTUE AND PRAISEWORTHY THINGS", "reference": "Articles of Faith 13"},
 
     # -------------------------------
     # DOCTRINE & COVENANTS
