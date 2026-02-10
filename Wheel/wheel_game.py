@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.8 — Added Pause & Resume Timer
+# v3.9 — Added Timer On/Off Toggle
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -45,9 +45,12 @@ if "w_timer_start" not in st.session_state:
 if "w_timer_running" not in st.session_state:
     st.session_state.w_timer_running = False
 
-# NEW: paused time storage
 if "w_paused_time" not in st.session_state:
     st.session_state.w_paused_time = None
+
+# NEW: Timer Enabled Toggle
+if "w_timer_enabled" not in st.session_state:
+    st.session_state.w_timer_enabled = True
 
 # ---------------------------------------------------------
 # GAME LOGIC
@@ -74,14 +77,12 @@ def stop_timer():
     st.session_state.w_timer_start = None
     st.session_state.w_paused_time = None
 
-# NEW: Pause timer
 def pause_timer():
     if st.session_state.w_timer_running:
         st.session_state.w_paused_time = get_time_left()
         st.session_state.w_timer_running = False
         st.session_state.w_timer_start = None
 
-# NEW: Resume timer
 def resume_timer():
     if st.session_state.w_paused_time is not None:
         st.session_state.w_timer_start = time.time() - (TIMER_DURATION - st.session_state.w_paused_time)
@@ -89,11 +90,9 @@ def resume_timer():
         st.session_state.w_paused_time = None
 
 def get_time_left():
-    # If paused, return paused value
     if st.session_state.w_paused_time is not None:
         return st.session_state.w_paused_time
 
-    # If timer not running
     if not st.session_state.get("w_timer_running", False) or st.session_state.get("w_timer_start") is None:
         return TIMER_DURATION
 
@@ -118,47 +117,46 @@ def guess_letter(letter):
         st.error("Error: No spin value. Please refresh the page.")
         return
 
+    phrase = st.session_state.w_puzzle["text"].upper()
+
+    # VOWELS
     if letter in "AEIOU":
         if st.session_state.w_team_scores[st.session_state.w_current_team] < VOWEL_COST:
             st.error("Not enough money to buy a vowel!")
             return
+
+        st.session_state.w_team_scores[st.session_state.w_current_team] -= VOWEL_COST
+        count = phrase.count(letter)
+
+        if count == 0:
+            st.warning(f"Vowel '{letter}' is not in the puzzle. Team loses turn!")
+            st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
         else:
-            st.session_state.w_team_scores[st.session_state.w_current_team] -= VOWEL_COST
-            phrase = st.session_state.w_puzzle["text"].upper()
-            count = phrase.count(letter)
+            st.session_state.w_guessed_letters.add(letter)
+            st.info(f"Vowel '{letter}' guessed correctly!")
 
-            if count == 0:
-                st.warning(f"Vowel '{letter}' is not in the puzzle. Team {TEAM_NAMES[st.session_state.w_current_team]} loses their turn!")
-                st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
-                st.session_state.w_random_value = None
-                return
-            else:
-                st.session_state.w_guessed_letters.add(letter)
-                st.info(f"Vowel '{letter}' guessed correctly!")
-                st.session_state.w_random_value = None
-                return
+        st.session_state.w_random_value = None
+        return
 
+    # CONSONANTS
     st.session_state.w_guessed_letters.add(letter)
-    phrase = st.session_state.w_puzzle["text"].upper()
     count = phrase.count(letter)
 
     if count > 0:
         if isinstance(st.session_state.w_random_value, int):
             points = count * st.session_state.w_random_value
             st.session_state.w_team_scores[st.session_state.w_current_team] += points
-        else:
-            st.error("Invalid random value! Please spin again.")
-            return
 
         unique_chars = set(c for c in phrase if c.isalpha())
         if unique_chars.issubset(st.session_state.w_guessed_letters):
             st.session_state.w_revealed = True
             st.balloons()
-        st.session_state.w_random_value = None
+
     else:
-        st.warning(f"Letter '{letter}' is not in the puzzle. Team {TEAM_NAMES[st.session_state.w_current_team]} loses their turn!")
+        st.warning(f"Letter '{letter}' is not in the puzzle. Team loses turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
-        st.session_state.w_random_value = None
+
+    st.session_state.w_random_value = None
 
 def solve_puzzle(correct):
     stop_timer()
@@ -171,7 +169,7 @@ def solve_puzzle(correct):
         reference = st.session_state.w_puzzle.get("reference", "No reference available")
         st.write(f"**Scriptural Reference:** {reference}")
     else:
-        st.warning(f"Team {TEAM_NAMES[st.session_state.w_current_team]} guessed incorrectly. Next team's turn!")
+        st.warning(f"Incorrect guess. Next team's turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
         st.session_state.w_random_value = None
 
@@ -180,8 +178,12 @@ def solve_puzzle(correct):
 # ---------------------------------------------------------
 def app():
 
-    # Timer expiration
-    if st.session_state.get("w_timer_running", False) and get_time_left() <= 0:
+    # TIMER EXPIRATION
+    if (
+        st.session_state.w_timer_enabled
+        and st.session_state.get("w_timer_running", False)
+        and get_time_left() <= 0
+    ):
         stop_timer()
         st.toast("Time's up! Next team's turn.", icon="⏳")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
@@ -191,11 +193,17 @@ def app():
 
     c1, c2, c3 = st.columns([1, 1, 1])
 
-    # TIMER DISPLAY + PAUSE/RESUME
+    # TIMER COLUMN
     with c3:
+
+        # NEW: Timer Toggle
+        st.session_state.w_timer_enabled = st.toggle(
+            "⏱️ Timer Enabled",
+            value=st.session_state.w_timer_enabled
+        )
+
         timer_placeholder = st.empty()
 
-        # Default timer display
         timer_placeholder.markdown(
             """
             <div style="
@@ -211,12 +219,12 @@ def app():
         pause_col, resume_col = st.columns(2)
 
         with pause_col:
-            if st.button("⏸️ Pause", disabled=not st.session_state.w_timer_running):
+            if st.button("⏸️ Pause", disabled=not st.session_state.w_timer_running or not st.session_state.w_timer_enabled):
                 pause_timer()
                 st.rerun()
 
         with resume_col:
-            if st.button("▶️ Resume", disabled=st.session_state.w_timer_running or st.session_state.w_paused_time is None):
+            if st.button("▶️ Resume", disabled=not st.session_state.w_timer_enabled or st.session_state.w_timer_running or st.session_state.w_paused_time is None):
                 resume_timer()
                 st.rerun()
 
@@ -234,10 +242,10 @@ def app():
             start_new_round()
             st.rerun()
 
-    # NEW TURN LOGIC
+    # AUTO-SPIN NEW TURN
     if st.session_state.w_puzzle and st.session_state.w_random_value is None and not st.session_state.w_revealed:
         spin_random_value()
-        if st.session_state.w_random_value != "Lose Turn":
+        if st.session_state.w_timer_enabled and st.session_state.w_random_value != "Lose Turn":
             start_timer()
         st.rerun()
 
@@ -372,7 +380,7 @@ def app():
             st.rerun()
 
     # TIMER UPDATE LOOP
-    if st.session_state.get("w_timer_running", False):
+    if st.session_state.w_timer_enabled and st.session_state.get("w_timer_running", False):
         time_left = get_time_left()
         color = timer_color(time_left)
         timer_placeholder.markdown(
