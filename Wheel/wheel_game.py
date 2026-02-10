@@ -210,18 +210,12 @@ def app():
 
 
         # --- Top Bar: Controls ---
-        if st.button("🔄 New Puzzle"):
-            start_new_round()
         col1, col2, col3 = st.columns([1,1,1])
         with col2:
              if st.button("🔄 New Puzzle"):
                 start_new_round()
                 st.rerun()
 
-       
-
-        # --- Top Bar: Controls ---
-            st.rerun()
 
         if not st.session_state.w_puzzle:
             start_new_round()
@@ -238,22 +232,6 @@ def app():
 
     # --- Scoreboard ---
     with st.sidebar:
-        st.write("### Timer")
-        timer_placeholder = st.empty()
-
-        # Set a default static display for the timer
-        timer_placeholder.markdown(
-            f"""
-            <div style="
-                font-size:3rem; font-weight:800; text-align:center; padding:0.5rem 1rem;
-                border-radius:1rem; margin:1rem auto; background-color:#334155; color:white;
-            ">
-                --
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
         st.write("### Team Scores")
         for i in range(4):
             is_active = (i == st.session_state.w_current_team)
