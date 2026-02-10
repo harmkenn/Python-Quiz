@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.5
+# v3.6
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -187,23 +187,24 @@ def app():
         time.sleep(0.5) # Let toast appear before rerun
         st.rerun()
 
-    c1, c2 = st.columns([2, 1])
-    
-    # --- Top: Timer ---
-    timer_placeholder = st.empty()
+    c1, c2, c3 = st.columns([1,1, 1])
 
-    # Set a default static display for the timer
-    timer_placeholder.markdown(
-        f"""
-        <div style="
-            font-size:3rem; font-weight:800; text-align:center; padding:0.5rem 1rem;
-            border-radius:1rem; margin:1rem auto; background-color:#334155; color:white;
-        ">
-            --
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    with c3:
+        # --- Top: Timer ---
+        timer_placeholder = st.empty()
+    
+        # Set a default static display for the timer
+        timer_placeholder.markdown(
+            f"""
+            <div style="
+                font-size:3rem; font-weight:800; text-align:center; padding:0.5rem 1rem;
+                border-radius:1rem; margin:1rem auto; background-color:#334155; color:white;
+            ">
+                --
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     with c1:
         st.title("🎡 Scripture Wheel")
