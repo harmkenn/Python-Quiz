@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.7 — Added Pause & Resume Timer
+# v3.8 — Added Pause & Resume Timer
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -62,7 +62,7 @@ def start_new_round():
     st.session_state.w_timer_running = False
     st.session_state.w_timer_start = None
 
-TIMER_DURATION = 15
+TIMER_DURATION = 20
 
 def start_timer():
     st.session_state.w_timer_start = time.time()
