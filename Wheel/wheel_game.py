@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.7
+# v3.8
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -182,5 +182,4 @@ def app():
     # --- Game Logic ---
     # Add your game logic here (e.g., puzzle board, guessing letters, solving puzzles)
 
-if __name__ == "__main__":
-    app()
+app()
