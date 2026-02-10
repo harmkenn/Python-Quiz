@@ -4,7 +4,7 @@ import time
 from puzzle_bank import PUZZLE_BANK  # Import the puzzle bank from the external file
 
 st.set_page_config(page_title="Scripture Wheel", layout="wide")
-# v3.8
+# v3.9
 
 # ---------------------------------------------------------
 # CONFIGURATION & PUZZLE BANK
@@ -167,15 +167,15 @@ def app():
     # --- Timer Controls ---
     col1, col2, col3 = st.columns([1, 1, 1])
     with col1:
-        if st.button("⏸️ Pause Timer", disabled=not st.session_state.w_timer_running):
+        if st.button("⏸️ Pause Timer", key="pause_timer", disabled=not st.session_state.w_timer_running):
             pause_timer()
             st.rerun()
     with col2:
-        if st.button("▶️ Resume Timer", disabled=not st.session_state.w_timer_paused):
+        if st.button("▶️ Resume Timer", key="resume_timer", disabled=not st.session_state.w_timer_paused):
             resume_timer()
             st.rerun()
     with col3:
-        if st.button("⏹️ Stop Timer", disabled=not (st.session_state.w_timer_running or st.session_state.w_timer_paused)):
+        if st.button("⏹️ Stop Timer", key="stop_timer", disabled=not (st.session_state.w_timer_running or st.session_state.w_timer_paused)):
             stop_timer()
             st.rerun()
 
