@@ -29,6 +29,18 @@ scriptures = {
 "Psalm 24:3–4": "“Who shall stand in his holy place? He that hath clean hands, and a pure heart.”",
 "Proverbs 3:5–6": "“Trust in the Lord with all thine heart … and he shall direct thy paths.”",
 "Isaiah 1:18": "“Though your sins be as scarlet, they shall be as white as snow.”",
+"Isaiah 5:20": "“Woe unto them that call evil good, and good evil.”",
+"Isaiah 29:13–14": "The restoration of the gospel is “a marvellous work and a wonder.”",
+"Isaiah 53:3–5": "“Surely [Jesus Christ] hath borne our griefs, and carried our sorrows.”",
+"Isaiah 58:6–7": "The blessings of a proper fast",
+"Isaiah 58:13–14": "“Turn away … from doing thy pleasure on my holy day; and call the sabbath a delight.”",
+"Jeremiah 1:4–5": "“Before I formed thee in the belly … I ordained thee a prophet unto the nations.”",
+"Ezekiel 3:16–17": "The prophet is “a watchman unto the house of Israel.”",
+"Ezekiel 37:15–17": "The Bible and the Book of Mormon “shall become one in thine hand.”",
+"Daniel 2:44–45": "God shall “set up a kingdom, which shall never be destroyed.”",
+"Amos 3:7": "“The Lord God … revealeth his secret unto his servants the prophets.”",
+"Malachi 3:8–10": "The blessings of paying tithing",
+"Malachi 4:5–6": "Elijah “shall turn … the heart of the children to their fathers.”",
 }
 extra = {
 "Moses 1:39": "“This is my work and my glory—to bring to pass the immortality and eternal life of man.”",
