@@ -71,7 +71,7 @@ def main():
         st.title("🎮 LDS Games Arcade")
         st.info("Select a game from the sidebar to begin.")
     elif st.session_state.current_game == "Matching":
-        mod = load_game_module("Matching", "both.py", "game_matching")
+        mod = load_game_module("Matching", "Matching_OT.py", "game_matching")
         mod.app()
     elif st.session_state.current_game == "Jeopardy":
         mod = load_game_module("Jeopardy", "app.py", "game_jeopardy")
