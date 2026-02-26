@@ -104,20 +104,6 @@ question_bank = [
     {"category": "Plan of Salvation", "q": "Where do righteous spirits go after death?", "a": "Spirit Paradise"},
 
     # -------------------------------
-    # Priesthood & Organization (Additions)
-    # -------------------------------
-    {"category": "Priesthood & Organization", "q": "Which priesthood administers the sacrament?", "a": "Aaronic Priesthood"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood office can baptize?", "a": "Priest"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood office can confer the Holy Ghost?", "a": "Elder"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood holds the keys of all spiritual blessings?", "a": "Melchizedek Priesthood"},
-    {"category": "Priesthood & Organization", "q": "Who holds all priesthood keys today?", "a": "The President of the Church"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the women’s organization?", "a": "Relief Society"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the children’s organization?", "a": "Primary"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the youth organization for young men?", "a": "Aaronic Priesthood Quorums"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the youth organization for young women?", "a": "Young Women"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the Church’s missionary organization?", "a": "The Missionary Program"},
-
-    # -------------------------------
     # Book of Mormon (Additions)
     # -------------------------------
     {"category": "Book of Mormon", "q": "Who was the first prophet in the Book of Mormon?", "a": "Lehi"},
