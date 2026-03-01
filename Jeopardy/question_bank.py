@@ -76,48 +76,6 @@ question_bank = [
     {"category": "Old Testament Prophets", "q": "Elijah will turn the hearts of the children to their fathers.", "a": "Malachi 4:5–6"},
 
     # -------------------------------
-    # Basic Doctrine & Scripture (Additions)
-    # -------------------------------
-    {"category": "Basic Doctrine & Scripture", "q": "What is the name of God’s plan for His children?", "a": "The Plan of Salvation"},
-    {"category": "Basic Doctrine & Scripture", "q": "What gift is received after baptism?", "a": "The Gift of the Holy Ghost"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the first ordinance of the gospel?", "a": "Baptism"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the second ordinance of the gospel?", "a": "Confirmation"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the sacred agreement made at baptism called?", "a": "A covenant"},
-    {"category": "Basic Doctrine & Scripture", "q": "What book contains modern revelations?", "a": "Doctrine and Covenants"},
-    {"category": "Basic Doctrine & Scripture", "q": "What book contains writings of ancient American prophets?", "a": "The Book of Mormon"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the first book of the Bible?", "a": "Genesis"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the last book of the Bible?", "a": "Revelation"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the name of the LDS hymnbook?", "a": "Hymns"},
-
-    # -------------------------------
-    # Plan of Salvation (Additions)
-    # -------------------------------
-    {"category": "Plan of Salvation", "q": "Where do spirits go after death?", "a": "Spirit world"},
-    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the sun?", "a": "Celestial kingdom"},
-    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the moon?", "a": "Terrestrial kingdom"},
-    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the stars?", "a": "Telestial kingdom"},
-    {"category": "Plan of Salvation", "q": "What event reunites the body and spirit forever?", "a": "Resurrection"},
-    {"category": "Plan of Salvation", "q": "What event allowed mortality and agency?", "a": "The Fall"},
-    {"category": "Plan of Salvation", "q": "What happens before entering a kingdom of glory?", "a": "Judgment"},
-    {"category": "Plan of Salvation", "q": "Where does God live?", "a": "The Celestial Kingdom"},
-    {"category": "Plan of Salvation", "q": "Where did Adam and Eve live before the Fall?", "a": "The Garden of Eden"},
-    {"category": "Plan of Salvation", "q": "Where do righteous spirits go after death?", "a": "Spirit Paradise"},
-
-    # -------------------------------
-    # Priesthood & Organization (Additions)
-    # -------------------------------
-    {"category": "Priesthood & Organization", "q": "Which priesthood administers the sacrament?", "a": "Aaronic Priesthood"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood office can baptize?", "a": "Priest"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood office can confer the Holy Ghost?", "a": "Elder"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood holds the keys of all spiritual blessings?", "a": "Melchizedek Priesthood"},
-    {"category": "Priesthood & Organization", "q": "Who holds all priesthood keys today?", "a": "The President of the Church"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the women’s organization?", "a": "Relief Society"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the children’s organization?", "a": "Primary"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the youth organization for young men?", "a": "Aaronic Priesthood Quorums"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the youth organization for young women?", "a": "Young Women"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the Church’s missionary organization?", "a": "The Missionary Program"},
-
-    # -------------------------------
     # Book of Mormon (Additions)
     # -------------------------------
     {"category": "Book of Mormon", "q": "Who was the first prophet in the Book of Mormon?", "a": "Lehi"},
@@ -220,4 +178,45 @@ question_bank = [
     {"category": "Church History", "q": "How many children does President Russell M. Nelson have?", "a": "10"},
 
 
+    # -------------------------------
+    # Who Said It? (Scriptures)
+    # -------------------------------
+    {"category": "Who Said It? (Scriptures)", "q": "“I will go and do the things which the Lord hath commanded.”", "a": "Nephi"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Choose you this day whom ye will serve; ... but as for me and my house, we will serve the Lord.”", "a": "Joshua"},
+    {"category": "Who Said It? (Scriptures)", "q": "“For behold, this is my work and my glory—to bring to pass the immortality and eternal life of man.”", "a": "God (Moses 1:39)"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Wickedness never was happiness.”", "a": "Alma"},
+    {"category": "Who Said It? (Scriptures)", "q": "“When ye are in the service of your fellow beings ye are only in the service of your God.”", "a": "King Benjamin"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Am I my brother’s keeper?”", "a": "Cain"},
+    {"category": "Who Said It? (Scriptures)", "q": "“How then can I do this great wickedness, and sin against God?”", "a": "Joseph (of Egypt)"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Fear not: for they that be with us are more than they that be with them.”", "a": "Elisha"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Adam fell that men might be; and men are, that they might have joy.”", "a": "Lehi"},
+    {"category": "Who Said It? (Scriptures)", "q": "“I know that my Redeemer liveth.”", "a": "Job"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Whither thou goest, I will go; and where thou lodgest, I will lodge.”", "a": "Ruth"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Ye are the light of the world.”", "a": "Jesus Christ"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Faith without works is dead.”", "a": "James"},
+    {"category": "Who Said It? (Scriptures)", "q": "“I have fought a good fight, I have finished my course, I have kept the faith.”", "a": "Paul"},
+    {"category": "Who Said It? (Scriptures)", "q": "“Remember, remember that it is upon the rock of our Redeemer, who is Christ... that ye must build your foundation.”", "a": "Helaman"},
+
+    # -------------------------------
+    # Who Said It? (Modern Prophets)
+    # -------------------------------
+    {"category": "Who Said It? (Modern Prophets)", "q": "“No unhallowed hand can stop the work from progressing.”", "a": "Joseph Smith"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“This is the place.”", "a": "Brigham Young"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“Every member a missionary.”", "a": "David O. McKay"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“No success can compensate for failure in the home.”", "a": "David O. McKay"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“Do it.”", "a": "Spencer W. Kimball"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“Lengthen your stride.”", "a": "Spencer W. Kimball"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“Stand for something or you will fall for anything.”", "a": "Gordon B. Hinckley"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“To the rescue.”", "a": "Thomas S. Monson"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“Think Celestial.”", "a": "Russell M. Nelson"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“Let God Prevail.”", "a": "Russell M. Nelson"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“A man is saved no faster than he gets knowledge.”", "a": "Joseph Smith"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“The Book of Mormon is the keystone of our religion.”", "a": "Ezra Taft Benson"},
+    {"category": "Who Said It? (Modern Prophets)", "q": "“Joy is not a matter of circumstance, it is a matter of focus.”", "a": "Russell M. Nelson"},
+
 ]
+
+
+
+
+
