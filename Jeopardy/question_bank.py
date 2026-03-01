@@ -76,48 +76,6 @@ question_bank = [
     {"category": "Old Testament Prophets", "q": "Elijah will turn the hearts of the children to their fathers.", "a": "Malachi 4:5–6"},
 
     # -------------------------------
-    # Basic Doctrine & Scripture (Additions)
-    # -------------------------------
-    {"category": "Basic Doctrine & Scripture", "q": "What is the name of God’s plan for His children?", "a": "The Plan of Salvation"},
-    {"category": "Basic Doctrine & Scripture", "q": "What gift is received after baptism?", "a": "The Gift of the Holy Ghost"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the first ordinance of the gospel?", "a": "Baptism"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the second ordinance of the gospel?", "a": "Confirmation"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the sacred agreement made at baptism called?", "a": "A covenant"},
-    {"category": "Basic Doctrine & Scripture", "q": "What book contains modern revelations?", "a": "Doctrine and Covenants"},
-    {"category": "Basic Doctrine & Scripture", "q": "What book contains writings of ancient American prophets?", "a": "The Book of Mormon"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the first book of the Bible?", "a": "Genesis"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the last book of the Bible?", "a": "Revelation"},
-    {"category": "Basic Doctrine & Scripture", "q": "What is the name of the LDS hymnbook?", "a": "Hymns"},
-
-    # -------------------------------
-    # Plan of Salvation (Additions)
-    # -------------------------------
-    {"category": "Plan of Salvation", "q": "Where do spirits go after death?", "a": "Spirit world"},
-    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the sun?", "a": "Celestial kingdom"},
-    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the moon?", "a": "Terrestrial kingdom"},
-    {"category": "Plan of Salvation", "q": "Which kingdom is compared to the glory of the stars?", "a": "Telestial kingdom"},
-    {"category": "Plan of Salvation", "q": "What event reunites the body and spirit forever?", "a": "Resurrection"},
-    {"category": "Plan of Salvation", "q": "What event allowed mortality and agency?", "a": "The Fall"},
-    {"category": "Plan of Salvation", "q": "What happens before entering a kingdom of glory?", "a": "Judgment"},
-    {"category": "Plan of Salvation", "q": "Where does God live?", "a": "The Celestial Kingdom"},
-    {"category": "Plan of Salvation", "q": "Where did Adam and Eve live before the Fall?", "a": "The Garden of Eden"},
-    {"category": "Plan of Salvation", "q": "Where do righteous spirits go after death?", "a": "Spirit Paradise"},
-
-    # -------------------------------
-    # Priesthood & Organization (Additions)
-    # -------------------------------
-    {"category": "Priesthood & Organization", "q": "Which priesthood administers the sacrament?", "a": "Aaronic Priesthood"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood office can baptize?", "a": "Priest"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood office can confer the Holy Ghost?", "a": "Elder"},
-    {"category": "Priesthood & Organization", "q": "Which priesthood holds the keys of all spiritual blessings?", "a": "Melchizedek Priesthood"},
-    {"category": "Priesthood & Organization", "q": "Who holds all priesthood keys today?", "a": "The President of the Church"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the women’s organization?", "a": "Relief Society"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the children’s organization?", "a": "Primary"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the youth organization for young men?", "a": "Aaronic Priesthood Quorums"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the youth organization for young women?", "a": "Young Women"},
-    {"category": "Priesthood & Organization", "q": "What is the name of the Church’s missionary organization?", "a": "The Missionary Program"},
-
-    # -------------------------------
     # Book of Mormon (Additions)
     # -------------------------------
     {"category": "Book of Mormon", "q": "Who was the first prophet in the Book of Mormon?", "a": "Lehi"},
