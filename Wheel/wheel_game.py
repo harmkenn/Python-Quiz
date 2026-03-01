@@ -129,7 +129,6 @@ def guess_letter(letter):
         count = phrase.count(letter)
 
         if count == 0:
-            st.warning(f"Vowel '{letter}' is not in the puzzle. Team loses turn!")
             st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
         else:
             st.session_state.w_guessed_letters.add(letter)
@@ -153,7 +152,6 @@ def guess_letter(letter):
             st.balloons()
 
     else:
-        st.warning(f"Letter '{letter}' is not in the puzzle. Team loses turn!")
         st.session_state.w_current_team = (st.session_state.w_current_team + 1) % len(TEAM_NAMES)
 
     st.session_state.w_random_value = None
