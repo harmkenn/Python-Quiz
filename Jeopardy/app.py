@@ -11,7 +11,7 @@ from question_bank import question_bank
 
 if __name__ == "__main__":
     st.set_page_config(page_title="Scripture Jeopardy - Teacher", layout="wide")
-# v3.2 — Dynamic Question Bank Edition
+# v3.4 — Buttons visible during answering timer
 
 # ---------------------------------------------------------
 # AUTO-DETECT LOCAL IP FOR QR CODE
@@ -41,36 +41,27 @@ TEAM_COLORS = [
 ]
 
 # ---------------------------------------------------------
-# DYNAMIC JEOPARDY BOARD (5 random categories × 5 questions each)
+# DYNAMIC JEOPARDY BOARD (5 random categories x 5 questions each)
 # ---------------------------------------------------------
-import random
-from collections import defaultdict
 
-# Build a dictionary: category → list of questions
 category_map = defaultdict(list)
 for q in question_bank:
     category_map[q["category"]].append(q)
 
-# Only run once per game
 def init_board():
     if "selected_categories" not in st.session_state:
-        # 1. Pick 5 random categories
         all_categories = list(category_map.keys())
         st.session_state.selected_categories = random.sample(all_categories, 5)
 
-        # 2. For each category, pick 5 random questions
         board = {}
         for cat in st.session_state.selected_categories:
             questions = category_map[cat]
 
-            # Ensure at least 5 questions exist
             if len(questions) < 5:
-                # If a category is too small, randomly repeat questions
                 chosen = random.choices(questions, k=5)
             else:
                 chosen = random.sample(questions, 5)
 
-            # Assign Jeopardy point values
             board[cat] = {}
             for i, q in enumerate(chosen):
                 points = str((i + 1) * 100)
@@ -78,13 +69,22 @@ def init_board():
 
         st.session_state.jeopardy_board = board
 
-    # Use the generated board
     return st.session_state.jeopardy_board
 
 # ---------------------------------------------------------
 # TIMER HELPERS
 # ---------------------------------------------------------
-TIMER_DURATION = 15
+TIMER_READING = 15
+TIMER_ANSWERING = 10
+TIMER_DISCUSSION = 30
+
+def get_current_duration():
+    mode = st.session_state.get("timer_mode", "reading")
+    if mode == "answering":
+        return TIMER_ANSWERING
+    elif mode == "discussion":
+        return TIMER_DISCUSSION
+    return TIMER_READING
 
 def start_timer():
     st.session_state.timer_start = time.time()
@@ -95,14 +95,15 @@ def stop_timer():
 
 def get_time_left():
     if not st.session_state.timer_running or st.session_state.timer_start is None:
-        return TIMER_DURATION
+        return get_current_duration()
     elapsed = time.time() - st.session_state.timer_start
-    return max(0, TIMER_DURATION - int(elapsed))
+    return max(0, get_current_duration() - int(elapsed))
 
 def timer_color(seconds_left):
-    if seconds_left > TIMER_DURATION * 0.6:
+    total = get_current_duration()
+    if seconds_left > total * 0.6:
         return "#22c55e"
-    elif seconds_left > TIMER_DURATION * 0.3:
+    elif seconds_left > total * 0.3:
         return "#eab308"
     else:
         return "#ef4444"
@@ -159,7 +160,7 @@ def render_team_buttons():
 # ---------------------------------------------------------
 # SIDEBAR: QR CODE + BUZZER LINK
 # ---------------------------------------------------------
-    
+
 def app():
     st.sidebar.subheader("Buzzer Link")
 
@@ -197,6 +198,9 @@ def app():
     if "timer_running" not in st.session_state:
         st.session_state.timer_running = False
 
+    if "timer_mode" not in st.session_state:
+        st.session_state.timer_mode = "reading"
+
     categories = init_board()
 
     # ---------------------------------------------------------
@@ -226,6 +230,7 @@ def app():
                     if st.button(f"${points}", key=f"{cat}-{points}", disabled=disabled):
                         st.session_state.current_question = (cat, points_int)
                         st.session_state.show_answer = False
+                        st.session_state.timer_mode = "reading"
                         BUZZ_STATE.clear()
                         start_timer()
                         st.rerun()
@@ -240,10 +245,13 @@ def app():
         st.markdown(f"## {cat} — ${points}")
         st.markdown(f"### {qdata['q']}")
 
+        # Placeholders rendered first so they appear at the top
         timer_placeholder = st.empty()
+        buzz_banner = st.empty()
 
-        def render_timer():
-            time_left = get_time_left()
+        def render_timer(time_left=None):
+            if time_left is None:
+                time_left = get_time_left()
             color = timer_color(time_left)
             timer_placeholder.markdown(
                 f"""
@@ -264,45 +272,33 @@ def app():
                 unsafe_allow_html=True,
             )
 
-        if st.session_state.timer_running:
-            for _ in range(200):
-                render_timer()
-                time.sleep(0.2)
-                if get_time_left() == 0:
-                    st.session_state.timer_running = False
-                    break
-        else:
-            render_timer()
+        def render_buzz_banner(buzz_name=None):
+            if buzz_name:
+                buzz_banner.markdown(
+                    f"""
+                    <div style="
+                        background:#22c55e;
+                        color:white;
+                        padding:1rem;
+                        text-align:center;
+                        font-size:2rem;
+                        font-weight:700;
+                        border-radius:10px;
+                        margin-bottom:1rem;
+                    ">
+                        🔔 {buzz_name} BUZZED IN FIRST!
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+            else:
+                buzz_banner.info("No team has buzzed in yet.")
 
-        first_buzz = BUZZ_STATE.get()
-        if first_buzz:
-            buzz_name = first_buzz["team"]
-
-            for i in range(4):
-                if TEAM_NAMES[i] == buzz_name:
-                    st.session_state.current_team = i
-                    break
-
-            st.markdown(
-                f"""
-                <div style="
-                    background:#22c55e;
-                    color:white;
-                    padding:1rem;
-                    text-align:center;
-                    font-size:2rem;
-                    font-weight:700;
-                    border-radius:10px;
-                    margin-bottom:1rem;
-                ">
-                    🔔 {buzz_name} BUZZED IN FIRST!
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-        else:
-            st.info("No team has buzzed in yet.")
-
+        # ---------------------------------------------------------
+        # CONTROL BUTTONS — rendered BEFORE timer loops so they are
+        # always visible while the countdown is running
+        # ---------------------------------------------------------
+        st.markdown("---")
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
@@ -323,10 +319,16 @@ def app():
         with col4:
             if st.button("👁️ Show Answer"):
                 st.session_state.show_answer = True
+                st.session_state.timer_running = False
                 st.rerun()
 
         if st.session_state.show_answer:
             st.markdown(f"### ✅ Answer: {qdata['a']}")
+
+            if st.button("⏳ Start Discussion Timer (30s)"):
+                st.session_state.timer_mode = "discussion"
+                start_timer()
+                st.rerun()
 
             colA, colB, colC = st.columns(3)
             with colA:
@@ -351,6 +353,79 @@ def app():
                     st.session_state.current_question = None
                     st.session_state.show_answer = False
                     st.rerun()
+
+        # ---------------------------------------------------------
+        # TIMER LOOPS — run after buttons are already painted
+        # ---------------------------------------------------------
+        if st.session_state.timer_running:
+
+            # READING MODE: Watch for a buzz, then hand off to answering
+            if st.session_state.timer_mode == "reading":
+                render_buzz_banner(None)
+
+                while get_time_left() > 0:
+                    render_timer()
+
+                    if BUZZ_STATE.get():
+                        buzz_name = BUZZ_STATE.get()["team"]
+
+                        for i in range(4):
+                            if TEAM_NAMES[i] == buzz_name:
+                                st.session_state.current_team = i
+                                break
+
+                        render_buzz_banner(buzz_name)
+
+                        current_val = get_time_left()
+                        for t in range(current_val, -1, -1):
+                            render_timer(t)
+                            time.sleep(0.05)
+
+                        st.session_state.timer_mode = "answering"
+                        start_timer()
+                        st.rerun()
+                        break
+
+                    time.sleep(0.1)
+
+                if get_time_left() == 0:
+                    st.session_state.timer_running = False
+                    render_timer(0)
+
+            # ANSWERING MODE: Team name stays visible above the 10-second countdown
+            elif st.session_state.timer_mode == "answering":
+                first_buzz = BUZZ_STATE.get()
+                if first_buzz:
+                    buzz_name = first_buzz["team"]
+                    for i in range(4):
+                        if TEAM_NAMES[i] == buzz_name:
+                            st.session_state.current_team = i
+                            break
+                    render_buzz_banner(buzz_name)
+                else:
+                    render_buzz_banner(None)
+
+                while get_time_left() > 0:
+                    render_timer()
+                    time.sleep(0.1)
+                st.session_state.timer_running = False
+                render_timer(0)
+
+            # DISCUSSION MODE
+            else:
+                first_buzz = BUZZ_STATE.get()
+                render_buzz_banner(first_buzz["team"] if first_buzz else None)
+
+                while get_time_left() > 0:
+                    render_timer()
+                    time.sleep(0.1)
+                st.session_state.timer_running = False
+                render_timer(0)
+
+        else:
+            first_buzz = BUZZ_STATE.get()
+            render_buzz_banner(first_buzz["team"] if first_buzz else None)
+            render_timer()
 
 if __name__ == "__main__":
     app()
