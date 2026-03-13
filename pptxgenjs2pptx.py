@@ -3,11 +3,10 @@ import asyncio
 import base64
 import os
 import tempfile
-import json
 from pyppeteer import launch
 
 # ─────────────────────────────────────────────
-# Helper: run PptxGenJS code in headless Chrome
+# Helper: run PptxGenJS code in headless Chrome v1.1
 # ─────────────────────────────────────────────
 async def run_pptxgenjs(js_code: str, output_path: str) -> dict:
     """
@@ -168,7 +167,10 @@ if st.button("🚀 Convert to PPTX", type="primary"):
                 tmp_path = tmp.name
 
             try:
-                result = asyncio.run(run_pptxgenjs(js_code, tmp_path))
+                # Run the async function using asyncio.create_task()
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                result = loop.run_until_complete(run_pptxgenjs(js_code, tmp_path))
 
                 if result["success"]:
                     # Read the generated PPTX
