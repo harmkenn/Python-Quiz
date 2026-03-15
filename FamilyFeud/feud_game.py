@@ -1,4 +1,5 @@
 import streamlit as st
+import random
 import data
 
 def app():
@@ -58,6 +59,12 @@ def app():
     """, unsafe_allow_html=True)
 
     # --- Session State Initialization ---
+    # Create a random order of indices if not already set
+    if "feud_game_indices" not in st.session_state:
+        indices = list(range(len(data.feud_data)))
+        random.shuffle(indices)
+        st.session_state.feud_game_indices = indices
+
     if "feud_round_index" not in st.session_state:
         st.session_state.feud_round_index = 0
     if "feud_scores" not in st.session_state:
@@ -71,7 +78,7 @@ def app():
 
     # --- Game Logic Functions ---
     def next_round():
-        if st.session_state.feud_round_index < len(data.feud_data) - 1:
+        if st.session_state.feud_round_index < len(st.session_state.feud_game_indices) - 1:
             st.session_state.feud_round_index += 1
             st.session_state.feud_revealed = []
             st.session_state.feud_strikes = 0
@@ -104,9 +111,39 @@ def app():
         st.session_state.feud_round_points = 0
 
     # --- Data for Current Round ---
-    current_data = data.feud_data[st.session_state.feud_round_index]
+    # Use the shuffled index mapping
+    current_actual_index = st.session_state.feud_game_indices[st.session_state.feud_round_index]
+    current_data = data.feud_data[current_actual_index]
     question = current_data["question"]
     answers = current_data["answers"] # List of (text, points)
+
+    # --- Sidebar Controls ---
+    with st.sidebar:
+        st.title("Controls")
+        
+        st.subheader("Strikes")
+        c_s1, c_s2 = st.columns(2)
+        with c_s1:
+            if st.button("❌ Strike", use_container_width=True):
+                add_strike()
+        with c_s2:
+            if st.button("Clear", use_container_width=True):
+                clear_strikes()
+        
+        # Display strikes in sidebar
+        st.markdown(f"<div class='strike-x' style='font-size:60px;'>{'X ' * st.session_state.feud_strikes}</div>", unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.subheader("Navigation")
+        c_n1, c_n2 = st.columns(2)
+        with c_n1:
+            if st.button("⬅️ Prev", use_container_width=True):
+                prev_round()
+                st.rerun()
+        with c_n2:
+            if st.button("Next ➡️", use_container_width=True):
+                next_round()
+                st.rerun()
 
     # --- Layout: Header & Scores ---
     st.title("👨‍👩‍👧‍👦 Family Feud")
@@ -142,54 +179,26 @@ def app():
         target_col = col_a if i < (total_ans + 1) // 2 else col_b
         
         with target_col:
-            # Visual Card
-            if is_revealed:
-                st.markdown(
-                    f"<div class='answer-card answer-card-revealed'><span>{i+1}. {ans_text}</span> <span>{pts}</span></div>", 
-                    unsafe_allow_html=True
-                )
-            else:
-                # Hidden Card
-                st.markdown(
-                    f"<div class='answer-card'>{i+1}</div>", 
-                    unsafe_allow_html=True
-                )
+            # Layout: Button left, Card right
+            c_btn, c_card = st.columns([1, 4], vertical_alignment="center")
             
-            # Control Button (Host only essentially)
-            if not is_revealed:
-                if st.button(f"Reveal {i+1}", key=f"rev_{i}"):
-                    reveal_answer(i, pts)
-                    st.rerun()
-            else:
-                # Invisible placeholder to keep alignment? Or just nothing.
-                st.write("") 
+            with c_btn:
+                # Reveal button
+                if not is_revealed:
+                    if st.button(f"{i+1}", key=f"rev_{i}", use_container_width=True):
+                        reveal_answer(i, pts)
+                        st.rerun()
+                else:
+                    st.button("✔", key=f"rev_{i}_done", disabled=True, use_container_width=True)
 
-    st.markdown("---")
-
-    # --- Strikes & Controls ---
-    sc1, sc2, sc3 = st.columns([1, 2, 1])
-    
-    with sc1:
-        st.write("### Strikes")
-        s_cols = st.columns(3)
-        with s_cols[0]:
-            if st.button("❌"): add_strike()
-        with s_cols[1]:
-            if st.button("Clear"): clear_strikes()
-            
-    with sc2:
-        # Display Big X's
-        x_str = " X " * st.session_state.feud_strikes
-        st.markdown(f"<div class='strike-x'>{x_str}</div>", unsafe_allow_html=True)
-
-    with sc3:
-        st.write("### Controls")
-        nav_c1, nav_c2 = st.columns(2)
-        with nav_c1:
-            if st.button("⬅️ Prev"):
-                prev_round()
-                st.rerun()
-        with nav_c2:
-            if st.button("Next ➡️"):
-                next_round()
-                st.rerun()
+            with c_card:
+                if is_revealed:
+                    st.markdown(
+                        f"<div class='answer-card answer-card-revealed'><span>{ans_text}</span> <span>{pts}</span></div>", 
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.markdown(
+                        f"<div class='answer-card'></div>", 
+                        unsafe_allow_html=True
+                    )
