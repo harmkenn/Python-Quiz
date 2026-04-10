@@ -7,7 +7,7 @@ if __name__ == "__main__":
     st.set_page_config(page_title="Italian Match", layout="wide")
 
 # --- Load Italian Data (1000 common words/phrases) ---
-from italian_1000_words import italian_words   # <-- You will create this file
+from italian_set import italian_set   # <-- You will create this file
 
 # --- Helper function to convert index to letter ---
 def index_to_letter(index):
