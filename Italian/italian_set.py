@@ -18,7 +18,7 @@ italian_set = {
     "see you soon": "a presto",
     "goodbye": "arrivederci",
     "welcome": "benvenuto",
-
+ 
     # --- Useful Phrases ---
     "I don't understand": "non capisco",
     "do you speak English": "parli inglese",
