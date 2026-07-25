@@ -5,8 +5,11 @@ import random
 if __name__ == "__main__":
     st.set_page_config(page_title="Italian Match", layout="wide")
 
-# --- Load Italian Data (1000 common words/phrases) ---
-from italian_set import italian_set   # <-- You will create this file
+# --- Load Italian Data (consolidated dataset) ---
+from consolidated_italian_data import get_english_to_italian
+
+# Build italian_set dict from consolidated data (English -> Italiano)
+italian_set = get_english_to_italian()
 
 def app():
     st.markdown("""
