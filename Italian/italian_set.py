@@ -1,3 +1,24 @@
+from pathlib import Path
+import pandas as pd
+
+# Load CSV and expose `italian_set` dict mapping English -> Italiano
+csv_path = Path(__file__).parent / "1000 Words.csv"
+if not csv_path.exists():
+    raise FileNotFoundError(f"CSV not found: {csv_path}")
+
+_df = pd.read_csv(csv_path)
+if 'English' not in _df.columns or 'Italiano' not in _df.columns:
+    raise ValueError("CSV must contain 'English' and 'Italiano' columns")
+
+# Build mapping; keep first occurrence if English duplicates exist
+italian_set = {}
+for _, row in _df.iterrows():
+    eng = str(row['English']).strip()
+    ita = str(row['Italiano']).strip()
+    if eng and eng not in italian_set:
+        italian_set[eng] = ita
+
+__all__ = ['italian_set']
 italian_set = {
     # --- Greetings & Basics ---
     "hello": "ciao",
