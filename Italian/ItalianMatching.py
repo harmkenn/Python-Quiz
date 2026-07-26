@@ -5,8 +5,11 @@ import random
 if __name__ == "__main__":
     st.set_page_config(page_title="Italian Match", layout="wide")
 
-# --- Load Italian Data (1000 common words/phrases) ---
-from italian_set import italian_set   # <-- You will create this file
+# --- Load Italian Data (consolidated dataset) ---
+from consolidated_italian_data import get_english_to_italian
+
+# Build italian_set dict from consolidated data (English -> Italiano)
+italian_set = get_english_to_italian()
 
 def app():
     st.markdown("""
@@ -26,13 +29,19 @@ def app():
     num_pairs = st.sidebar.slider("Number of word pairs:", 10, len(italian_set), 20, step=1)
     num_teams = st.sidebar.slider("Number of teams:", 2, 4, 4, step=1)
 
-    team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"][:num_teams]
-
     # --- Initialize game ---
     if "initialized" not in st.session_state:
         st.session_state.initialized = False
+        st.session_state.num_teams = num_teams
+    
+    # Use stored num_teams if game is already running, otherwise use slider value
+    if st.session_state.initialized:
+        num_teams = st.session_state.num_teams
+    
+    team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"][:num_teams]
 
     if st.sidebar.button("🔁 Start New Game") or not st.session_state.initialized:
+        st.session_state.num_teams = num_teams
         selected = random.sample(list(italian_set.items()), num_pairs)
         pairs = []
         for eng, ita in selected:

@@ -1,0 +1,1738 @@
+Italiano,English,Part,Source
+cosa,thing,Noun,1000 Words.csv
+anno,year,Noun,1000 Words.csv
+uomo,man,Noun,1000 Words.csv
+giorno,day,Noun,1000 Words.csv
+volta,time,Noun,1000 Words.csv
+casa,home,Noun,1000 Words.csv
+parte,part,Noun,1000 Words.csv
+vita,life,Noun,1000 Words.csv
+tempo,time,Noun,1000 Words.csv
+donna,woman,Noun,1000 Words.csv
+mano,hand,Noun,1000 Words.csv
+occhio,eye,Noun,1000 Words.csv
+ora,now,Noun,1000 Words.csv
+signore,Mr.,Noun,1000 Words.csv
+paese,"country, town",Noun,1000 Words.csv
+momento,moment,Noun,1000 Words.csv
+modo,way,Noun,1000 Words.csv
+mondo,world,Noun,1000 Words.csv
+parola,word,Noun,1000 Words.csv
+padre,father,Noun,1000 Words.csv
+punto,point,Noun,1000 Words.csv
+lavoro,work,Noun,1000 Words.csv
+stato,state,Noun,1000 Words.csv
+caso,case,Noun,1000 Words.csv
+città,city,Noun,1000 Words.csv
+guerra,war,Noun,1000 Words.csv
+strada,street,Noun,1000 Words.csv
+figlio,son,Noun,1000 Words.csv
+notte,night,Noun,1000 Words.csv
+voce,voice,Noun,1000 Words.csv
+nome,name,Noun,1000 Words.csv
+sera,evening,Noun,1000 Words.csv
+acqua,water,Noun,1000 Words.csv
+amico,friend,Noun,1000 Words.csv
+fatto,done,Noun,1000 Words.csv
+gente,people,Noun,1000 Words.csv
+amore,love,Noun,1000 Words.csv
+storia,history,Noun,1000 Words.csv
+aria,air,Noun,1000 Words.csv
+forza,power,Noun,1000 Words.csv
+testa,head,Noun,1000 Words.csv
+ragione,reason,Noun,1000 Words.csv
+mare,sea,Noun,1000 Words.csv
+mese,month,Noun,1000 Words.csv
+capo,head,Noun,1000 Words.csv
+luce,light,Noun,1000 Words.csv
+sole,Sun,Noun,1000 Words.csv
+famiglia,family,Noun,1000 Words.csv
+piede,foot,Noun,1000 Words.csv
+persona,person,Noun,1000 Words.csv
+via,street,Noun,1000 Words.csv
+signora,Mrs.,Noun,1000 Words.csv
+governo,government,Noun,1000 Words.csv
+senso,sense,Noun,1000 Words.csv
+opera,Opera,Noun,1000 Words.csv
+prodotto,product,Noun,1000 Words.csv
+festa,party,Noun,1000 Words.csv
+gioco,game,Noun,1000 Words.csv
+prova,test,Noun,1000 Words.csv
+campagna,countryside,Noun,1000 Words.csv
+fiore,flower,Noun,1000 Words.csv
+sala,"room, hall",Noun,1000 Words.csv
+misura,measure,Noun,1000 Words.csv
+posizione,position,Noun,1000 Words.csv
+natura,nature,Noun,1000 Words.csv
+ufficio,office,Noun,1000 Words.csv
+specie,species,Noun,1000 Words.csv
+successo,success,Noun,1000 Words.csv
+zona,area,Noun,1000 Words.csv
+fuoco,fire,Noun,1000 Words.csv
+soldato,soldier,Noun,1000 Words.csv
+vista,view,Noun,1000 Words.csv
+libertà,freedom,Noun,1000 Words.csv
+risultato,result,Noun,1000 Words.csv
+importanza,importance,Noun,1000 Words.csv
+dubbio,doubt,Noun,1000 Words.csv
+ricerca,Research,Noun,1000 Words.csv
+dio,God,Noun,1000 Words.csv
+figura,figure,Noun,1000 Words.csv
+piazza,square,Noun,1000 Words.csv
+questione,question,Noun,1000 Words.csv
+nemico,enemy,Noun,1000 Words.csv
+pena,punishment,Noun,1000 Words.csv
+motivo,reason,Noun,1000 Words.csv
+esperienza,experience,Noun,1000 Words.csv
+ricordo,memory,Noun,1000 Words.csv
+albero,tree,Noun,1000 Words.csv
+politica,policy,Noun,1000 Words.csv
+processo,process,Noun,1000 Words.csv
+vino,wine,Noun,1000 Words.csv
+porta,door,Noun,1000 Words.csv
+sud,south,Noun,1000 Words.csv
+sogno,dream,Noun,1000 Words.csv
+cane,dog,Noun,1000 Words.csv
+isola,island,Noun,1000 Words.csv
+movimento,movement,Noun,1000 Words.csv
+mente,mind,Noun,1000 Words.csv
+occasione,opportunity,Noun,1000 Words.csv
+prezzo,price,Noun,1000 Words.csv
+causa,cause,Noun,1000 Words.csv
+periodo,period,Noun,1000 Words.csv
+sviluppo,development,Noun,1000 Words.csv
+sorella,sister,Noun,1000 Words.csv
+effetto,effect,Noun,1000 Words.csv
+giardino,garden,Noun,1000 Words.csv
+attività,activities,Noun,1000 Words.csv
+volontà,will,Noun,1000 Words.csv
+volto,face,Noun,1000 Words.csv
+base,basis,Noun,1000 Words.csv
+carattere,character,Noun,1000 Words.csv
+coscienza,consciousness,Noun,1000 Words.csv
+guardia,guard,Noun,1000 Words.csv
+memoria,memory,Noun,1000 Words.csv
+terreno,ground,Noun,1000 Words.csv
+animale,animal,Noun,1000 Words.csv
+direzione,direction,Noun,1000 Words.csv
+eccellenza,excellence,Noun,1000 Words.csv
+malattia,disease,Noun,1000 Words.csv
+scienza,science,Noun,1000 Words.csv
+funzione,function,Noun,1000 Words.csv
+conseguenza,result,Noun,1000 Words.csv
+parete,wall,Noun,1000 Words.csv
+dente,tooth,Noun,1000 Words.csv
+distanza,distance,Noun,1000 Words.csv
+gusto,taste,Noun,1000 Words.csv
+impressione,impression,Noun,1000 Words.csv
+istituto,institute,Noun,1000 Words.csv
+quadro,painting,Noun,1000 Words.csv
+attenzione,attention,Noun,1000 Words.csv
+autore,author,Noun,1000 Words.csv
+difficoltà,difficulty,Noun,1000 Words.csv
+passione,passion,Noun,1000 Words.csv
+commissione,commission,Noun,1000 Words.csv
+dito,finger,Noun,1000 Words.csv
+inizio,Start,Noun,1000 Words.csv
+programma,program,Noun,1000 Words.csv
+spettacolo,show,Noun,1000 Words.csv
+titolo,title,Noun,1000 Words.csv
+comunicazione,communication,Noun,1000 Words.csv
+fenomeno,phenomenon,Noun,1000 Words.csv
+maggio,May,Noun,1000 Words.csv
+stampa,press,Noun,1000 Words.csv
+denaro,money,Noun,1000 Words.csv
+destino,destiny,Noun,1000 Words.csv
+dovere,duty,Noun,1000 Words.csv
+ferro,iron,Noun,1000 Words.csv
+punta,tip,Noun,1000 Words.csv
+regno,kingdom,Noun,1000 Words.csv
+epoca,era,Noun,1000 Words.csv
+luna,moon,Noun,1000 Words.csv
+provincia,province,Noun,1000 Words.csv
+voglia,wish,Noun,1000 Words.csv
+differenza,difference,Noun,1000 Words.csv
+controllo,control,Noun,1000 Words.csv
+grazia,grace,Noun,1000 Words.csv
+passato,past,Noun,1000 Words.csv
+spazio,space,Noun,1000 Words.csv
+stella,star,Noun,1000 Words.csv
+corsa,race,Noun,1000 Words.csv
+erba,grass,Noun,1000 Words.csv
+massa,mass,Noun,1000 Words.csv
+origine,origin,Noun,1000 Words.csv
+polizia,police,Noun,1000 Words.csv
+soluzione,solution,Noun,1000 Words.csv
+chilometro,kilometer,Noun,1000 Words.csv
+madre,mother,Noun,1000 Words.csv
+paura,fear,Noun,1000 Words.csv
+cuore,heart,Noun,1000 Words.csv
+idea,idea,Noun,1000 Words.csv
+fondo,background,Noun,1000 Words.csv
+esempio,example,Noun,1000 Words.csv
+ordine,order,Noun,1000 Words.csv
+posto,place,Noun,1000 Words.csv
+campo,field,Noun,1000 Words.csv
+faccia,face,Noun,1000 Words.csv
+moglie,wife,Noun,1000 Words.csv
+ragazzo,boy,Noun,1000 Words.csv
+bisogno,need,Noun,1000 Words.csv
+cielo,sky,Noun,1000 Words.csv
+letto,bed,Noun,1000 Words.csv
+fronte,front,Noun,1000 Words.csv
+conto,bill,Noun,1000 Words.csv
+corpo,body,Noun,1000 Words.csv
+numero,number,Noun,1000 Words.csv
+ministro,minister,Noun,1000 Words.csv
+problema,problem,Noun,1000 Words.csv
+chiesa,church,Noun,1000 Words.csv
+braccio,arm,Noun,1000 Words.csv
+bambino,child,Noun,1000 Words.csv
+pensiero,thought,Noun,1000 Words.csv
+pace,peace,Noun,1000 Words.csv
+morte,death,Noun,1000 Words.csv
+fine,end,Noun,1000 Words.csv
+forma,form,Noun,1000 Words.csv
+resto,rest,Noun,1000 Words.csv
+popolo,people,Noun,1000 Words.csv
+società,society,Noun,1000 Words.csv
+studio,study,Noun,1000 Words.csv
+legge,law,Noun,1000 Words.csv
+libro,book,Noun,1000 Words.csv
+figlia,daughter,Noun,1000 Words.csv
+resto,rest,Noun,1000 Words.csv
+luogo,place,Noun,1000 Words.csv
+condizione,condition,Noun,1000 Words.csv
+professore,teacher,Noun,1000 Words.csv
+marito,husband,Noun,1000 Words.csv
+verità,truth,Noun,1000 Words.csv
+segno,sign,Noun,1000 Words.csv
+diritto,right,Noun,1000 Words.csv
+lettera,letter,Noun,1000 Words.csv
+ragazza,girl,Noun,1000 Words.csv
+scuola,school,Noun,1000 Words.csv
+camera,room,Noun,1000 Words.csv
+gruppo,group,Noun,1000 Words.csv
+discorso,speech,Noun,1000 Words.csv
+centro,center,Noun,1000 Words.csv
+secolo,century,Noun,1000 Words.csv
+mezzo,half,Noun,1000 Words.csv
+tipo,guy,Noun,1000 Words.csv
+colpa,fault,Noun,1000 Words.csv
+rispetto,respect,Noun,1000 Words.csv
+scena,scene,Noun,1000 Words.csv
+oggetto,object,Noun,1000 Words.csv
+possibilità,possibility,Noun,1000 Words.csv
+mamma,mom,Noun,1000 Words.csv
+presenza,presence,Noun,1000 Words.csv
+teatro,theater,Noun,1000 Words.csv
+caffè,coffee,Noun,1000 Words.csv
+principio,principle,Noun,1000 Words.csv
+termine,term,Noun,1000 Words.csv
+lingua,tongue,Noun,1000 Words.csv
+pezzo,piece,Noun,1000 Words.csv
+capello,hair,Noun,1000 Words.csv
+regione,region,Noun,1000 Words.csv
+monte,Mountain,Noun,1000 Words.csv
+università,university,Noun,1000 Words.csv
+treno,train,Noun,1000 Words.csv
+inverno,winter,Noun,1000 Words.csv
+nazione,nation,Noun,1000 Words.csv
+pagina,page,Noun,1000 Words.csv
+scopo,purpose,Noun,1000 Words.csv
+compagno,partner,Noun,1000 Words.csv
+necessità,need,Noun,1000 Words.csv
+potere,power,Noun,1000 Words.csv
+musica,music,Noun,1000 Words.csv
+dottore,doctor,Noun,1000 Words.csv
+sentimento,feeling,Noun,1000 Words.csv
+nave,ship,Noun,1000 Words.csv
+pietra,Stone,Noun,1000 Words.csv
+produzione,production,Noun,1000 Words.csv
+speranza,hope,Noun,1000 Words.csv
+dolore,ache,Noun,1000 Words.csv
+carne,meat,Noun,1000 Words.csv
+generale,general,Noun,1000 Words.csv
+proposito,purpose,Noun,1000 Words.csv
+elemento,element,Noun,1000 Words.csv
+stazione,railway station,Noun,1000 Words.csv
+materia,matter,Noun,1000 Words.csv
+scala,ladder,Noun,1000 Words.csv
+maniera,way,Noun,1000 Words.csv
+arma,weapon,Noun,1000 Words.csv
+autorità,authority,Noun,1000 Words.csv
+gamba,leg,Noun,1000 Words.csv
+patria,homeland,Noun,1000 Words.csv
+albergo,hotel,Noun,1000 Words.csv
+gioia,joy,Noun,1000 Words.csv
+argomento,topic,Noun,1000 Words.csv
+sguardo,look,Noun,1000 Words.csv
+relazione,report,Noun,1000 Words.csv
+classe,class,Noun,1000 Words.csv
+battaglia,battle,Noun,1000 Words.csv
+viso,face,Noun,1000 Words.csv
+gesto,gesture,Noun,1000 Words.csv
+mattino,morning,Noun,1000 Words.csv
+opinione,opinion,Noun,1000 Words.csv
+ponte,bridge,Noun,1000 Words.csv
+sorriso,smile,Noun,1000 Words.csv
+frase,phrase,Noun,1000 Words.csv
+limite,limit,Noun,1000 Words.csv
+ritorno,return,Noun,1000 Words.csv
+bosco,wood,Noun,1000 Words.csv
+esame,exam,Noun,1000 Words.csv
+lato,side,Noun,1000 Words.csv
+operazione,operation,Noun,1000 Words.csv
+pranzo,lunch,Noun,1000 Words.csv
+costa,it costs,Noun,1000 Words.csv
+prato,meadow,Noun,1000 Words.csv
+repubblica,republic,Noun,1000 Words.csv
+valle,Valley,Noun,1000 Words.csv
+nord,north,Noun,1000 Words.csv
+fatica,fatigue,Noun,1000 Words.csv
+odore,smell,Noun,1000 Words.csv
+articolo,article,Noun,1000 Words.csv
+costruzione,construction,Noun,1000 Words.csv
+rivoluzione,Revolution,Noun,1000 Words.csv
+zia,aunt,Noun,1000 Words.csv
+confronto,comparison,Noun,1000 Words.csv
+potenza,power,Noun,1000 Words.csv
+sforzo,effort,Noun,1000 Words.csv
+sicurezza,safety,Noun,1000 Words.csv
+ufficiale,official,Noun,1000 Words.csv
+crisi,crisis,Noun,1000 Words.csv
+cucina,kitchen,Noun,1000 Words.csv
+gatto,cat,Noun,1000 Words.csv
+pietà,pity,Noun,1000 Words.csv
+territorio,territory,Noun,1000 Words.csv
+attimo,moment,Noun,1000 Words.csv
+civiltà,civilization,Noun,1000 Words.csv
+contatto,contact,Noun,1000 Words.csv
+errore,error,Noun,1000 Words.csv
+fretta,hurry,Noun,1000 Words.csv
+intenzione,intention,Noun,1000 Words.csv
+cultura,culture,Noun,1000 Words.csv
+giudizio,judgement,Noun,1000 Words.csv
+spesa,expense,Noun,1000 Words.csv
+aiuto,Help,Noun,1000 Words.csv
+ambiente,environment,Noun,1000 Words.csv
+animo,mind,Noun,1000 Words.csv
+bestia,beast,Noun,1000 Words.csv
+cortile,courtyard,Noun,1000 Words.csv
+pelle,skin,Noun,1000 Words.csv
+proposta,proposal,Noun,1000 Words.csv
+riva,shore,Noun,1000 Words.csv
+segretario,secretary,Noun,1000 Words.csv
+abito,dress,Noun,1000 Words.csv
+chiave,key,Noun,1000 Words.csv
+corrente,current,Noun,1000 Words.csv
+operaio,worker,Noun,1000 Words.csv
+corso,course,Noun,1000 Words.csv
+finestra,window,Noun,1000 Words.csv
+arte,art,Noun,1000 Words.csv
+sistema,system,Noun,1000 Words.csv
+piano,plan,Noun,1000 Words.csv
+bocca,mouth,Noun,1000 Words.csv
+anima,soul,Noun,1000 Words.csv
+palazzo,palace,Noun,1000 Words.csv
+passo,step,Noun,1000 Words.csv
+giornata,day,Noun,1000 Words.csv
+servizio,service,Noun,1000 Words.csv
+rapporto,relationship,Noun,1000 Words.csv
+milione,million,Noun,1000 Words.csv
+stanza,room,Noun,1000 Words.csv
+valore,value,Noun,1000 Words.csv
+colpo,blow,Noun,1000 Words.csv
+sangue,blood,Noun,1000 Words.csv
+interesse,interest,Noun,1000 Words.csv
+spalla,shoulder,Noun,1000 Words.csv
+silenzio,silence,Noun,1000 Words.csv
+signorina,young lady,Noun,1000 Words.csv
+ombra,shadow,Noun,1000 Words.csv
+azione,action,Noun,1000 Words.csv
+vento,wind,Noun,1000 Words.csv
+mattina,morning,Noun,1000 Words.csv
+colore,color,Noun,1000 Words.csv
+presidente,president,Noun,1000 Words.csv
+consiglio,Advice,Noun,1000 Words.csv
+principe,prince,Noun,1000 Words.csv
+viaggio,travel,Noun,1000 Words.csv
+genere,kind,Noun,1000 Words.csv
+giornale,newspaper,Noun,1000 Words.csv
+spirito,spirit,Noun,1000 Words.csv
+cavallo,horse,Noun,1000 Words.csv
+muro,Wall,Noun,1000 Words.csv
+situazione,situation,Noun,1000 Words.csv
+linea,line,Noun,1000 Words.csv
+giro,round,Noun,1000 Words.csv
+automobile,car,Noun,1000 Words.csv
+atto,act,Noun,1000 Words.csv
+aspetto,appearance,Noun,1000 Words.csv
+età,age,Noun,1000 Words.csv
+fortuna,luck,Noun,1000 Words.csv
+oro,gold,Noun,1000 Words.csv
+partito,party,Noun,1000 Words.csv
+macchina,machine,Noun,1000 Words.csv
+carta,paper,Noun,1000 Words.csv
+minuto,minute,Noun,1000 Words.csv
+tratto,stretch,Noun,1000 Words.csv
+settimana,week,Noun,1000 Words.csv
+notizia,news,Noun,1000 Words.csv
+fratello,brother,Noun,1000 Words.csv
+realtà,reality,Noun,1000 Words.csv
+industria,industry,Noun,1000 Words.csv
+piacere,pleasure,Noun,1000 Words.csv
+maestro,master,Noun,1000 Words.csv
+personaggio,character,Noun,1000 Words.csv
+pomeriggio,afternoon,Noun,1000 Words.csv
+fianco,side,Noun,1000 Words.csv
+bambina,child,Noun,1000 Words.csv
+bellezza,beauty,Noun,1000 Words.csv
+domanda,question,Noun,1000 Words.csv
+pianta,plant,Noun,1000 Words.csv
+pubblico,public,Noun,1000 Words.csv
+sede,seat,Noun,1000 Words.csv
+affare,deal,Noun,1000 Words.csv
+bene,well,Noun,1000 Words.csv
+metà,half,Noun,1000 Words.csv
+papà,Pope,Noun,1000 Words.csv
+fiume,river,Noun,1000 Words.csv
+lotta,fight,Noun,1000 Words.csv
+mercato,market,Noun,1000 Words.csv
+angolo,angle,Noun,1000 Words.csv
+compagnia,company,Noun,1000 Words.csv
+espressione,expression,Noun,1000 Words.csv
+labbro,lip,Noun,1000 Words.csv
+villa,villa,Noun,1000 Words.csv
+desiderio,desire,Noun,1000 Words.csv
+serie,series,Noun,1000 Words.csv
+visita,visit,Noun,1000 Words.csv
+coraggio,courage,Noun,1000 Words.csv
+direttore,director,Noun,1000 Words.csv
+esercito,army,Noun,1000 Words.csv
+grado,degree,Noun,1000 Words.csv
+padrone,master,Noun,1000 Words.csv
+risposta,reply,Noun,1000 Words.csv
+tavola,table,Noun,1000 Words.csv
+immagine,image,Noun,1000 Words.csv
+montagna,mountain,Noun,1000 Words.csv
+energia,power,Noun,1000 Words.csv
+fede,wedding ring,Noun,1000 Words.csv
+pane,bread,Noun,1000 Words.csv
+seguito,following,Noun,1000 Words.csv
+estate,summer,Noun,1000 Words.csv
+film,movie,Noun,1000 Words.csv
+frutto,fruit,Noun,1000 Words.csv
+onore,honor,Noun,1000 Words.csv
+pericolo,danger,Noun,1000 Words.csv
+scrittore,writer,Noun,1000 Words.csv
+collina,hill,Noun,1000 Words.csv
+zio,uncle,Noun,1000 Words.csv
+difesa,defence,Noun,1000 Words.csv
+metro,meter,Noun,1000 Words.csv
+collo,neck,Noun,1000 Words.csv
+cura,care,Noun,1000 Words.csv
+disposizione,layout,Noun,1000 Words.csv
+Domenica,Sunday,Noun,1000 Words.csv
+giovanotto,young man,Noun,1000 Words.csv
+poeta,poet,Noun,1000 Words.csv
+stagione,season,Noun,1000 Words.csv
+peso,weight,Noun,1000 Words.csv
+tono,tone,Noun,1000 Words.csv
+croce,cross,Noun,1000 Words.csv
+decisione,decision,Noun,1000 Words.csv
+poesia,poetry,Noun,1000 Words.csv
+fiducia,confidence,Noun,1000 Words.csv
+filo,wire,Noun,1000 Words.csv
+folla,crowd,Noun,1000 Words.csv
+qualità,quality,Noun,1000 Words.csv
+roba,stuff,Noun,1000 Words.csv
+conoscenza,knowledge,Noun,1000 Words.csv
+favore,favor,Noun,1000 Words.csv
+popolazione,population,Noun,1000 Words.csv
+strumento,tool,Noun,1000 Words.csv
+uso,use,Noun,1000 Words.csv
+vestito,dress,Noun,1000 Words.csv
+commercio,business,Noun,1000 Words.csv
+fabbrica,factory,Noun,1000 Words.csv
+giugno,June,Noun,1000 Words.csv
+giustizia,justice,Noun,1000 Words.csv
+avvocato,lawyer,Noun,1000 Words.csv
+messa,mass,Noun,1000 Words.csv
+orecchio,ear,Noun,1000 Words.csv
+sonno,sleep,Noun,1000 Words.csv
+congresso,congress,Noun,1000 Words.csv
+porto,port,Noun,1000 Words.csv
+calcio,football,Noun,1000 Words.csv
+fantasia,fantasy,Noun,1000 Words.csv
+matrimonio,marriage,Noun,1000 Words.csv
+medico,doctor,Noun,1000 Words.csv
+ospedale,Hospital,Noun,1000 Words.csv
+pianura,flat land,Noun,1000 Words.csv
+tavolo,table,Noun,1000 Words.csv
+fame,hunger,Noun,1000 Words.csv
+latte,milk,Noun,1000 Words.csv
+merito,merit,Noun,1000 Words.csv
+attore,actor,Noun,1000 Words.csv
+ricchezza,wealth,Noun,1000 Words.csv
+sacrificio,sacrifice,Noun,1000 Words.csv
+atteggiamento,attitude,Noun,1000 Words.csv
+concetto,concept,Noun,1000 Words.csv
+mestiere,craft,Noun,1000 Words.csv
+attesa,waiting,Noun,1000 Words.csv
+bagno,bathroom,Noun,1000 Words.csv
+foglia,leaf,Noun,1000 Words.csv
+istante,instant,Noun,1000 Words.csv
+lago,lake,Noun,1000 Words.csv
+questo,this,Noun,1000 Words.csv
+quello,one,Noun,1000 Words.csv
+più,more,Adjective,1000 Words.csv
+tutto,all,Adjective,1000 Words.csv
+suo,his,Adjective,1000 Words.csv
+altro,other,Adjective,1000 Words.csv
+mio,my,Adjective,1000 Words.csv
+quale,which,Adjective,1000 Words.csv
+tanto,much,Adjective,1000 Words.csv
+grande,great,Adjective,1000 Words.csv
+poco,little,Adjective,1000 Words.csv
+molto,very,Adjective,1000 Words.csv
+nostro,our,Adjective,1000 Words.csv
+stesso,same,Adjective,1000 Words.csv
+primo,first,Adjective,1000 Words.csv
+loro,their,Adjective,1000 Words.csv
+ogni,every,Adjective,1000 Words.csv
+proprio,own,Adjective,1000 Words.csv
+solo,only,Adjective,1000 Words.csv
+quanto,how much,Adjective,1000 Words.csv
+bello,beautiful,Adjective,1000 Words.csv
+qualche,some,Adjective,1000 Words.csv
+nuovo,new,Adjective,1000 Words.csv
+certo,of course,Adjective,1000 Words.csv
+vero,true,Adjective,1000 Words.csv
+buono,good,Adjective,1000 Words.csv
+tuo,your,Adjective,1000 Words.csv
+nessuno,nobody,Adjective,1000 Words.csv
+alcuno,any,Adjective,1000 Words.csv
+italiano,Italian,Adjective,1000 Words.csv
+ultimo,last,Adjective,1000 Words.csv
+vecchio,old,Adjective,1000 Words.csv
+piccolo,small,Adjective,1000 Words.csv
+troppo,too much,Adjective,1000 Words.csv
+tale,such,Adjective,1000 Words.csv
+giovane,young,Adjective,1000 Words.csv
+alto,tall,Adjective,1000 Words.csv
+vostro,your,Adjective,1000 Words.csv
+diverso,different,Adjective,1000 Words.csv
+meglio,better,Adjective,1000 Words.csv
+lungo,long,Adjective,1000 Words.csv
+povero,poor,Adjective,1000 Words.csv
+maggiore,greater,Adjective,1000 Words.csv
+mezzo,half,Adjective,1000 Words.csv
+secondo,second,Adjective,1000 Words.csv
+lontano,far,Adjective,1000 Words.csv
+vicino,close,Adjective,1000 Words.csv
+possibile,possible,Adjective,1000 Words.csv
+caro,Dear,Adjective,1000 Words.csv
+pieno,full,Adjective,1000 Words.csv
+nero,black,Adjective,1000 Words.csv
+particolare,particular,Adjective,1000 Words.csv
+bianco,white,Adjective,1000 Words.csv
+forte,strong,Adjective,1000 Words.csv
+politico,politic,Adjective,1000 Words.csv
+attuale,current,Adjective,1000 Words.csv
+current,Latin,Adjective,1000 Words.csv
+impossibile,impossible,Adjective,1000 Words.csv
+sereno,serene,Adjective,1000 Words.csv
+puro,pure,Adjective,1000 Words.csv
+normale,normal,Adjective,1000 Words.csv
+perfetto,perfect,Adjective,1000 Words.csv
+piano,plan,Adjective,1000 Words.csv
+caratteristico,characteristic,Adjective,1000 Words.csv
+russo,Russian,Adjective,1000 Words.csv
+continuo,continuous,Adjective,1000 Words.csv
+stupido,stupid,Adjective,1000 Words.csv
+estremo,extreme,Adjective,1000 Words.csv
+grigio,Grey,Adjective,1000 Words.csv
+reale,real,Adjective,1000 Words.csv
+interessante,interesting,Adjective,1000 Words.csv
+medesimo,same,Adjective,1000 Words.csv
+religioso,religious,Adjective,1000 Words.csv
+ampio,large,Adjective,1000 Words.csv
+biondo,blond,Adjective,1000 Words.csv
+ufficiale,official,Adjective,1000 Words.csv
+attento,careful,Adjective,1000 Words.csv
+enorme,huge,Adjective,1000 Words.csv
+sottile,thin,Adjective,1000 Words.csv
+triste,sad,Adjective,1000 Words.csv
+minimo,minimum,Adjective,1000 Words.csv
+privato,private,Adjective,1000 Words.csv
+rapido,rapid,Adjective,1000 Words.csv
+quarto,fourth,Adjective,1000 Words.csv
+diretto,direct,Adjective,1000 Words.csv
+nobile,noble,Adjective,1000 Words.csv
+pericoloso,dangerous,Adjective,1000 Words.csv
+giallo,yellow,Adjective,1000 Words.csv
+pazzo,crazy,Adjective,1000 Words.csv
+sacro,sacred,Adjective,1000 Words.csv
+comodo,comfortable,Adjective,1000 Words.csv
+elettrico,electric,Adjective,1000 Words.csv
+assoluto,absolute,Adjective,1000 Words.csv
+cristiano,Christian,Adjective,1000 Words.csv
+antico,ancient,Adjective,1000 Words.csv
+rosso,red,Adjective,1000 Words.csv
+chiaro,clear,Adjective,1000 Words.csv
+unico,single,Adjective,1000 Words.csv
+sicuro,sure,Adjective,1000 Words.csv
+importante,important,Adjective,1000 Words.csv
+vario,varied,Adjective,1000 Words.csv
+giusto,quite right,Adjective,1000 Words.csv
+francese,French,Adjective,1000 Words.csv
+vivo,I live,Adjective,1000 Words.csv
+generale,general,Adjective,1000 Words.csv
+ricco,rich,Adjective,1000 Words.csv
+grosso,big,Adjective,1000 Words.csv
+necessario,necessary,Adjective,1000 Words.csv
+libero,free,Adjective,1000 Words.csv
+nazionale,national,Adjective,1000 Words.csv
+basso,bass,Adjective,1000 Words.csv
+semplice,simple,Adjective,1000 Words.csv
+grave,serious,Adjective,1000 Words.csv
+pubblico,public,Adjective,1000 Words.csv
+comune,common,Adjective,1000 Words.csv
+freddo,cold,Adjective,1000 Words.csv
+economico,cheap,Adjective,1000 Words.csv
+felice,happy,Adjective,1000 Words.csv
+difficile,difficult,Adjective,1000 Words.csv
+tedesco,German,Adjective,1000 Words.csv
+breve,short,Adjective,1000 Words.csv
+pronto,ready,Adjective,1000 Words.csv
+serio,serious,Adjective,1000 Words.csv
+presente,here I’m,Adjective,1000 Words.csv
+migliore,best,Adjective,1000 Words.csv
+facile,easy,Adjective,1000 Words.csv
+terzo,third,Adjective,1000 Words.csv
+caldo,hot,Adjective,1000 Words.csv
+estero,abroad,Adjective,1000 Words.csv
+largo,wide,Adjective,1000 Words.csv
+pricipale,pricipale,Adjective,1000 Words.csv
+verde,green,Adjective,1000 Words.csv
+romano,Roman,Adjective,1000 Words.csv
+umano,human,Adjective,1000 Words.csv
+inutile,useless,Adjective,1000 Words.csv
+moderno,modern,Adjective,1000 Words.csv
+numeroso,numerous,Adjective,1000 Words.csv
+simile,similar,Adjective,1000 Words.csv
+fresco,fresh,Adjective,1000 Words.csv
+militare,military,Adjective,1000 Words.csv
+americano,American,Adjective,1000 Words.csv
+vuoto,empty,Adjective,1000 Words.csv
+ciascuno,each,Adjective,1000 Words.csv
+tranquillo,quiet,Adjective,1000 Words.csv
+contento,happy,Adjective,1000 Words.csv
+storico,historical,Adjective,1000 Words.csv
+superiore,higher,Adjective,1000 Words.csv
+inglese,English,Adjective,1000 Words.csv
+fermo,stationary,Adjective,1000 Words.csv
+solito,usual,Adjective,1000 Words.csv
+buio,dark,Adjective,1000 Words.csv
+strano,strange,Adjective,1000 Words.csv
+noto,known,Adjective,1000 Words.csv
+prossimo,next one,Adjective,1000 Words.csv
+profondo,deep,Adjective,1000 Words.csv
+sociale,social,Adjective,1000 Words.csv
+cattivo,bad,Adjective,1000 Words.csv
+massimo,maximum,Adjective,1000 Words.csv
+intero,full,Adjective,1000 Words.csv
+uguale,equal,Adjective,1000 Words.csv
+bravo,good boy,Adjective,1000 Words.csv
+brutto,ugly,Adjective,1000 Words.csv
+preciso,accurate,Adjective,1000 Words.csv
+qualsiasi,any,Adjective,1000 Words.csv
+improvviso,sudden,Adjective,1000 Words.csv
+famoso,famous,Adjective,1000 Words.csv
+straniero,foreigner,Adjective,1000 Words.csv
+civile,civil,Adjective,1000 Words.csv
+internazionale,international,Adjective,1000 Words.csv
+interno,internal,Adjective,1000 Words.csv
+vasto,extensive,Adjective,1000 Words.csv
+segreto,secret,Adjective,1000 Words.csv
+greco,Greek,Adjective,1000 Words.csv
+naturale,natural,Adjective,1000 Words.csv
+sinistro,left,Adjective,1000 Words.csv
+duro,hard,Adjective,1000 Words.csv
+stanco,tired,Adjective,1000 Words.csv
+azzurro,light blue,Adjective,1000 Words.csv
+recente,recent,Adjective,1000 Words.csv
+notevole,remarkable,Adjective,1000 Words.csv
+cittadino,citizen,Adjective,1000 Words.csv
+destro,right,Adjective,1000 Words.csv
+europeo,European,Adjective,1000 Words.csv
+zitto,quiet,Adjective,1000 Words.csv
+medio,average,Adjective,1000 Words.csv
+qualunque,whatever,Adjective,1000 Words.csv
+straordinario,extraordinary,Adjective,1000 Words.csv
+nudo,naked,Adjective,1000 Words.csv
+futuro,future,Adjective,1000 Words.csv
+cattolico,Catholic,Adjective,1000 Words.csv
+capace,able,Adjective,1000 Words.csv
+industriale,industrial,Adjective,1000 Words.csv
+personale,staff,Adjective,1000 Words.csv
+centrale,central,Adjective,1000 Words.csv
+tecnico,technical,Adjective,1000 Words.csv
+dolce,sweet,Adjective,1000 Words.csv
+leggero,light,Adjective,1000 Words.csv
+morale,moral,Adjective,1000 Words.csv
+utile,helpful,Adjective,1000 Words.csv
+contrario,contrary,Adjective,1000 Words.csv
+speciale,special,Adjective,1000 Words.csv
+peggio,worse,Adjective,1000 Words.csv
+minore,lower,Adjective,1000 Words.csv
+contadino,farmer,Adjective,1000 Words.csv
+essere,to be,Verb,1000 Words.csv
+avere,to have,Verb,1000 Words.csv
+dire,to say,Verb,1000 Words.csv
+potere,can,Verb,1000 Words.csv
+volere,want,Verb,1000 Words.csv
+sapere,to know,Verb,1000 Words.csv
+stare,to stay,Verb,1000 Words.csv
+dovere,must,Verb,1000 Words.csv
+vedere,to see,Verb,1000 Words.csv
+andare,to go,Verb,1000 Words.csv
+venire,to come,Verb,1000 Words.csv
+dare,to give,Verb,1000 Words.csv
+parlare,to speak,Verb,1000 Words.csv
+trovare,to find,Verb,1000 Words.csv
+sentire,"to feel, to hear",Verb,1000 Words.csv
+lasciare,to leave,Verb,1000 Words.csv
+prendere,to take,Verb,1000 Words.csv
+guardare,to look,Verb,1000 Words.csv
+mettere,to put,Verb,1000 Words.csv
+pensare,to think,Verb,1000 Words.csv
+passare,to pass,Verb,1000 Words.csv
+credere,to believe,Verb,1000 Words.csv
+portare,to bring,Verb,1000 Words.csv
+parere,to seem,Verb,1000 Words.csv
+tornare,to return,Verb,1000 Words.csv
+sembrare,"to seem, to look like",Verb,1000 Words.csv
+tenere,to keep,Verb,1000 Words.csv
+capire,to understand,Verb,1000 Words.csv
+morire,to die,Verb,1000 Words.csv
+chiamare,to call,Verb,1000 Words.csv
+conoscere,to know,Verb,1000 Words.csv
+rimanere,to stay,Verb,1000 Words.csv
+chiedere,to ask,Verb,1000 Words.csv
+cercare,to search for,Verb,1000 Words.csv
+entrare,to come in,Verb,1000 Words.csv
+vivere,to live,Verb,1000 Words.csv
+aprire,to open,Verb,1000 Words.csv
+uscire,to go out,Verb,1000 Words.csv
+ricordare,to remember,Verb,1000 Words.csv
+bisognare,need,Verb,1000 Words.csv
+cominciare,to begin,Verb,1000 Words.csv
+rispondere,"to answer, to reply",Verb,1000 Words.csv
+aspettare,to wait,Verb,1000 Words.csv
+riuscire,to succeed,Verb,1000 Words.csv
+chiudere,to close,Verb,1000 Words.csv
+finire,to finish,Verb,1000 Words.csv
+arrivare,to arrive,Verb,1000 Words.csv
+scrivere,to write,Verb,1000 Words.csv
+diventare,to become,Verb,1000 Words.csv
+restare,to remain,Verb,1000 Words.csv
+seguire,to follow,Verb,1000 Words.csv
+bastare,to suffice,Verb,1000 Words.csv
+perdere,to lose,Verb,1000 Words.csv
+rendere,"to make (big, small..)",Verb,1000 Words.csv
+correre,to run,Verb,1000 Words.csv
+salvare,to save,Verb,1000 Words.csv
+vestire,to dress,Verb,1000 Words.csv
+costruire,to build,Verb,1000 Words.csv
+camminare,to walk,Verb,1000 Words.csv
+ritrovare,to find again,Verb,1000 Words.csv
+durare,to last,Verb,1000 Words.csv
+accendere,to turn on,Verb,1000 Words.csv
+evitare,to avoid,Verb,1000 Words.csv
+immaginare,to imagine,Verb,1000 Words.csv
+ridurre,to reduce,Verb,1000 Words.csv
+contenere,to contain,Verb,1000 Words.csv
+fissare,to fix,Verb,1000 Words.csv
+costringere,to force,Verb,1000 Words.csv
+abbandonare,to abandon,Verb,1000 Words.csv
+attendere,to wait for,Verb,1000 Words.csv
+preferire,to prefer,Verb,1000 Words.csv
+scegliere,to choose,Verb,1000 Words.csv
+avvertire,to warn,Verb,1000 Words.csv
+proporre,to propose,Verb,1000 Words.csv
+temere,to fear,Verb,1000 Words.csv
+esprimere,to express,Verb,1000 Words.csv
+spingere,to push,Verb,1000 Words.csv
+salutare,to greet,Verb,1000 Words.csv
+udire,to hear,Verb,1000 Words.csv
+difendere,to stick up for,Verb,1000 Words.csv
+dirigere,to direct,Verb,1000 Words.csv
+cantare,to sing,Verb,1000 Words.csv
+sorgere,to rise,Verb,1000 Words.csv
+assicurare,to ensure,Verb,1000 Words.csv
+assumere,to hire,Verb,1000 Words.csv
+tendere,to tend,Verb,1000 Words.csv
+dividere,to divide,Verb,1000 Words.csv
+scusare,to excuse,Verb,1000 Words.csv
+mantenere,to maintain,Verb,1000 Words.csv
+ritenere,to consider,Verb,1000 Words.csv
+concludere,to conclude,Verb,1000 Words.csv
+saltare,to jump,Verb,1000 Words.csv
+stabilire,to establish,Verb,1000 Words.csv
+appartenere,to belong,Verb,1000 Words.csv
+possedere,to possess,Verb,1000 Words.csv
+risultare,to result,Verb,1000 Words.csv
+suonare,to play,Verb,1000 Words.csv
+coprire,to cover up,Verb,1000 Words.csv
+insegnare,to teach,Verb,1000 Words.csv
+affermare,to assert,Verb,1000 Words.csv
+rivelare,to reveal,Verb,1000 Words.csv
+conservare,to preserve,Verb,1000 Words.csv
+risolvere,to solve,Verb,1000 Words.csv
+concedere,to grant,Verb,1000 Words.csv
+limitare,to limit,Verb,1000 Words.csv
+abitare,to live,Verb,1000 Words.csv
+convincere,to convince,Verb,1000 Words.csv
+comprare,to buy,Verb,1000 Words.csv
+legare,to tie,Verb,1000 Words.csv
+sostenere,to sustain,Verb,1000 Words.csv
+nascere,to be born,Verb,1000 Words.csv
+presentare,to introduce,Verb,1000 Words.csv
+trattare,to deal,Verb,1000 Words.csv
+piacere,to like,Verb,1000 Words.csv
+continuare,to continue,Verb,1000 Words.csv
+partire,to leave,Verb,1000 Words.csv
+servire,to serve,Verb,1000 Words.csv
+giungere,to stop,Verb,1000 Words.csv
+apparire,to appear,Verb,1000 Words.csv
+amare,to love,Verb,1000 Words.csv
+esistere,to exist,Verb,1000 Words.csv
+intendere,to hear,Verb,1000 Words.csv
+salire,to go up,Verb,1000 Words.csv
+mancare,to miss,Verb,1000 Words.csv
+ridere,to laugh,Verb,1000 Words.csv
+lavorare,to work,Verb,1000 Words.csv
+alzare,to raise up,Verb,1000 Words.csv
+riconoscere,to recognize,Verb,1000 Words.csv
+sedere,to sit down,Verb,1000 Words.csv
+leggere,to read,Verb,1000 Words.csv
+cadere,to fall,Verb,1000 Words.csv
+mangiare,to eat,Verb,1000 Words.csv
+dormire,to sleep,Verb,1000 Words.csv
+raggiungere,to reach,Verb,1000 Words.csv
+comprendere,to understand,Verb,1000 Words.csv
+scendere,to alight,Verb,1000 Words.csv
+compiere,to fulfill,Verb,1000 Words.csv
+toccare,to touch,Verb,1000 Words.csv
+considerare,to consider,Verb,1000 Words.csv
+muovere,to move,Verb,1000 Words.csv
+stringere,to tighten,Verb,1000 Words.csv
+mandare,to send,Verb,1000 Words.csv
+domandare,to ask,Verb,1000 Words.csv
+ascoltare,to listen,Verb,1000 Words.csv
+decidere,to decide,Verb,1000 Words.csv
+ricevere,to receive,Verb,1000 Words.csv
+osservare,to observe,Verb,1000 Words.csv
+permettere,to allow,Verb,1000 Words.csv
+avvenire,to occur,Verb,1000 Words.csv
+spiegare,to explain,Verb,1000 Words.csv
+raccogliere,to collect,Verb,1000 Words.csv
+ottenere,to obtain,Verb,1000 Words.csv
+offrire,to offer,Verb,1000 Words.csv
+mostrare,to exhibit,Verb,1000 Words.csv
+accompagnare,to accompany,Verb,1000 Words.csv
+dimenticare,to forget,Verb,1000 Words.csv
+pregare,to pray,Verb,1000 Words.csv
+raccontare,to tell,Verb,1000 Words.csv
+bere,to drinking,Verb,1000 Words.csv
+ritornare,to return,Verb,1000 Words.csv
+cambiare,to change,Verb,1000 Words.csv
+dimostrare,to demonstrate,Verb,1000 Words.csv
+sperare,to hope,Verb,1000 Words.csv
+sposare,to marry,Verb,1000 Words.csv
+ammettere,to admit,Verb,1000 Words.csv
+fuggire,to run away,Verb,1000 Words.csv
+liberare,to free,Verb,1000 Words.csv
+riferire,to report,Verb,1000 Words.csv
+svegliare,to wake up,Verb,1000 Words.csv
+capitare,to happen,Verb,1000 Words.csv
+posare,to place,Verb,1000 Words.csv
+impedire,to prevent,Verb,1000 Words.csv
+gettare,to throw,Verb,1000 Words.csv
+vendere,to sell,Verb,1000 Words.csv
+distinguere,to distinguish,Verb,1000 Words.csv
+offendere,to offend,Verb,1000 Words.csv
+rimettere,to return,Verb,1000 Words.csv
+rompere,to break,Verb,1000 Words.csv
+godere,to enjoy,Verb,1000 Words.csv
+imporre,to impose,Verb,1000 Words.csv
+significare,to mean,Verb,1000 Words.csv
+desiderare,to desire,Verb,1000 Words.csv
+divertire,to amuse,Verb,1000 Words.csv
+volgere,to turn,Verb,1000 Words.csv
+giudicare,to judge,Verb,1000 Words.csv
+produrre,to produce,Verb,1000 Words.csv
+avvicinare,to approach,Verb,1000 Words.csv
+diffondere,to spread,Verb,1000 Words.csv
+ordinare,to sort,Verb,1000 Words.csv
+invitare,to invite,Verb,1000 Words.csv
+discutere,to discuss,Verb,1000 Words.csv
+sbagliare,to make a mistake,Verb,1000 Words.csv
+badare,to look after,Verb,1000 Words.csv
+tagliare,to cut,Verb,1000 Words.csv
+pubblicare,to publish,Verb,1000 Words.csv
+attaccare,to attack,Verb,1000 Words.csv
+imparare,to learn,Verb,1000 Words.csv
+prevedere,to forecast,Verb,1000 Words.csv
+scappare,to run away,Verb,1000 Words.csv
+spegnere,to switch off,Verb,1000 Words.csv
+annunciare,to announce,Verb,1000 Words.csv
+baciare,to kiss,Verb,1000 Words.csv
+esporre,to expose,Verb,1000 Words.csv
+attraversare,go across,Verb,1000 Words.csv
+fornire,to provide,Verb,1000 Words.csv
+segnare,to mark,Verb,1000 Words.csv
+superare,to overcome,Verb,1000 Words.csv
+rivedere,to review,Verb,1000 Words.csv
+allontanare,to remove,Verb,1000 Words.csv
+ammazzare,to kill,Verb,1000 Words.csv
+accogliere,to receive,Verb,1000 Words.csv
+voltare,to turn,Verb,1000 Words.csv
+preoccupare,to worry,Verb,1000 Words.csv
+provocare,to cause,Verb,1000 Words.csv
+riempire,to fill,Verb,1000 Words.csv
+partecipare,to take part,Verb,1000 Words.csv
+piantare,to plant,Verb,1000 Words.csv
+rientrare,to re-enter,Verb,1000 Words.csv
+richiedere,to request,Verb,1000 Words.csv
+nascondere,to hide,Verb,1000 Words.csv
+ripetere,to repeat,Verb,1000 Words.csv
+scoprire,to discover,Verb,1000 Words.csv
+preparare,prepare,Verb,1000 Words.csv
+scorrere,to slide,Verb,1000 Words.csv
+rappresentare,to represent,Verb,1000 Words.csv
+riprendere,to resume,Verb,1000 Words.csv
+costituire,to constitute,Verb,1000 Words.csv
+incontrare,to meet,Verb,1000 Words.csv
+valere,be worth,Verb,1000 Words.csv
+accorgersi,to notice,Verb,1000 Words.csv
+provare,to try,Verb,1000 Words.csv
+formare,to form,Verb,1000 Words.csv
+uccidere,to kill,Verb,1000 Words.csv
+tirare,to pull,Verb,1000 Words.csv
+togliere,to remove,Verb,1000 Words.csv
+notare,to notice,Verb,1000 Words.csv
+aggiungere,to add,Verb,1000 Words.csv
+succedere,to happen,Verb,1000 Words.csv
+pagare,to pay,Verb,1000 Words.csv
+tentare,to attempt,Verb,1000 Words.csv
+accadere,to happen,Verb,1000 Words.csv
+creare,to create,Verb,1000 Words.csv
+importare,to import,Verb,1000 Words.csv
+pesare,to weigh,Verb,1000 Words.csv
+usare,to use,Verb,1000 Words.csv
+accettare,to accept,Verb,1000 Words.csv
+indicare,to indicate,Verb,1000 Words.csv
+buttare,to throw,Verb,1000 Words.csv
+battere,to beat,Verb,1000 Words.csv
+interessare,to interest,Verb,1000 Words.csv
+sorridere,to smile,Verb,1000 Words.csv
+condurre,to conduct,Verb,1000 Words.csv
+disporre,to have,Verb,1000 Words.csv
+unire,to merge,Verb,1000 Words.csv
+aiutare,to help,Verb,1000 Words.csv
+piangere,to cry,Verb,1000 Words.csv
+girare,to turn,Verb,1000 Words.csv
+levare,to lift,Verb,1000 Words.csv
+meritare,to deserve,Verb,1000 Words.csv
+dedicare,to devote,Verb,1000 Words.csv
+iniziare,to start,Verb,1000 Words.csv
+sorprendere,to surprise,Verb,1000 Words.csv
+trasformare,to commute,Verb,1000 Words.csv
+confessare,to confess,Verb,1000 Words.csv
+arrestare,to stop,Verb,1000 Words.csv
+ringraziare,to thank,Verb,1000 Words.csv
+riunire,to gather,Verb,1000 Words.csv
+volare,to fly,Verb,1000 Words.csv
+fondare,to found,Verb,1000 Words.csv
+guidare,to drive,Verb,1000 Words.csv
+ferire,to hurt,Verb,1000 Words.csv
+opporre,to oppose,Verb,1000 Words.csv
+procedere,to proceed,Verb,1000 Words.csv
+smettere,to stop,Verb,1000 Words.csv
+consentire,to allow,Verb,1000 Words.csv
+innamorarsi,to fall in love,Verb,1000 Words.csv
+organizzare,to organize,Verb,1000 Words.csv
+rifiutare,to reject,Verb,1000 Words.csv
+riportare,to report,Verb,1000 Words.csv
+dipendere,to depend,Verb,1000 Words.csv
+provvedere,to provide,Verb,1000 Words.csv
+trascinare,to drag,Verb,1000 Words.csv
+fumare,to smoke,Verb,1000 Words.csv
+scoppiare,to burst,Verb,1000 Words.csv
+soffrire,to suffer,Verb,1000 Words.csv
+recare,to cause,Verb,1000 Words.csv
+riguardare,to concern,Verb,1000 Words.csv
+rivolgere,to turn,Verb,1000 Words.csv
+tacere,to be silent,Verb,1000 Words.csv
+occorrere,to take,Verb,1000 Words.csv
+porre,to place,Verb,1000 Words.csv
+vincere,to win,Verb,1000 Words.csv
+svolgere,to perform,Verb,1000 Words.csv
+studiare,to study,Verb,1000 Words.csv
+crescere,to grow up,Verb,1000 Words.csv
+divenire,to become,Verb,1000 Words.csv
+gridare,to shout,Verb,1000 Words.csv
+dichiarare,to declare,Verb,1000 Words.csv
+contare,to count,Verb,1000 Words.csv
+giocare,to play,Verb,1000 Words.csv
+assistere,to assist,Verb,1000 Words.csv
+aumentare,to increase,Verb,1000 Words.csv
+lanciare,to launch,Verb,1000 Words.csv
+determinare,to determine,Verb,1000 Words.csv
+scherzare,to joke,Verb,1000 Words.csv
+elevare,to raise,Verb,1000 Words.csv
+promettere,to promise,Verb,1000 Words.csv
+scomparire,to disappear,Verb,1000 Words.csv
+trarre,to draw,Verb,1000 Words.csv
+distruggere,to destroy,Verb,1000 Words.csv
+sognare,to dream,Verb,1000 Words.csv
+appoggiare,to support,Verb,1000 Words.csv
+armare,to arm,Verb,1000 Words.csv
+celebrare,to celebrate,Verb,1000 Words.csv
+descrivere,to describe,Verb,1000 Words.csv
+resistere,to resist,Verb,1000 Words.csv
+bruciare,to burn,Verb,1000 Words.csv
+colpire,to hit,Verb,1000 Words.csv
+estendere,to extend,Verb,1000 Words.csv
+staccare,to remove,Verb,1000 Words.csv
+affrontare,to face up to,Verb,1000 Words.csv
+avanzare,to push forward,Verb,1000 Words.csv
+comporre,to compose,Verb,1000 Words.csv
+escludere,to exclude,Verb,1000 Words.csv
+figurare,to appear,Verb,1000 Words.csv
+insistere,to insist,Verb,1000 Words.csv
+il,the,Other,1000 Words.csv
+di,of,Other,1000 Words.csv
+e,is,Other,1000 Words.csv
+a,to,Other,1000 Words.csv
+un,a,Other,1000 Words.csv
+in,in,Other,1000 Words.csv
+che,that,Other,1000 Words.csv
+non,not,Other,1000 Words.csv
+si,yes,Other,1000 Words.csv
+da,from,Other,1000 Words.csv
+lo,the,Other,1000 Words.csv
+per,for,Other,1000 Words.csv
+con,with,Other,1000 Words.csv
+ma,but,Other,1000 Words.csv
+come,how,Other,1000 Words.csv
+su,up,Other,1000 Words.csv
+mi,me,Other,1000 Words.csv
+anche,also,Other,1000 Words.csv
+o,or,Other,1000 Words.csv
+io,I,Other,1000 Words.csv
+se,self,Other,1000 Words.csv
+perché,because,Other,1000 Words.csv
+li,there,Other,1000 Words.csv
+ci,us,Other,1000 Words.csv
+ne,neither,Other,1000 Words.csv
+lei,she,Other,1000 Words.csv
+ancora,yet,Other,1000 Words.csv
+tu,you,Other,1000 Words.csv
+lui,he,Other,1000 Words.csv
+senza,without,Other,1000 Words.csv
+bene,well,Other,1000 Words.csv
+cui,which,Other,1000 Words.csv
+chi,who,Other,1000 Words.csv
+già,already,Other,1000 Words.csv
+dopo,after,Other,1000 Words.csv
+uno,one,Other,1000 Words.csv
+noi,we,Other,1000 Words.csv
+dove,where,Other,1000 Words.csv
+qui,here,Other,1000 Words.csv
+no,no,Other,1000 Words.csv
+allora,then,Other,1000 Words.csv
+tra,between,Other,1000 Words.csv
+vi,you,Other,1000 Words.csv
+ora,now,Other,1000 Words.csv
+fra,between,Other,1000 Words.csv
+prima,before,Other,1000 Words.csv
+forse,perhaps,Other,1000 Words.csv
+sì,yup,Other,1000 Words.csv
+sotto,under,Other,1000 Words.csv
+voi,you,Other,1000 Words.csv
+fino,till,Other,1000 Words.csv
+oggi,today,Other,1000 Words.csv
+quasi,almost,Other,1000 Words.csv
+pure,also,Other,1000 Words.csv
+egli,he,Other,1000 Words.csv
+mentre,while,Other,1000 Words.csv
+contro,versus,Other,1000 Words.csv
+invece,instead,Other,1000 Words.csv
+esso,it,Other,1000 Words.csv
+là,there,Other,1000 Words.csv
+però,however,Other,1000 Words.csv
+né,neither,Other,1000 Words.csv
+subito,immediately,Other,1000 Words.csv
+verso,towards,Other,1000 Words.csv
+ciò,it,Other,1000 Words.csv
+ecco,here,Other,1000 Words.csv
+loro,their,Other,1000 Words.csv
+essa,it,Other,1000 Words.csv
+fuori,outside,Other,1000 Words.csv
+meno,less,Other,1000 Words.csv
+adesso,now,Other,1000 Words.csv
+niente,nothing,Other,1000 Words.csv
+cioè,that is,Other,1000 Words.csv
+male,bad,Other,1000 Words.csv
+nulla,nothing,Other,1000 Words.csv
+ah,ha,Other,1000 Words.csv
+oh,oh,Other,1000 Words.csv
+quindi,then,Other,1000 Words.csv
+appena,as soon as,Other,1000 Words.csv
+insieme,together,Other,1000 Words.csv
+dunque,therefore,Other,1000 Words.csv
+dentro,inside,Other,1000 Words.csv
+durante,during,Other,1000 Words.csv
+almeno,at least,Other,1000 Words.csv
+secondo,second,Other,1000 Words.csv
+anzi,rather,Other,1000 Words.csv
+oramai,now,Other,1000 Words.csv
+oltre,over,Other,1000 Words.csv
+intorno,around,Other,1000 Words.csv
+sopra,above,Other,1000 Words.csv
+dietro,behind,Other,1000 Words.csv
+davanti,in front of,Other,1000 Words.csv
+soltanto,only,Other,1000 Words.csv
+infatti,indeed,Other,1000 Words.csv
+qualcosa,something,Other,1000 Words.csv
+spesso,often,Other,1000 Words.csv
+accordo,agreement,Other,1000 Words.csv
+ieri,yesterday,Other,1000 Words.csv
+davvero,really,Other,1000 Words.csv
+lì,there,Other,1000 Words.csv
+qualcuno,someone,Other,1000 Words.csv
+avanti,come on,Other,1000 Words.csv
+assai,very,Other,1000 Words.csv
+presto,soon,Other,1000 Words.csv
+qua,here,Other,1000 Words.csv
+domani,tomorrow,Other,1000 Words.csv
+circa,about,Other,1000 Words.csv
+giù,down,Other,1000 Words.csv
+soprattutto,mostly,Other,1000 Words.csv
+nemmeno,not even,Other,1000 Words.csv
+grazie,thank you,Other,1000 Words.csv
+tuttavia,however,Other,1000 Words.csv
+appunto,just,Other,1000 Words.csv
+neppure,neither,Other,1000 Words.csv
+eh,huh,Other,1000 Words.csv
+veramente,really,Other,1000 Words.csv
+tardi,late,Other,1000 Words.csv
+insomma,in conclusion,Other,1000 Words.csv
+presso,at,Other,1000 Words.csv
+intanto,in the meantime,Other,1000 Words.csv
+lungo,long,Other,1000 Words.csv
+neanche,neither,Other,1000 Words.csv
+piuttosto,rather,Other,1000 Words.csv
+stasera,tonight,Other,1000 Words.csv
+perciò,therefore,Other,1000 Words.csv
+naturalmente,of course,Other,1000 Words.csv
+accanto,next,Other,1000 Words.csv
+eppure,but yet,Other,1000 Words.csv
+eccetera,etc,Other,1000 Words.csv
+finalmente,finally,Other,1000 Words.csv
+infine,finally,Other,1000 Words.csv
+poiché,as,Other,1000 Words.csv
+comunque,however,Other,1000 Words.csv
+dinanzi,before,Other,1000 Words.csv
+abbastanza,enough,Other,1000 Words.csv
+peccato,sin,Other,1000 Words.csv
+certamente,of course,Other,1000 Words.csv
+coloro,they,Other,1000 Words.csv
+attorno,about,Other,1000 Words.csv
+magari,maybe,Other,1000 Words.csv
+oppure,or,Other,1000 Words.csv
+inoltre,moreover,Other,1000 Words.csv
+indietro,back,Other,1000 Words.csv
+addosso,on,Other,1000 Words.csv
+addirittura,even,Other,1000 Words.csv
+finché,as long as,Other,1000 Words.csv
+perfino,even,Other,1000 Words.csv
+affatto,at all,Other,1000 Words.csv
+stamattina,this morning,Other,1000 Words.csv
+completamente,completely,Other,1000 Words.csv
+probabilmente,probably,Other,1000 Words.csv
+chissà,who knows,Other,1000 Words.csv
+ognuno,each one,Other,1000 Words.csv
+entro,within,Other,1000 Words.csv
+ciao,hello,Unknown,italian_set.py
+salve,hi,Unknown,italian_set.py
+buongiorno,good morning,Unknown,italian_set.py
+buonasera,good evening,Unknown,italian_set.py
+buonanotte,good night,Unknown,italian_set.py
+per favore,please,Unknown,italian_set.py
+grazie mille,thanks a lot,Unknown,italian_set.py
+prego,you're welcome,Unknown,italian_set.py
+mi scusi,excuse me,Unknown,italian_set.py
+mi dispiace,sorry,Unknown,italian_set.py
+come stai,how are you,Unknown,italian_set.py
+sto bene,I'm fine,Unknown,italian_set.py
+piacere di conoscerti,nice to meet you,Unknown,italian_set.py
+a dopo,see you later,Unknown,italian_set.py
+a presto,see you soon,Unknown,italian_set.py
+arrivederci,goodbye,Unknown,italian_set.py
+benvenuto,welcome,Unknown,italian_set.py
+non capisco,I don't understand,Unknown,italian_set.py
+parli inglese,do you speak English,Unknown,italian_set.py
+ho bisogno di aiuto,I need help,Unknown,italian_set.py
+dov'Ã¨ il bagno,where is the bathroom,Unknown,italian_set.py
+quanto costa,how much does it cost,Unknown,italian_set.py
+vorrei questo,I would like this,Unknown,italian_set.py
+puoi ripetere,can you repeat,Unknown,italian_set.py
+che ore sono,what time is it,Unknown,italian_set.py
+mi sono perso,I'm lost,Unknown,italian_set.py
+ho fame,I'm hungry,Unknown,italian_set.py
+ho sete,I'm thirsty,Unknown,italian_set.py
+sono stanco,I'm tired,Unknown,italian_set.py
+ho freddo,I'm cold,Unknown,italian_set.py
+ho caldo,I'm hot,Unknown,italian_set.py
+sono malato,I'm sick,Unknown,italian_set.py
+mi sento bene,I feel good,Unknown,italian_set.py
+mi sento male,I feel bad,Unknown,italian_set.py
+non so,I don't know,Unknown,italian_set.py
+penso di sÃ¬,I think so,Unknown,italian_set.py
+non penso,I don't think so,Unknown,italian_set.py
+va bene,it's okay,Unknown,italian_set.py
+nessun problema,no problem,Unknown,italian_set.py
+un momento,one moment,Unknown,italian_set.py
+ho fretta,I'm in a hurry,Unknown,italian_set.py
+sto solo guardando,I'm just looking,Unknown,italian_set.py
+studente,student,Unknown,italian_set.py
+infermiere,nurse,Unknown,italian_set.py
+poliziotto,police officer,Unknown,italian_set.py
+casa,house,Unknown,italian_set.py
+appartamento,apartment,Unknown,italian_set.py
+ristorante,restaurant,Unknown,italian_set.py
+bar,bar,Unknown,italian_set.py
+negozio,store,Unknown,italian_set.py
+supermercato,supermarket,Unknown,italian_set.py
+farmacia,pharmacy,Unknown,italian_set.py
+aeroporto,airport,Unknown,italian_set.py
+stazione,train station,Unknown,italian_set.py
+fermata dell'autobus,bus stop,Unknown,italian_set.py
+paese,town,Unknown,italian_set.py
+parco,park,Unknown,italian_set.py
+banca,bank,Unknown,italian_set.py
+ufficio postale,post office,Unknown,italian_set.py
+autobus,bus,Unknown,italian_set.py
+bicicletta,bicycle,Unknown,italian_set.py
+telefono,phone,Unknown,italian_set.py
+computer,computer,Unknown,italian_set.py
+sedia,chair,Unknown,italian_set.py
+sacchetto,bag,Unknown,italian_set.py
+portafoglio,wallet,Unknown,italian_set.py
+biglietto,ticket,Unknown,italian_set.py
+penna,pen,Unknown,italian_set.py
+carta di credito,credit card,Unknown,italian_set.py
+acqua frizzante,sparkling water,Unknown,italian_set.py
+tÃ¨,tea,Unknown,italian_set.py
+formaggio,cheese,Unknown,italian_set.py
+pesce,fish,Unknown,italian_set.py
+verdure,vegetables,Unknown,italian_set.py
+mela,apple,Unknown,italian_set.py
+banana,banana,Unknown,italian_set.py
+arancione,orange,Unknown,italian_set.py
+riso,rice,Unknown,italian_set.py
+pasta,pasta,Unknown,italian_set.py
+pizza,pizza,Unknown,italian_set.py
+insalata,salad,Unknown,italian_set.py
+zuppa,soup,Unknown,italian_set.py
+dolce,dessert,Unknown,italian_set.py
+fare,to do,Unknown,italian_set.py
+fare,to make,Unknown,italian_set.py
+bere,to drink,Unknown,italian_set.py
+sentire,to feel,Unknown,italian_set.py
+rispondere,to answer,Unknown,italian_set.py
+veloce,fast,Unknown,italian_set.py
+lento,slow,Unknown,italian_set.py
+arrabbiato,angry,Unknown,italian_set.py
+affamato,hungry,Unknown,italian_set.py
+assetato,thirsty,Unknown,italian_set.py
+aperto,open,Unknown,italian_set.py
+chiuso,closed,Unknown,italian_set.py
+pulito,clean,Unknown,italian_set.py
+sporco,dirty,Unknown,italian_set.py
+costoso,expensive,Unknown,italian_set.py
+dopo,later,Unknown,italian_set.py
+sempre,always,Unknown,italian_set.py
+mai,never,Unknown,italian_set.py
+qualche volta,sometimes,Unknown,italian_set.py
+dritto,straight,Unknown,italian_set.py
+vicino,near,Unknown,italian_set.py
+ovunque,everywhere,Unknown,italian_set.py
+prenotazione,reservation,Unknown,italian_set.py
+passaporto,passport,Unknown,italian_set.py
+bagaglio,luggage,Unknown,italian_set.py
+mappa,map,Unknown,italian_set.py
+spiaggia,beach,Unknown,italian_set.py
+biglietto del treno,train ticket,Unknown,italian_set.py
+biglietto dell'autobus,bus ticket,Unknown,italian_set.py
+cucinare,to cook,Unknown,italian_set.py
+pulire,to clean,Unknown,italian_set.py
+lavare,to wash,Unknown,italian_set.py
+fare la doccia,to shower,Unknown,italian_set.py
+radersi,to shave,Unknown,italian_set.py
+vestirsi,to get dressed,Unknown,italian_set.py
+alzarsi,to get up,Unknown,italian_set.py
+alzarsi in piedi,to stand up,Unknown,italian_set.py
+visitare,to visit,Unknown,italian_set.py
+viaggiare,to travel,Unknown,italian_set.py
+pianificare,to plan,Unknown,italian_set.py
+pulire la casa,to clean the house,Unknown,italian_set.py
+fare il bucato,to do laundry,Unknown,italian_set.py
+stirare,to iron,Unknown,italian_set.py
+eccitato,excited,Unknown,italian_set.py
+annoiato,bored,Unknown,italian_set.py
+preoccupato,worried,Unknown,italian_set.py
+spaventato,scared,Unknown,italian_set.py
+sicuro,confident,Unknown,italian_set.py
+calmo,calm,Unknown,italian_set.py
+nervoso,nervous,Unknown,italian_set.py
+sorpreso,surprised,Unknown,italian_set.py
+orgoglioso,proud,Unknown,italian_set.py
+vergognoso,ashamed,Unknown,italian_set.py
+imbarazzato,embarrassed,Unknown,italian_set.py
+grato,grateful,Unknown,italian_set.py
+geloso,jealous,Unknown,italian_set.py
+curioso,curious,Unknown,italian_set.py
+coraggioso,brave,Unknown,italian_set.py
+tempo,weather,Unknown,italian_set.py
+pioggia,rain,Unknown,italian_set.py
+neve,snow,Unknown,italian_set.py
+nuvola,cloud,Unknown,italian_set.py
+tempesta,storm,Unknown,italian_set.py
+nebbia,fog,Unknown,italian_set.py
+tempo caldo,hot weather,Unknown,italian_set.py
+tempo freddo,cold weather,Unknown,italian_set.py
+sta piovendo,it's raining,Unknown,italian_set.py
+sta nevicando,it's snowing,Unknown,italian_set.py
+c'Ã¨ vento,it's windy,Unknown,italian_set.py
+c'Ã¨ il sole,it's sunny,Unknown,italian_set.py
+Ã¨ nuvoloso,it's cloudy,Unknown,italian_set.py
+camicia,shirt,Unknown,italian_set.py
+maglietta,t-shirt,Unknown,italian_set.py
+pantaloni,pants,Unknown,italian_set.py
+pantaloncini,shorts,Unknown,italian_set.py
+gonna,skirt,Unknown,italian_set.py
+giacca,jacket,Unknown,italian_set.py
+cappotto,coat,Unknown,italian_set.py
+scarpe,shoes,Unknown,italian_set.py
+stivali,boots,Unknown,italian_set.py
+calzini,socks,Unknown,italian_set.py
+cappello,hat,Unknown,italian_set.py
+guanti,gloves,Unknown,italian_set.py
+sciarpa,scarf,Unknown,italian_set.py
+cintura,belt,Unknown,italian_set.py
+occhiali da sole,sunglasses,Unknown,italian_set.py
+abito,suit,Unknown,italian_set.py
+cravatta,tie,Unknown,italian_set.py
+costume da bagno,swimsuit,Unknown,italian_set.py
+blu,blue,Unknown,italian_set.py
+viola,purple,Unknown,italian_set.py
+rosa,pink,Unknown,italian_set.py
+marrone,brown,Unknown,italian_set.py
+grigio,gray,Unknown,italian_set.py
+argento,silver,Unknown,italian_set.py
+camera da letto,bedroom,Unknown,italian_set.py
+soggiorno,living room,Unknown,italian_set.py
+lampada,lamp,Unknown,italian_set.py
+divano,couch,Unknown,italian_set.py
+coperta,blanket,Unknown,italian_set.py
+cuscino,pillow,Unknown,italian_set.py
+frigorifero,refrigerator,Unknown,italian_set.py
+forno,oven,Unknown,italian_set.py
+fornello,stove,Unknown,italian_set.py
+microonde,microwave,Unknown,italian_set.py
+lavandino,sink,Unknown,italian_set.py
+doccia,shower,Unknown,italian_set.py
+gabinetto,toilet,Unknown,italian_set.py
+specchio,mirror,Unknown,italian_set.py
+asciugamano,towel,Unknown,italian_set.py
+sapone,soap,Unknown,italian_set.py
+shampoo,shampoo,Unknown,italian_set.py
+spazzolino,toothbrush,Unknown,italian_set.py
+dentifricio,toothpaste,Unknown,italian_set.py
+oceano,ocean,Unknown,italian_set.py
+foresta,forest,Unknown,italian_set.py
+roccia,rock,Unknown,italian_set.py
+sabbia,sand,Unknown,italian_set.py
+terra,earth,Unknown,italian_set.py
+ghiaccio,ice,Unknown,italian_set.py
+uccello,bird,Unknown,italian_set.py
+pesce,fish (animal),Unknown,italian_set.py
+mucca,cow,Unknown,italian_set.py
+maiale,pig,Unknown,italian_set.py
+pecora,sheep,Unknown,italian_set.py
+capra,goat,Unknown,italian_set.py
+pollo,chicken,Unknown,italian_set.py
+anatra,duck,Unknown,italian_set.py
+coniglio,rabbit,Unknown,italian_set.py
+topo,mouse,Unknown,italian_set.py
+orso,bear,Unknown,italian_set.py
+leone,lion,Unknown,italian_set.py
+tigre,tiger,Unknown,italian_set.py
+elefante,elephant,Unknown,italian_set.py
+scimmia,monkey,Unknown,italian_set.py
+serpente,snake,Unknown,italian_set.py
+rana,frog,Unknown,italian_set.py
+motocicletta,motorcycle,Unknown,italian_set.py
+metropolitana,subway,Unknown,italian_set.py
+tram,tram,Unknown,italian_set.py
+taxi,taxi,Unknown,italian_set.py
+aereo,airplane,Unknown,italian_set.py
+barca,boat,Unknown,italian_set.py
+scooter,scooter,Unknown,italian_set.py
+casco,helmet,Unknown,italian_set.py
+benzina,gasoline,Unknown,italian_set.py
+autista,driver,Unknown,italian_set.py
+passeggero,passenger,Unknown,italian_set.py
+traffico,traffic,Unknown,italian_set.py
+strada,road,Unknown,italian_set.py
+autostrada,highway,Unknown,italian_set.py
+lavoro,job,Unknown,italian_set.py
+riunione,meeting,Unknown,italian_set.py
+capo,boss,Unknown,italian_set.py
+dipendente,employee,Unknown,italian_set.py
+collega,colleague,Unknown,italian_set.py
+progetto,project,Unknown,italian_set.py
+compito,task,Unknown,italian_set.py
+scadenza,deadline,Unknown,italian_set.py
+email,email,Unknown,italian_set.py
+documento,document,Unknown,italian_set.py
+stampante,printer,Unknown,italian_set.py
+cartella,folder,Unknown,italian_set.py
+scrivania,desk,Unknown,italian_set.py
+tastiera,keyboard,Unknown,italian_set.py
+mouse,mouse (computer),Unknown,italian_set.py
+internet,internet,Unknown,italian_set.py
+password,password,Unknown,italian_set.py
+cassiere,cashier,Unknown,italian_set.py
+cliente,customer,Unknown,italian_set.py
+sconto,discount,Unknown,italian_set.py
+scontrino,receipt,Unknown,italian_set.py
+taglia,size,Unknown,italian_set.py
+taglia piccola,small size,Unknown,italian_set.py
+taglia media,medium size,Unknown,italian_set.py
+taglia grande,large size,Unknown,italian_set.py
+restituire,to return (item),Unknown,italian_set.py
+cambiare,to exchange,Unknown,italian_set.py
+provare,to try on,Unknown,italian_set.py
+saldi,sale,Unknown,italian_set.py
+centro commerciale,shopping mall,Unknown,italian_set.py
+naso,nose,Unknown,italian_set.py
+petto,chest,Unknown,italian_set.py
+stomaco,stomach,Unknown,italian_set.py
+ginocchio,knee,Unknown,italian_set.py
+medicina,medicine,Unknown,italian_set.py
+pillola,pill,Unknown,italian_set.py
+appuntamento dal medico,doctor's appointment,Unknown,italian_set.py
+dolore,pain,Unknown,italian_set.py
+mal di testa,headache,Unknown,italian_set.py
+febbre,fever,Unknown,italian_set.py
+tosse,cough,Unknown,italian_set.py
+raffreddore,cold (illness),Unknown,italian_set.py
+allergia,allergy,Unknown,italian_set.py
+spazzare,to sweep,Unknown,italian_set.py
+passare il mocio,to mop,Unknown,italian_set.py
+passare l'aspirapolvere,to vacuum,Unknown,italian_set.py
+spolverare,to dust,Unknown,italian_set.py
+piegare i vestiti,to fold clothes,Unknown,italian_set.py
+innaffiare le piante,to water plants,Unknown,italian_set.py
+portare fuori la spazzatura,to take out the trash,Unknown,italian_set.py
+lavare i piatti,to wash dishes,Unknown,italian_set.py
+apparecchiare la tavola,to set the table,Unknown,italian_set.py
+sparecchiare la tavola,to clear the table,Unknown,italian_set.py
+caricatore del telefono,phone charger,Unknown,italian_set.py
+batteria,battery,Unknown,italian_set.py
+schermo,screen,Unknown,italian_set.py
+app,app,Unknown,italian_set.py
+messaggio,message,Unknown,italian_set.py
+chiamata,call,Unknown,italian_set.py
+mandare un messaggio,to text,Unknown,italian_set.py
+scaricare,to download,Unknown,italian_set.py
+caricare,to upload,Unknown,italian_set.py
+collegare,to connect,Unknown,italian_set.py
+scollegare,to disconnect,Unknown,italian_set.py
+wifi,wifi,Unknown,italian_set.py
+impostazioni,settings,Unknown,italian_set.py
+aula,classroom,Unknown,italian_set.py
+lezione,lesson,Unknown,italian_set.py
+compiti,homework,Unknown,italian_set.py
+voto,grade,Unknown,italian_set.py
+materia,subject,Unknown,italian_set.py
+matematica,math,Unknown,italian_set.py
+geografia,geography,Unknown,italian_set.py
+lingua,language,Unknown,italian_set.py
+dizionario,dictionary,Unknown,italian_set.py
+quaderno,notebook,Unknown,italian_set.py
+matita,pencil,Unknown,italian_set.py
+gomma,eraser,Unknown,italian_set.py
+zaino,backpack,Unknown,italian_set.py
+migliorare,to improve,Unknown,italian_set.py
+confrontare,to compare,Unknown,italian_set.py
+progettare,to design,Unknown,italian_set.py
+sviluppare,to develop,Unknown,italian_set.py
+testare,to test,Unknown,italian_set.py
+misurare,to measure,Unknown,italian_set.py
+preparare,to prepare,Unknown,italian_set.py
+condividere,to share,Unknown,italian_set.py
+debole,weak,Unknown,italian_set.py
+sano,healthy,Unknown,italian_set.py
+malato,sick,Unknown,italian_set.py
+amichevole,friendly,Unknown,italian_set.py
+scortese,unfriendly,Unknown,italian_set.py
+divertente,funny,Unknown,italian_set.py
+intelligente,smart,Unknown,italian_set.py
+educato,polite,Unknown,italian_set.py
+maleducato,rude,Unknown,italian_set.py
+rumoroso,loud,Unknown,italian_set.py
+turista,tourist,Unknown,italian_set.py
+guida,guide,Unknown,italian_set.py
+museo,museum,Unknown,italian_set.py
+biglietteria,ticket office,Unknown,italian_set.py
+ingresso,entrance,Unknown,italian_set.py
+uscita,exit,Unknown,italian_set.py
+orari di apertura,opening hours,Unknown,italian_set.py
+chiuso oggi,closed today,Unknown,italian_set.py
+aperto tutti i giorni,open daily,Unknown,italian_set.py
+prenotazione obbligatoria,reservation required,Unknown,italian_set.py
+visita,tour,Unknown,italian_set.py
+souvenir,souvenir,Unknown,italian_set.py
+foto,photo,Unknown,italian_set.py
+macchina fotografica,camera,Unknown,italian_set.py
+esplorare,to explore,Unknown,italian_set.py
+prenotare,to book,Unknown,italian_set.py
+colazione,breakfast,Unknown,italian_set.py
+cena,dinner,Unknown,italian_set.py
+spuntino,snack,Unknown,italian_set.py
+pasto,meal,Unknown,italian_set.py
+forchetta,fork,Unknown,italian_set.py
+coltello,knife,Unknown,italian_set.py
+cucchiaio,spoon,Unknown,italian_set.py
+piatto,plate,Unknown,italian_set.py
+tazza,cup,Unknown,italian_set.py
+bicchiere,glass,Unknown,italian_set.py
+tovagliolo,napkin,Unknown,italian_set.py
+sale,salt,Unknown,italian_set.py
+pepe,pepper,Unknown,italian_set.py
+olio,oil,Unknown,italian_set.py
+aceto,vinegar,Unknown,italian_set.py
+zucchero,sugar,Unknown,italian_set.py
+burro,butter,Unknown,italian_set.py
+uovo,egg,Unknown,italian_set.py
+manzo,beef,Unknown,italian_set.py
+maiale,pork,Unknown,italian_set.py
+vegetariano,vegetarian,Unknown,italian_set.py
+vegano,vegan,Unknown,italian_set.py
+senza glutine,gluten-free,Unknown,italian_set.py
+il conto per favore,bill please,Unknown,italian_set.py
+menu,menu,Unknown,italian_set.py
+cameriere,waiter,Unknown,italian_set.py
+cameriera,waitress,Unknown,italian_set.py
+sto cercando,I'm looking for,Unknown,italian_set.py
+sto aspettando,I'm waiting for,Unknown,italian_set.py
+ci sto pensando,I'm thinking about it,Unknown,italian_set.py
+ho cambiato idea,I changed my mind,Unknown,italian_set.py
+sono d'accordo con te,I agree with you,Unknown,italian_set.py
+non sono d'accordo con te,I disagree with you,Unknown,italian_set.py
+dipende,that depends,Unknown,italian_set.py
+non Ã¨ importante,it's not important,Unknown,italian_set.py
+Ã¨ molto importante,it's very important,Unknown,italian_set.py
+non mi importa,I don't care,Unknown,italian_set.py
+ho bisogno di piÃ¹ tempo,I need more time,Unknown,italian_set.py
+sono quasi pronto,I'm almost ready,Unknown,italian_set.py
+non sono sicuro,I'm not sure,Unknown,italian_set.py
+sono sicuro,I'm sure,Unknown,italian_set.py
+lo spero,I hope so,Unknown,italian_set.py
+spero di no,I hope not,Unknown,italian_set.py
+prometto,I promise,Unknown,italian_set.py
+ho dimenticato,I forgot,Unknown,italian_set.py
+mi sono ricordato,I remembered,Unknown,italian_set.py
+due,two,Unknown,italian_set.py
+tre,three,Unknown,italian_set.py
+quattro,four,Unknown,italian_set.py
+cinque,five,Unknown,italian_set.py
+sei,six,Unknown,italian_set.py
+sette,seven,Unknown,italian_set.py
+otto,eight,Unknown,italian_set.py
+nove,nine,Unknown,italian_set.py
+dieci,ten,Unknown,italian_set.py
+undici,eleven,Unknown,italian_set.py
+dodici,twelve,Unknown,italian_set.py
+tredici,thirteen,Unknown,italian_set.py
+quattordici,fourteen,Unknown,italian_set.py
+quindici,fifteen,Unknown,italian_set.py
+sedici,sixteen,Unknown,italian_set.py
+diciassette,seventeen,Unknown,italian_set.py
+diciotto,eighteen,Unknown,italian_set.py
+diciannove,nineteen,Unknown,italian_set.py
+venti,twenty,Unknown,italian_set.py
+trenta,thirty,Unknown,italian_set.py
+quaranta,forty,Unknown,italian_set.py
+cinquanta,fifty,Unknown,italian_set.py
+cinquantuno,fifty-one,Unknown,italian_set.py
+cinquantadue,fifty-two,Unknown,italian_set.py
+cinquantatre,fifty-three,Unknown,italian_set.py
+cinquantaquattro,fifty-four,Unknown,italian_set.py
+cinquantacinque,fifty-five,Unknown,italian_set.py
+cinquantasei,fifty-six,Unknown,italian_set.py
+cinquantasette,fifty-seven,Unknown,italian_set.py
+cinquantotto,fifty-eight,Unknown,italian_set.py
+cinquantanove,fifty-nine,Unknown,italian_set.py
+sessanta,sixty,Unknown,italian_set.py
+settanta,seventy,Unknown,italian_set.py
+ottanta,eighty,Unknown,italian_set.py
+novanta,ninety,Unknown,italian_set.py
+cento,one hundred,Unknown,italian_set.py
+appuntamento,appointment,Unknown,italian_set.py
+programma,schedule,Unknown,italian_set.py
+evento,event,Unknown,italian_set.py
+vacanza,holiday,Unknown,italian_set.py
+fine settimana,weekend,Unknown,italian_set.py
+giorno feriale,weekday,Unknown,italian_set.py
+mezzanotte,midnight,Unknown,italian_set.py
+mezzogiorno,noon,Unknown,italian_set.py
+presto,early,Unknown,italian_set.py
+scelta,choice,Unknown,italian_set.py
+cambiamento,change,Unknown,italian_set.py
+bugia,lie,Unknown,italian_set.py
+presente,present,Unknown,italian_set.py
+obiettivo,goal,Unknown,italian_set.py
+regola,rule,Unknown,italian_set.py
+diritti,rights,Unknown,italian_set.py
+tribunale,court,Unknown,italian_set.py
+giudice,judge,Unknown,italian_set.py
+comunitÃ ,community,Unknown,italian_set.py
+nazione,country,Unknown,italian_set.py
+confine,border,Unknown,italian_set.py
+conto bancario,bank account,Unknown,italian_set.py
+contanti,cash,Unknown,italian_set.py
+monete,coins,Unknown,italian_set.py
+stipendio,salary,Unknown,italian_set.py
+reddito,income,Unknown,italian_set.py
+budget,budget,Unknown,italian_set.py
+prestito,loan,Unknown,italian_set.py
+debito,debt,Unknown,italian_set.py
+tassa,tax,Unknown,italian_set.py
+resto,change (money),Unknown,italian_set.py
+conversazione,conversation,Unknown,italian_set.py
+risposta,answer,Unknown,italian_set.py
+spiegazione,explanation,Unknown,italian_set.py
+storia,story,Unknown,italian_set.py
+informazioni,information,Unknown,italian_set.py
+ansia,anxiety,Unknown,italian_set.py
+fiducia,trust,Unknown,italian_set.py
+rabbia,anger,Unknown,italian_set.py
+conforto,comfort,Unknown,italian_set.py
+delusione,disappointment,Unknown,italian_set.py
+motivazione,motivation,Unknown,italian_set.py
+controllo di frontiera,border control,Unknown,italian_set.py
+dogana,customs,Unknown,italian_set.py
+ritiro bagagli,baggage claim,Unknown,italian_set.py
+carta d'imbarco,boarding pass,Unknown,italian_set.py
+uscita d'imbarco,gate,Unknown,italian_set.py
+ritardo,delay,Unknown,italian_set.py
+arrivo,arrival,Unknown,italian_set.py
+partenza,departure,Unknown,italian_set.py
+andata e ritorno,round trip,Unknown,italian_set.py
+biglietto di sola andata,one-way ticket,Unknown,italian_set.py
+attrazione turistica,tourist attraction,Unknown,italian_set.py
+assicurazione di viaggio,travel insurance,Unknown,italian_set.py
+carriera,career,Unknown,italian_set.py
+promozione,promotion,Unknown,italian_set.py
+abilitÃ ,skill,Unknown,italian_set.py
+formazione,training,Unknown,italian_set.py
+colloquio,interview,Unknown,italian_set.py
+curriculum,resume,Unknown,italian_set.py
+contratto,contract,Unknown,italian_set.py
+negoziazione,negotiation,Unknown,italian_set.py
+leadership,leadership,Unknown,italian_set.py
+lavoro di squadra,teamwork,Unknown,italian_set.py
+negoziare,to negotiate,Unknown,italian_set.py
+gestire,to manage,Unknown,italian_set.py
+guidare,to lead,Unknown,italian_set.py
+raccomandare,to recommend,Unknown,italian_set.py
+proteggere,to protect,Unknown,italian_set.py
+vietare,to forbid,Unknown,italian_set.py
+scusarsi,to apologize,Unknown,italian_set.py
+rilassarsi,to relax,Unknown,italian_set.py
+riposare,to rest,Unknown,italian_set.py
+fallire,to fail,Unknown,italian_set.py
+fidarsi,to trust,Unknown,italian_set.py
+dubitare,to doubt,Unknown,italian_set.py
+soffitto,ceiling,Unknown,italian_set.py
+pavimento,floor,Unknown,italian_set.py
+tetto,roof,Unknown,italian_set.py
+giardino,yard,Unknown,italian_set.py
+garage,garage,Unknown,italian_set.py
+balcone,balcony,Unknown,italian_set.py
+scale,stairs,Unknown,italian_set.py
+ascensore,elevator,Unknown,italian_set.py
+riscaldamento,heater,Unknown,italian_set.py
+aria condizionata,air conditioner,Unknown,italian_set.py
+interruttore,light switch,Unknown,italian_set.py
+presa elettrica,outlet,Unknown,italian_set.py
+farina,flour,Unknown,italian_set.py
+spezia,spice,Unknown,italian_set.py
+erba aromatica,herb,Unknown,italian_set.py
+aglio,garlic,Unknown,italian_set.py
+cipolla,onion,Unknown,italian_set.py
+pomodoro,tomato,Unknown,italian_set.py
+peperone,pepper (vegetable),Unknown,italian_set.py
+limone,lemon,Unknown,italian_set.py
+uva,grape,Unknown,italian_set.py
+fragola,strawberry,Unknown,italian_set.py
+pesca,peach,Unknown,italian_set.py
+pera,pear,Unknown,italian_set.py
+anguria,watermelon,Unknown,italian_set.py
+melone,melon,Unknown,italian_set.py
+oliva,olive,Unknown,italian_set.py
+fungo,mushroom,Unknown,italian_set.py
+cosa intendi,what do you mean,Unknown,italian_set.py
+ha senso,that makes sense,Unknown,italian_set.py
+lo apprezzo,I appreciate it,Unknown,italian_set.py
+non sono interessato,I'm not interested,Unknown,italian_set.py
+sono interessato,I'm interested,Unknown,italian_set.py
+sto imparando l'italiano,I'm learning Italian,Unknown,italian_set.py
+puoi aiutarmi,can you help me,Unknown,italian_set.py
+puoi mostrarmi,can you show me,Unknown,italian_set.py
+puoi spiegare,can you explain,Unknown,italian_set.py
+non ricordo,I don't remember,Unknown,italian_set.py
+sono completamente d'accordo,I completely agree,Unknown,italian_set.py
+sono completamente in disaccordo,I completely disagree,Unknown,italian_set.py
+Ã¨ troppo costoso,it's too expensive,Unknown,italian_set.py
+Ã¨ troppo lontano,it's too far,Unknown,italian_set.py
+Ã¨ vicino,it's close,Unknown,italian_set.py
+Ã¨ possibile,it's possible,Unknown,italian_set.py
+Ã¨ impossibile,it's impossible,Unknown,italian_set.py
+sono quasi arrivato,I'm almost there,Unknown,italian_set.py
+sto arrivando,I'm on my way,Unknown,italian_set.py
+andiamo,let's go,Unknown,italian_set.py
+prendere in prestito,to borrow,Unknown,italian_set.py
+prestare,to lend,Unknown,italian_set.py
+unirsi,to join,Unknown,italian_set.py
+separare,to separate,Unknown,italian_set.py
+stampare,to print,Unknown,italian_set.py
+firmare,to sign,Unknown,italian_set.py
+cancellare,to cancel,Unknown,italian_set.py
+confermare,to confirm,Unknown,italian_set.py
+indovinare,to guess,Unknown,italian_set.py
+dimostrare,to prove,Unknown,italian_set.py
+litigare,to argue,Unknown,italian_set.py
+perdonare,to forgive,Unknown,italian_set.py
+rispettare,to respect,Unknown,italian_set.py
+ammirare,to admire,Unknown,italian_set.py
+lamentarsi,to complain,Unknown,italian_set.py
