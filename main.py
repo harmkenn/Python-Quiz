@@ -47,8 +47,9 @@ def main():
             "Jeopardy": "📘 Jeopardy",
             "Wheel": "🎡 Wheel",
             "FamilyFeud": "👨‍👩‍👧‍👦 Family Feud",
+            "QuoteGuess": "💭 Quote Guess",
         }
-        options = [display_map[k] for k in ["Home", "Matching", "Jeopardy", "Wheel", "FamilyFeud"]]
+        options = [display_map[k] for k in ["Home", "Matching", "Jeopardy", "Wheel", "FamilyFeud", "QuoteGuess"]]
 
         # Determine current index for the selectbox
         current_display = display_map.get(st.session_state.get("current_game", "Home"), "🏠 Home")
@@ -82,6 +83,9 @@ def main():
         mod.app()
     elif st.session_state.current_game == "FamilyFeud":
         mod = load_game_module("FamilyFeud", "feud_game.py", "game_feud")
+        mod.app()
+    elif st.session_state.current_game == "QuoteGuess":
+        mod = load_game_module("QuoteGuess", "quote_guess_game.py", "game_quote_guess")
         mod.app()
 
 if __name__ == "__main__":
