@@ -3,6 +3,16 @@ import random
 from quotes_data import quotes_data
 
 
+def build_speaker_options(correct_speaker, all_speakers, num_options=10):
+    """Return a list of speaker options including the correct speaker."""
+    available = [speaker for speaker in all_speakers if speaker and speaker != correct_speaker]
+    num_distractors = min(num_options - 1, len(available))
+    distractors = random.sample(available, num_distractors) if num_distractors > 0 else []
+    options = distractors + [correct_speaker]
+    random.shuffle(options)
+    return options
+
+
 def app():
     """Main Quote Guess Game Application"""
     
@@ -102,12 +112,15 @@ def app():
         st.session_state.hints_shown = []
         st.session_state.question_history = []
         st.session_state.game_over = False
+        st.session_state.speaker_options = {}
         st.session_state.quote_game_initialized = True
         st.rerun()
 
     if not st.session_state.quote_game_initialized:
         st.info("👈 Click 'Start New Game' in the sidebar to begin!")
         return
+
+    all_speaker_names = sorted({q['speaker'] for q in quotes_data if q.get('speaker')})
 
     # --- Game Over Check ---
     if st.session_state.current_question >= len(st.session_state.quote_questions):
@@ -195,25 +208,34 @@ def app():
     st.markdown("---")
     
     if not st.session_state.question_answered:
+        correct_speaker = current_quote_data['speaker']
+        if st.session_state.current_question not in st.session_state.speaker_options:
+            st.session_state.speaker_options[st.session_state.current_question] = build_speaker_options(
+                correct_speaker,
+                all_speaker_names,
+                num_options=10
+            )
+        options = st.session_state.speaker_options[st.session_state.current_question]
+
         col1, col2 = st.columns([2, 1])
         
         with col1:
-            guess = st.text_input(
-                "Enter the speaker's name:",
-                key=f"guess-{question_num}",
-                placeholder="e.g., Nephi, Jesus Christ, Alma..."
+            selected_speaker = st.radio(
+                "Pick the speaker from the list:",
+                options,
+                key=f"guess-{question_num}"
             )
         
         with col2:
             st.write("")  # Spacing
             submit = st.button("✓ Submit Answer", key=f"submit-{question_num}")
         
-        if submit and guess.strip():
+        if submit and selected_speaker:
             st.session_state.question_answered = True
             
             # Check answer
-            correct_speaker = current_quote_data['speaker'].lower()
-            guess_lower = guess.strip().lower()
+            correct_speaker_lower = correct_speaker.lower()
+            guess_lower = selected_speaker.lower()
             
             # Calculate base points
             base_points = 300
@@ -221,12 +243,12 @@ def app():
             points_earned = max(base_points - (hints_used * 100), 0)
             
             # Store in history
-            is_correct = guess_lower == correct_speaker
+            is_correct = guess_lower == correct_speaker_lower
             st.session_state.question_history.append({
                 'question_num': question_num,
                 'quote': current_quote_data['quote'],
-                'correct_speaker': current_quote_data['speaker'],
-                'guess': guess.strip(),
+                'correct_speaker': correct_speaker,
+                'guess': selected_speaker,
                 'is_correct': is_correct,
                 'points': points_earned if is_correct else 0,
                 'team': st.session_state.current_team + 1,
