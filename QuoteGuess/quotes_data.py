@@ -657,12 +657,5 @@ quotes_data = [
         'chapter': '7:16',
         'hints': ['Moroni'],
     },
-    {
-        'quote': '[MISSING: Moroni 6:8]',
-        'speaker': 'Mormon',
-        'book': 'Moroni',
-        'chapter': '6:8',
-        'hints': ['Moroni'],
-    },
-    
+
 ]
