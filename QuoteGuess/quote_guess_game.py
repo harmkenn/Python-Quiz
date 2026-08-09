@@ -92,6 +92,7 @@ def app():
         background-color: #E0E7FF;
         border-radius: 10px;
         border: 2px solid #4F46E5;
+        color: #1E3A8A; /* Dark blue text for better contrast */
         margin: 20px 0;
     }
     </style>
