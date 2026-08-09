@@ -1,11 +1,20 @@
 import streamlit as st
 import random
 from quotes_data import quotes_data
+import re
 
 
-def build_speaker_options(correct_speaker, all_speakers, num_options=10):
+def clean_speaker_name(speaker):
+    """Removes parenthetical parts from speaker names."""
+    return re.sub(r"\(.*\)", "", speaker).strip()
+
+
+def build_speaker_options(correct_speaker, all_speakers, num_options=6):
     """Return a list of speaker options including the correct speaker."""
-    available = [speaker for speaker in all_speakers if speaker and speaker != correct_speaker]
+    cleaned_correct_speaker = clean_speaker_name(correct_speaker)
+    # Ensure we don't have duplicates after cleaning
+    cleaned_all_speakers = sorted(list(set(clean_speaker_name(s) for s in all_speakers if s)))
+    available = [speaker for speaker in cleaned_all_speakers if speaker != cleaned_correct_speaker]
     num_distractors = min(num_options - 1, len(available))
     distractors = random.sample(available, num_distractors) if num_distractors > 0 else []
     options = distractors + [correct_speaker]
@@ -178,15 +187,17 @@ def app():
         st.write("**Available Hints:**")
         for i, hint in enumerate(current_quote_data['hints']):
             hint_num = i + 1
+            hint_type = hint.split(':')[0]
             is_revealed = i in st.session_state.hints_shown
             
             if is_revealed:
                 st.markdown(
-                    f"<div class='hint-box'>💡 **Hint {hint_num}:** {hint}</div>",
+                    f"<div class='hint-box'>💡 **{hint_type}:** {hint.split(':', 1)[1].strip()}</div>",
                     unsafe_allow_html=True
                 )
             else:
-                if st.button(f"💡 Show Hint {hint_num}", key=f"hint-{question_num}-{hint_num}"):
+                button_label = f"💡 Show {hint_type} Hint"
+                if st.button(button_label, key=f"hint-{question_num}-{hint_num}"):
                     if i not in st.session_state.hints_shown:
                         st.session_state.hints_shown.append(i)
                         st.rerun()
