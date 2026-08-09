@@ -16,7 +16,7 @@ quotes_data = [
         'hints': ['Book: 1 Nephi', 'Chapter: 3', 'Year: Approx. 600-592 BC', 'Audience: His father, Lehi'],
     },
     {
-        'quote': 'And now as I said concerning faithâ\x80\x94 faith is not to have a perfect knowledge of things; therefore if ye have faith ye hope for things which are not seen, which are true.',
+        'quote': 'And now as I said concerning faith  faith is not to have a perfect knowledge of things; therefore if ye have faith ye hope for things which are not seen, which are true.',
         'speaker': 'Alma the Younger',
         'audience': 'The poor Zoramites',
         'book': 'Alma',
@@ -112,7 +112,7 @@ quotes_data = [
         'hints': ['Book: Alma', 'Chapter: 34', 'Year: Approx. 74 BC', 'Audience: The poor Zoramites'],
     },
     {
-        'quote': 'And it came to pass that he said unto them: Behold, here are the waters of Mormon (for thus were they called) and now, as ye are desirous to come into the fold of God, and to be called his people, and are willing to bear one anotherâ\x80\x99s burdens, that they may be light; Yea, and are willing to mourn with those that mourn ; yea, and comfort those that stand in need of comfort, and to stand as witnesses of God at all times and in all things, and in all places that ye may be in, even until death, that ye may be redeemed of God, and be numbered with those of the first resurrection , that ye may have eternal lifeâ\x80\x94',
+        'quote': 'And it came to pass that he said unto them: Behold, here are the waters of Mormon (for thus were they called) and now, as ye are desirous to come into the fold of God, and to be called his people, and are willing to bear one anotherâ\x80\x99s burdens, that they may be light; Yea, and are willing to mourn with those that mourn ; yea, and comfort those that stand in need of comfort, and to stand as witnesses of God at all times and in all things, and in all places that ye may be in, even until death, that ye may be redeemed of God, and be numbered with those of the first resurrection , that ye may have eternal life ',
         'speaker': 'Alma the Elder',
         'audience': 'Believers at the Waters of Mormon',
         'book': 'Mosiah',
@@ -240,7 +240,7 @@ quotes_data = [
         'hints': ['Book: 3 Nephi', 'Chapter: 1', 'Year: Approx. 1 AD', 'Audience: Nephi, son of Nephi'],
     },
     {
-        'quote': 'And it came to pass that he rent his coat; and he took a piece thereof, and wrote upon itâ\x80\x94 In memory of our God, our religion, and freedom, and our peace, our wives, and our childrenâ\x80\x94and he fastened it upon the end of a pole.',
+        'quote': 'And it came to pass that he rent his coat; and he took a piece thereof, and wrote upon it  In memory of our God, our religion, and freedom, and our peace, our wives, and our children and he fastened it upon the end of a pole.',
         'speaker': 'Moroni',
         'audience': 'The Nephites',
         'book': 'Alma',
@@ -248,7 +248,7 @@ quotes_data = [
         'hints': ['Book: Alma', 'Chapter: 46', 'Year: Approx. 73 BC', 'Audience: The Nephites'],
     },
     {
-        'quote': 'And they were all young men, and they were exceedingly valiant for courage , and also for strength and activity; but behold, this was not allâ\x80\x94they were men who were true at all times in whatsoever thing they were entrusted.',
+        'quote': 'And they were all young men, and they were exceedingly valiant for courage , and also for strength and activity; but behold, this was not all they were men who were true at all times in whatsoever thing they were entrusted.',
         'speaker': 'Mormon (narration)',
         'audience': 'The reader',
         'book': 'Alma',
@@ -288,7 +288,7 @@ quotes_data = [
         'hints': ['Book: Alma', 'Chapter: 43', 'Year: Approx. 74 BC', 'Audience: The reader'],
     },
     {
-        'quote': 'Now it is not common that the voice of the people desireth anything contrary to that which is right; but it is common for the lesser part of the people to desire that which is not right; therefore this shall ye observe and make it your lawâ\x80\x94to do your business by the voice of the people.',
+        'quote': 'Now it is not common that the voice of the people desireth anything contrary to that which is right; but it is common for the lesser part of the people to desire that which is not right; therefore this shall ye observe and make it your law to do your business by the voice of the people.',
         'speaker': 'King Mosiah',
         'audience': 'The people of Zarahemla',
         'book': 'Mosiah',
@@ -368,7 +368,7 @@ quotes_data = [
         'hints': ['Book: Moroni', 'Chapter: 7', 'Year: Approx. 401-421 AD', 'Audience: The peaceable followers of Christ'],
     },
     {
-        'quote': 'Now, we will compare the word unto a seed . Now, if ye give place, that a seed may be planted in your heart , behold, if it be a true seed, or a good seed, if ye do not cast it out by your unbelief , that ye will resist the Spirit of the Lord, behold, it will begin to swell within your breasts; and when you feel these swelling motions, ye will begin to say within yourselvesâ\x80\x94It must needs be that this is a good seed, or that the word is good, for it beginneth to enlarge my soul; yea, it beginneth to enlighten my understanding , yea, it beginneth to be delicious to me.',
+        'quote': 'Now, we will compare the word unto a seed . Now, if ye give place, that a seed may be planted in your heart , behold, if it be a true seed, or a good seed, if ye do not cast it out by your unbelief , that ye will resist the Spirit of the Lord, behold, it will begin to swell within your breasts; and when you feel these swelling motions, ye will begin to say within yourselves It must needs be that this is a good seed, or that the word is good, for it beginneth to enlarge my soul; yea, it beginneth to enlighten my understanding , yea, it beginneth to be delicious to me.',
         'speaker': 'Alma the Younger',
         'audience': 'The poor Zoramites',
         'book': 'Alma',
@@ -512,7 +512,7 @@ quotes_data = [
         'hints': ['Book: Jacob', 'Chapter: 2', 'Year: Approx. 544-421 BC', 'Audience: The people of Nephi'],
     },
     {
-        'quote': 'I say unto you, my brethren, that if you should render all the thanks and praise which your whole soul has power to possess, to that God who has created you, and has kept and preserved you, and has caused that ye should rejoice , and has granted that ye should live in peace one with anotherâ\x80\x94',
+        'quote': 'I say unto you, my brethren, that if you should render all the thanks and praise which your whole soul has power to possess, to that God who has created you, and has kept and preserved you, and has caused that ye should rejoice , and has granted that ye should live in peace one with another ',
         'speaker': 'King Benjamin',
         'audience': 'The people of Zarahemla',
         'book': 'Mosiah',
@@ -544,7 +544,7 @@ quotes_data = [
         'hints': ['Book: Moroni', 'Chapter: 7', 'Year: Approx. 401-421 AD', 'Audience: The peaceable followers of Christ'],
     },
     {
-        'quote': 'Now, concerning the state of the soul between death and the resurrectionâ\x80\x94Behold, it has been made known unto me by an angel, that the spirits of all men, as soon as they are departed from this mortal body, yea, the spirits of all men, whether they be good or evil, are taken home to that God who gave them life.',
+        'quote': 'Now, concerning the state of the soul between death and the resurrection Behold, it has been made known unto me by an angel, that the spirits of all men, as soon as they are departed from this mortal body, yea, the spirits of all men, whether they be good or evil, are taken home to that God who gave them life.',
         'speaker': 'Alma the Younger',
         'audience': 'His son, Corianton',
         'book': 'Alma',
@@ -560,7 +560,7 @@ quotes_data = [
         'hints': ['Book: 2 Nephi', 'Chapter: 31', 'Year: Approx. 559-545 BC', 'Audience: His brethren'],
     },
     {
-        'quote': 'And it came to pass that he rent his coat; and he took a piece thereof, and wrote upon itâ\x80\x94 In memory of our God, our religion, and freedom, and our peace, our wives, and our childrenâ\x80\x94and he fastened it upon the end of a pole.',
+        'quote': 'And it came to pass that he rent his coat; and he took a piece thereof, and wrote upon it In memory of our God, our religion, and freedom, and our peace, our wives, and our children and he fastened it upon the end of a pole.',
         'speaker': 'Moroni',
         'audience': 'The Nephites',
         'book': 'Alma',
@@ -632,7 +632,7 @@ quotes_data = [
         'hints': ['Book: Alma', 'Chapter: 57', 'Year: Approx. 63 BC', 'Audience: Captain Moroni (in a letter)'],
     },
     {
-        'quote': 'And it came to pass that when the men of Moroni saw the fierceness and the anger of the Lamanites, they were about to shrink and flee from them. And Moroni, perceiving their intent, sent forth and inspired their hearts with these thoughtsâ\x80\x94yea, the thoughts of their lands, their liberty, yea, their freedom from bondage.',
+        'quote': 'And it came to pass that when the men of Moroni saw the fierceness and the anger of the Lamanites, they were about to shrink and flee from them. And Moroni, perceiving their intent, sent forth and inspired their hearts with these thoughts yea, the thoughts of their lands, their liberty, yea, their freedom from bondage.',
         'speaker': 'Mormon (narration)',
         'audience': 'The reader',
         'book': 'Alma',
@@ -680,7 +680,7 @@ quotes_data = [
         'hints': ['Book: 3 Nephi', 'Chapter: 18', 'Year: Approx. 34 AD', 'Audience: The Nephite multitude'],
     },
     {
-        'quote': 'Behold I have given unto you my gospel , and this is the gospel which I have given unto youâ\x80\x94that I came into the world to do the will of my Father, because my Father sent me.',
+        'quote': 'Behold I have given unto you my gospel , and this is the gospel which I have given unto you that I came into the world to do the will of my Father, because my Father sent me.',
         'speaker': 'Jesus Christ',
         'audience': 'The twelve disciples',
         'book': '3 Nephi',
