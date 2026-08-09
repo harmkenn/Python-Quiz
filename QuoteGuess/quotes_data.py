@@ -5,6 +5,7 @@ quotes_data = [
         'book': '2 Nephi',
         'chapter': '2:25',
         'hints': ['2 Nephi'],
+        'hints': ['Book: 2 Nephi', 'Chapter: 2', 'Year: Approx. 588-570 BC'],
     },
     {
         'quote': 'And it came to pass that I, Nephi, said unto my father: I will go and do the things which the Lord hath commanded, for I know that the Lord giveth no commandments unto the children of men, save he shall prepare a way for them that they may accomplish the thing which he commandeth them.',
@@ -12,6 +13,7 @@ quotes_data = [
         'book': '1 Nephi',
         'chapter': '3:7',
         'hints': ['1 Nephi'],
+        'hints': ['Book: 1 Nephi', 'Chapter: 3', 'Year: Approx. 600-592 BC'],
     },
     {
         'quote': 'And now as I said concerning faithâ\x80\x94 faith is not to have a perfect knowledge of things; therefore if ye have faith ye hope for things which are not seen, which are true.',
@@ -19,6 +21,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '32:21',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 32', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'Wherefore, whoso believeth in God might with surety hope for a better world, yea, even a place at the right hand of God, which hope cometh of faith , maketh an anchor to the souls of men, which would make them sure and steadfast, always abounding in good works , being led to glorify God.',
@@ -26,13 +29,16 @@ quotes_data = [
         'book': 'Ether',
         'chapter': '12:4',
         'hints': ['Ether'],
+        'hints': ['Book: Ether', 'Chapter: 12', 'Year: Approx. 421 AD (narration)'],
     },
     {
         'quote': '[Moroni 7:33 - TEXT NOT FOUND]',
+        'quote': 'And Christ hath said: If ye will have faith in me ye shall have power to do whatsoever thing is expedient in me.',
         'speaker': 'Mormon',
         'book': 'Moroni',
         'chapter': '7:33',
         'hints': ['Moroni'],
+        'hints': ['Book: Moroni', 'Chapter: 7', 'Year: Approx. 401-421 AD'],
     },
     {
         'quote': 'O my son, do not let us be slothful because of the easiness of the way ; for so was it with our fathers; for so was it prepared for them, that if they would look they might live ; even so it is with us. The way is prepared, and if we will look we may live forever.',
@@ -40,6 +46,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '37:46',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 37', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'But Alma said unto him: Thou hast had signs enough; will ye tempt your God? Will ye say, Show unto me a sign, when ye have the testimony of all these thy brethren, and also all the holy prophets? The scriptures are laid before thee, yea, and all things denote there is a God; yea, even the earth , and all things that are upon the face of it, yea, and its motion , yea, and also all the planets which move in their regular form do witness that there is a Supreme Creator.',
@@ -47,6 +54,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '30:44',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 30', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'And as I spake concerning the convincing of the Jews , that Jesus is the very Christ , it must needs be that the Gentiles be convinced also that Jesus is the Christ, the Eternal God ;',
@@ -54,13 +62,16 @@ quotes_data = [
         'book': '2 Nephi',
         'chapter': '26:12',
         'hints': ['2 Nephi'],
+        'hints': ['Book: 2 Nephi', 'Chapter: 26', 'Year: Approx. 559-545 BC'],
     },
     {
         'quote': '[Moroni 10:4 - TEXT NOT FOUND] [Moroni 10:5 - TEXT NOT FOUND]',
+        'quote': 'And when ye shall receive these things, I would exhort you that ye would ask God, the Eternal Father, in the name of Christ, if these things are not true; and if ye shall ask with a sincere heart, with real intent, having faith in Christ, he will manifest the truth of it unto you, by the power of the Holy Ghost. And by the power of the Holy Ghost ye may know the truth of all things.',
         'speaker': 'Moroni',
         'book': 'Moroni',
         'chapter': '10:4-5',
         'hints': ['Moroni'],
+        'hints': ['Book: Moroni', 'Chapter: 10', 'Year: Approx. 421 AD'],
     },
     {
         'quote': 'For he that diligently seeketh shall find; and the mysteries of God shall be unfolded unto them, by the power of the Holy Ghost , as well in these times as in times of old, and as well in times of old as in times to come; wherefore, the course of the Lord is one eternal round.',
@@ -68,13 +79,16 @@ quotes_data = [
         'book': '1 Nephi',
         'chapter': '10:19',
         'hints': ['1 Nephi'],
+        'hints': ['Book: 1 Nephi', 'Chapter: 10', 'Year: Approx. 600-592 BC'],
     },
     {
         'quote': '[Moroni 7:47 - TEXT NOT FOUND]',
+        'quote': 'But charity is the pure love of Christ, and it endureth forever; and whoso is found possessed of it at the last day, it shall be well with him.',
         'speaker': 'Mormon',
         'book': 'Moroni',
         'chapter': '7:47',
         'hints': ['Moroni'],
+        'hints': ['Book: Moroni', 'Chapter: 7', 'Year: Approx. 401-421 AD'],
     },
     {
         'quote': 'And behold, I tell you these things that ye may learn wisdom ; that ye may learn that when ye are in the service of your fellow beings ye are only in the service of your God.',
@@ -82,6 +96,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '2:17',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 2', 'Year: Approx. 124 BC'],
     },
     {
         'quote': 'But this much I can tell you, that if ye do not watch yourselves, and your thoughts , and your words , and your deeds, and observe the commandments of God, and continue in the faith of what ye have heard concerning the coming of our Lord, even unto the end of your lives, ye must perish. And now, O man, remember, and perish not.',
@@ -89,6 +104,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '4:30',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 4', 'Year: Approx. 124 BC'],
     },
     {
         'quote': 'And now my beloved brethren, I would exhort you to have patience , and that ye bear with all manner of afflictions ; that ye do not revile against those who do cast you out because of your exceeding poverty, lest ye become sinners like unto them;',
@@ -96,6 +112,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '34:40',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 34', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'And it came to pass that he said unto them: Behold, here are the waters of Mormon (for thus were they called) and now, as ye are desirous to come into the fold of God, and to be called his people, and are willing to bear one anotherâ\x80\x99s burdens, that they may be light; Yea, and are willing to mourn with those that mourn ; yea, and comfort those that stand in need of comfort, and to stand as witnesses of God at all times and in all things, and in all places that ye may be in, even until death, that ye may be redeemed of God, and be numbered with those of the first resurrection , that ye may have eternal lifeâ\x80\x94',
@@ -103,6 +120,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '18:8-9',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 18', 'Year: Approx. 147 BC'],
     },
     {
         'quote': 'And if men come unto me I will show unto them their weakness . I give unto men weakness that they may be humble; and my grace is sufficient for all men that humble themselves before me; for if they humble themselves before me, and have faith in me, then will I make weak things become strong unto them.',
@@ -110,6 +128,7 @@ quotes_data = [
         'book': 'Ether',
         'chapter': '12:27',
         'hints': ['Ether'],
+        'hints': ['Book: Ether', 'Chapter: 12', 'Year: Approx. 421 AD (narration)'],
     },
     {
         'quote': 'But behold I say unto you, love your enemies , bless them that curse you, do good to them that hate you, and pray for them who despitefully use you and persecute you;',
@@ -117,6 +136,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '12:44',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 12', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'And he will take upon him death , that he may loose the bands of death which bind his people; and he will take upon him their infirmities, that his bowels may be filled with mercy, according to the flesh, that he may know according to the flesh how to succor his people according to their infirmities.',
@@ -124,6 +144,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '7:12',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 7', 'Year: Approx. 83 BC'],
     },
     {
         'quote': 'For the natural man is an enemy to God, and has been from the fall of Adam, and will be, forever and ever, unless he yields to the enticings of the Holy Spirit , and putteth off the natural man and becometh a saint through the atonement of Christ the Lord, and becometh as a child , submissive , meek, humble, patient, full of love, willing to submit to all things which the Lord seeth fit to inflict upon him, even as a child doth submit to his father.',
@@ -131,6 +152,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '3:19',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 3', 'Year: Approx. 124 BC'],
     },
     {
         'quote': 'For verily, verily I say unto you, he that hath the spirit of contention is not of me, but is of the devil , who is the father of contention, and he stirreth up the hearts of men to contend with anger, one with another.',
@@ -138,6 +160,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '11:29',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 11', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'And now, O my son Helaman, behold, thou art in thy youth, and therefore, I beseech of thee that thou wilt hear my words and learn of me; for I do know that whosoever shall put their trust in God shall be supported in their trials , and their troubles, and their afflictions, and shall be lifted up at the last day.',
@@ -145,6 +168,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '36:3',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 36', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'And I will also ease the burdens which are put upon your shoulders, that even you cannot feel them upon your backs, even while you are in bondage; and this will I do that ye may stand as witnesses for me hereafter, and that ye may know of a surety that I, the Lord God, do visit my people in their afflictions .',
@@ -152,6 +176,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '24:14',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 24', 'Year: Approx. 145-121 BC'],
     },
     {
         'quote': 'And now my son, Shiblon, I would that ye should remember, that as much as ye shall put your trust in God even so much ye shall be delivered out of your trials, and your troubles , and your afflictions, and ye shall be lifted up at the last day.',
@@ -159,6 +184,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '38:5',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 38', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'And now, my sons, remember, remember that it is upon the rock of our Redeemer, who is Christ, the Son of God, that ye must build your foundation ; that when the devil shall send forth his mighty winds, yea, his shafts in the whirlwind, yea, when all his hail and his mighty storm shall beat upon you, it shall have no power over you to drag you down to the gulf of misery and endless wo, because of the rock upon which ye are built, which is a sure foundation, a foundation whereon if men build they cannot fall.',
@@ -166,6 +192,7 @@ quotes_data = [
         'book': 'Helaman',
         'chapter': '5:12',
         'hints': ['Helaman'],
+        'hints': ['Book: Helaman', 'Chapter: 5', 'Year: Approx. 30 BC'],
     },
     {
         'quote': 'For a small moment have I forsaken thee, but with great mercies will I gather thee.',
@@ -173,6 +200,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '22:7',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 22', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'And now, I, Moroni, would speak somewhat concerning these things; I would show unto the world that faith is things which are hoped for and not seen; wherefore, dispute not because ye see not, for ye receive no witness until after the trial of your faith.',
@@ -180,6 +208,7 @@ quotes_data = [
         'book': 'Ether',
         'chapter': '12:6',
         'hints': ['Ether'],
+        'hints': ['Book: Ether', 'Chapter: 12', 'Year: Approx. 421 AD (narration)'],
     },
     {
         'quote': 'Yea, I know that I am nothing ; as to my strength I am weak; therefore I will not boast of myself, but I will boast of my God, for in his strength I can do all things ; yea, behold, many mighty miracles we have wrought in this land, for which we will praise his name forever.',
@@ -187,6 +216,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '26:12',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 26', 'Year: Approx. 90-77 BC'],
     },
     {
         'quote': 'And moreover, I would desire that ye should consider on the blessed and happy state of those that keep the commandments of God. For behold, they are blessed in all things, both temporal and spiritual; and if they hold out faithful to the end they are received into heaven , that thereby they may dwell with God in a state of never-ending happiness. O remember, remember that these things are true; for the Lord God hath spoken it.',
@@ -194,6 +224,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '2:41',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 2', 'Year: Approx. 124 BC'],
     },
     {
         'quote': 'Yea, and it came to pass that the Lord our God did visit us with assurances that he would deliver us; yea, insomuch that he did speak peace to our souls, and did grant unto us great faith, and did cause us that we should hope for our deliverance in him.',
@@ -201,6 +232,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '58:11',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 58', 'Year: Approx. 62 BC'],
     },
     {
         'quote': 'Lift up your head and be of good cheer; for behold, the time is at hand, and on this night shall the sign be given, and on the morrow come I into the world, to show unto the world that I will fulfil all that which I have caused to be spoken by the mouth of my holy prophets.',
@@ -208,6 +240,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '1:13',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 1', 'Year: Approx. 1 AD'],
     },
     {
         'quote': 'And it came to pass that he rent his coat; and he took a piece thereof, and wrote upon itâ\x80\x94 In memory of our God, our religion, and freedom, and our peace, our wives, and our childrenâ\x80\x94and he fastened it upon the end of a pole.',
@@ -215,6 +248,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '46:12',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 46', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'And they were all young men, and they were exceedingly valiant for courage , and also for strength and activity; but behold, this was not allâ\x80\x94they were men who were true at all times in whatsoever thing they were entrusted.',
@@ -222,6 +256,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '53:20',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 53', 'Year: Approx. 64 BC'],
     },
     {
         'quote': 'Yea, verily, verily I say unto you, if all men had been, and were, and ever would be, like unto Moroni , behold, the very powers of hell would have been shaken forever; yea, the devil would never have power over the hearts of the children of men.',
@@ -229,6 +264,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '48:17',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 48', 'Year: Approx. 72 BC'],
     },
     {
         'quote': 'And behold, all that he requires of you is to keep his commandments; and he has promised you that if ye would keep his commandments ye should prosper in the land; and he never doth vary from that which he hath said; therefore, if ye do keep his commandments he doth bless you and prosper you.',
@@ -236,6 +272,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '2:22',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 2', 'Year: Approx. 124 BC'],
     },
     {
         'quote': 'Therefore let your light so shine before this people, that they may see your good works and glorify your Father who is in heaven.',
@@ -243,6 +280,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '12:16',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 12', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'And again, the Lord has said that: Ye shall defend your families even unto bloodshed . Therefore for this cause were the Nephites contending with the Lamanites, to defend themselves, and their families, and their lands, their country, and their rights, and their religion.',
@@ -250,6 +288,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '43:47',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 43', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'Now it is not common that the voice of the people desireth anything contrary to that which is right; but it is common for the lesser part of the people to desire that which is not right; therefore this shall ye observe and make it your lawâ\x80\x94to do your business by the voice of the people.',
@@ -257,6 +296,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '29:26',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 29', 'Year: Approx. 91 BC'],
     },
     {
         'quote': 'Behold, I am Moroni, your chief captain. I seek not for power, but to pull it down. I seek not for honor of the world, but for the glory of my God, and the freedom and welfare of my country. And thus I close mine epistle.',
@@ -264,6 +304,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '60:36',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 60', 'Year: Approx. 61 BC'],
     },
     {
         'quote': 'And blessed are all the peacemakers , for they shall be called the children of God.',
@@ -271,6 +312,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '12:9',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 12', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'And the Lord said unto them also: Go forth among the Lamanites, thy brethren, and establish my word; yet ye shall be patient in long-suffering and afflictions, that ye may show forth good examples unto them in me, and I will make an instrument of thee in my hands unto the salvation of many souls.',
@@ -278,6 +320,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '17:11',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 17', 'Year: Approx. 91 BC'],
     },
     {
         'quote': 'Angels speak by the power of the Holy Ghost; wherefore, they speak the words of Christ. Wherefore, I said unto you, feast upon the words of Christ; for behold, the words of Christ will tell you all things what ye should do.',
@@ -285,6 +328,7 @@ quotes_data = [
         'book': '2 Nephi',
         'chapter': '32:3',
         'hints': ['2 Nephi'],
+        'hints': ['Book: 2 Nephi', 'Chapter: 32', 'Year: Approx. 559-545 BC'],
     },
     {
         'quote': 'And now Alma began to expound these things unto him, saying: It is given unto many to know the mysteries of God; nevertheless they are laid under a strict command that they shall not impart only according to the portion of his word which he doth grant unto the children of men, according to the heed and diligence which they give unto him.',
@@ -292,6 +336,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '12:9',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 12', 'Year: Approx. 83 BC'],
     },
     {
         'quote': 'Wherefore, brethren, seek not to counsel the Lord, but to take counsel from his hand. For behold, ye yourselves know that he counseleth in wisdom , and in justice, and in great mercy, over all his works.',
@@ -299,6 +344,7 @@ quotes_data = [
         'book': 'Jacob',
         'chapter': '4:10',
         'hints': ['Jacob'],
+        'hints': ['Book: Jacob', 'Chapter: 4', 'Year: Approx. 544-421 BC'],
     },
     {
         'quote': 'Thus God has provided a means that man, through faith, might work mighty miracles; therefore he becometh a great benefit to his fellow beings.',
@@ -306,6 +352,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '8:18',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 8', 'Year: Approx. 121 BC'],
     },
     {
         'quote': 'And whatsoever ye shall ask the Father in my name, which is right, believing that ye shall receive, behold it shall be given unto you.',
@@ -313,13 +360,16 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '18:20',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 18', 'Year: Approx. 34 AD'],
     },
     {
         'quote': '[Moroni 7:16 - TEXT NOT FOUND]',
+        'quote': 'For behold, the Spirit of Christ is given to every man, that he may know good from evil; wherefore, I show unto you the way to judge; for every thing which inviteth to do good, and to persuade to believe in Christ, is sent forth by the power and gift of Christ; wherefore ye may know with a perfect knowledge it is of God.',
         'speaker': 'Mormon',
         'book': 'Moroni',
         'chapter': '7:16',
         'hints': ['Moroni'],
+        'hints': ['Book: Moroni', 'Chapter: 7', 'Year: Approx. 401-421 AD'],
     },
     {
         'quote': 'Now, we will compare the word unto a seed . Now, if ye give place, that a seed may be planted in your heart , behold, if it be a true seed, or a good seed, if ye do not cast it out by your unbelief , that ye will resist the Spirit of the Lord, behold, it will begin to swell within your breasts; and when you feel these swelling motions, ye will begin to say within yourselvesâ\x80\x94It must needs be that this is a good seed, or that the word is good, for it beginneth to enlarge my soul; yea, it beginneth to enlighten my understanding , yea, it beginneth to be delicious to me.',
@@ -327,6 +377,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '32:28',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 32', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'Behold, I am he who was prepared from the foundation of the world to redeem my people. Behold, I am Jesus Christ. I am the Father and the Son. In me shall all mankind have life , and that eternally, even they who shall believe on my name; and they shall become my sons and my daughters.',
@@ -334,6 +385,7 @@ quotes_data = [
         'book': 'Ether',
         'chapter': '3:14',
         'hints': ['Ether'],
+        'hints': ['Book: Ether', 'Chapter: 3', 'Year: Approx. 2200 BC'],
     },
     {
         'quote': 'Behold, I am Jesus Christ, whom the prophets testified shall come into the world. And behold, I am the light and the life of the world; and I have drunk out of that bitter cup which the Father hath given me, and have glorified the Father in taking upon me the sins of the world, in the which I have suffered the will of the Father in all things from the beginning.',
@@ -341,13 +393,16 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '11:10-11',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 11', 'Year: Approx. 34 AD'],
     },
     {
         'quote': '[Moroni 10:32 - TEXT NOT FOUND]',
+        'quote': 'Yea, come unto Christ, and be perfected in him, and deny yourselves of all ungodliness; and if ye shall deny yourselves of all ungodliness, and love God with all your might, mind and strength, then is his grace sufficient for you, that by his grace ye may be perfect in Christ; and if by the grace of God ye are perfect in Christ, ye can in nowise deny the power of God.',
         'speaker': 'Moroni',
         'book': 'Moroni',
         'chapter': '10:32',
         'hints': ['Moroni'],
+        'hints': ['Book: Moroni', 'Chapter: 10', 'Year: Approx. 421 AD'],
     },
     {
         'quote': 'And I say unto you again that he cannot save them in their sins ; for I cannot deny his word, and he hath said that no unclean thing can inherit the kingdom of heaven; therefore, how can ye be saved, except ye inherit the kingdom of heaven? Therefore, ye cannot be saved in your sins.',
@@ -355,6 +410,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '11:37',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 11', 'Year: Approx. 82 BC'],
     },
     {
         'quote': 'And now behold, I ask of you, my brethren of the church, have ye spiritually been born of God ? Have ye received his image in your countenances? Have ye experienced this mighty change in your hearts?',
@@ -362,6 +418,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '5:14',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 5', 'Year: Approx. 83 BC'],
     },
     {
         'quote': 'And again, believe that ye must repent of your sins and forsake them, and humble yourselves before God; and ask in sincerity of heart that he would forgive you; and now, if you believe all these things see that ye do them.',
@@ -369,6 +426,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '4:10',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 4', 'Year: Approx. 124 BC'],
     },
     {
         'quote': 'Therefore, O my son, whosoever will come may come and partake of the waters of life freely; and whosoever will not come the same is not compelled to come; but in the last day it shall be restored unto him according to his deeds .',
@@ -376,6 +434,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '42:27',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 42', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'And thus we see that except the Lord doth chasten his people with many afflictions, yea, except he doth visit them with death and with terror, and with famine and with all manner of pestilence, they will not remember him.',
@@ -383,6 +442,7 @@ quotes_data = [
         'book': 'Helaman',
         'chapter': '12:3',
         'hints': ['Helaman'],
+        'hints': ['Book: Helaman', 'Chapter: 12', 'Year: Approx. 2 BC'],
     },
     {
         'quote': 'And he shall go forth, suffering pains and afflictions and temptations of every kind; and this that the word might be fulfilled which saith he will take upon him the pains and the sicknesses of his people.',
@@ -390,6 +450,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '7:11',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 7', 'Year: Approx. 83 BC'],
     },
     {
         'quote': 'Yea, and as often as my people repent will I forgive them their trespasses against me.',
@@ -397,6 +458,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '26:30',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 26', 'Year: Approx. 91 BC'],
     },
     {
         'quote': 'Yea, and from that time even until now, I have labored without ceasing, that I might bring souls unto repentance ; that I might bring them to taste of the exceeding joy of which I did taste; that they might also be born of God , and be filled with the Holy Ghost.',
@@ -404,6 +466,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '36:24',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 36', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'Therefore, whoso repenteth and cometh unto me as a little child, him will I receive, for of such is the kingdom of God. Behold, for such I have laid down my life, and have taken it up again; therefore repent, and come unto me ye ends of the earth, and be saved.',
@@ -411,13 +474,16 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '9:22',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 9', 'Year: Approx. 34 AD'],
     },
     {
         'quote': '[Moroni 6:8 - TEXT NOT FOUND]',
+        'quote': 'But as oft as they repented and sought forgiveness, with real intent, they were forgiven.',
         'speaker': 'Mormon',
         'book': 'Moroni',
         'chapter': '6:8',
         'hints': ['Moroni'],
+        'hints': ['Book: Moroni', 'Chapter: 6', 'Year: Approx. 401-421 AD'],
     },
     {
         'quote': 'Behold, I am he who was prepared from the foundation of the world to redeem my people. Behold, I am Jesus Christ. I am the Father and the Son. In me shall all mankind have life , and that eternally, even they who shall believe on my name; and they shall become my sons and my daughters.',
@@ -425,6 +491,7 @@ quotes_data = [
         'book': 'Ether',
         'chapter': '3:14',
         'hints': ['Ether'],
+        'hints': ['Book: Ether', 'Chapter: 3', 'Year: Approx. 2200 BC'],
     },
     {
         'quote': 'For behold, this life is the time for men to prepare to meet God; yea, behold the day of this life is the day for men to perform their labors .',
@@ -432,6 +499,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '34:32',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 34', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'O that cunning plan of the evil one! O the vainness , and the frailties, and the foolishness of men! When they are learned they think they are wise , and they hearken not unto the counsel of God, for they set it aside, supposing they know of themselves, wherefore, their wisdom is foolishness and it profiteth them not. And they shall perish.',
@@ -439,6 +507,7 @@ quotes_data = [
         'book': '2 Nephi',
         'chapter': '9:28',
         'hints': ['2 Nephi'],
+        'hints': ['Book: 2 Nephi', 'Chapter: 9', 'Year: Approx. 559-545 BC'],
     },
     {
         'quote': 'But before ye seek for riches , seek ye for the kingdom of God.',
@@ -446,6 +515,7 @@ quotes_data = [
         'book': 'Jacob',
         'chapter': '2:18',
         'hints': ['Jacob'],
+        'hints': ['Book: Jacob', 'Chapter: 2', 'Year: Approx. 544-421 BC'],
     },
     {
         'quote': 'I say unto you, my brethren, that if you should render all the thanks and praise which your whole soul has power to possess, to that God who has created you, and has kept and preserved you, and has caused that ye should rejoice , and has granted that ye should live in peace one with anotherâ\x80\x94',
@@ -453,6 +523,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '2:20',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 2', 'Year: Approx. 124 BC'],
     },
     {
         'quote': 'And we see that death comes upon mankind, yea, the death which has been spoken of by Amulek, which is the temporal death; nevertheless there was a space granted unto man in which he might repent; therefore this life became a probationary state ; a time to prepare to meet God; a time to prepare for that endless state which has been spoken of by us, which is after the resurrection of the dead.',
@@ -460,6 +531,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '12:24',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 12', 'Year: Approx. 83 BC'],
     },
     {
         'quote': 'And know ye that ye shall be judges of this people, according to the judgment which I shall give unto you, which shall be just. Therefore, what manner of men ought ye to be? Verily I say unto you, even as I am.',
@@ -467,13 +539,16 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '27:27',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 27', 'Year: Approx. 34 AD'],
     },
     {
         'quote': '[Moroni 7:48 - TEXT NOT FOUND]',
+        'quote': 'Wherefore, my beloved brethren, pray unto the Father with all the energy of heart, that ye may be filled with this love, which he hath bestowed upon all who are true followers of his Son, Jesus Christ; that ye may become the sons of God; that when he shall appear we shall be like him, for we shall see him as he is; that we may have this hope; that we may be purified even as he is pure. Amen.',
         'speaker': 'Mormon',
         'book': 'Moroni',
         'chapter': '7:48',
         'hints': ['Moroni'],
+        'hints': ['Book: Moroni', 'Chapter: 7', 'Year: Approx. 401-421 AD'],
     },
     {
         'quote': 'Now, concerning the state of the soul between death and the resurrectionâ\x80\x94Behold, it has been made known unto me by an angel, that the spirits of all men, as soon as they are departed from this mortal body, yea, the spirits of all men, whether they be good or evil, are taken home to that God who gave them life.',
@@ -481,6 +556,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '40:11',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 40', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'Wherefore, ye must press forward with a steadfastness in Christ, having a perfect brightness of hope , and a love of God and of all men. Wherefore, if ye shall press forward, feasting upon the word of Christ, and endure to the end, behold, thus saith the Father: Ye shall have eternal life .',
@@ -488,6 +564,7 @@ quotes_data = [
         'book': '2 Nephi',
         'chapter': '31:20',
         'hints': ['2 Nephi'],
+        'hints': ['Book: 2 Nephi', 'Chapter: 31', 'Year: Approx. 559-545 BC'],
     },
     {
         'quote': 'And it came to pass that he rent his coat; and he took a piece thereof, and wrote upon itâ\x80\x94 In memory of our God, our religion, and freedom, and our peace, our wives, and our childrenâ\x80\x94and he fastened it upon the end of a pole.',
@@ -495,6 +572,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '46:12',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 46', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'And Moroni was a strong and a mighty man; he was a man of a perfect understanding ; yea, a man that did not delight in bloodshed; a man whose soul did joy in the liberty and the freedom of his country, and his brethren from bondage and slavery;',
@@ -502,6 +580,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '48:11',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 48', 'Year: Approx. 72 BC'],
     },
     {
         'quote': 'And he also knowing that it was the only desire of the Nephites to preserve their lands, and their liberty , and their church, therefore he thought it no sin that he should defend them by stratagem ; therefore, he found by his spies which course the Lamanites were to take.',
@@ -509,6 +588,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '43:30',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 43', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'For the Lord suffereth the righteous to be slain that his justice and judgment may come upon the wicked; therefore ye need not suppose that the righteous are lost because they are slain; but behold, they do enter into the rest of the Lord their God.',
@@ -516,6 +596,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '60:13',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 60', 'Year: Approx. 61 BC'],
     },
     {
         'quote': 'But behold, because of the exceedingly great length of the war between the Nephites and the Lamanites many had become hardened, because of the exceedingly great length of the war; and many were softened because of their afflictions , insomuch that they did humble themselves before God, even in the depth of humility.',
@@ -523,6 +604,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '62:41',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 62', 'Year: Approx. 60 BC'],
     },
     {
         'quote': 'Now behold, this Lachoneus, the governor, was a just man, and could not be frightened by the demands and the threatenings of a robber ; therefore he did not hearken to the epistle of Giddianhi, the governor of the robbers, but he did cause that his people should cry unto the Lord for strength against the time that the robbers should come down against them.',
@@ -530,6 +612,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '3:12',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 3', 'Year: Approx. 16 AD'],
     },
     {
         'quote': 'Now ye see that this is the true faith of God; yea, ye see that God will support, and keep, and preserve us, so long as we are faithful unto him, and unto our faith, and our religion; and never will the Lord suffer that we shall be destroyed except we should fall into transgression and deny our faith.',
@@ -537,6 +620,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '44:4',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 44', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'Now they never had fought, yet they did not fear death; and they did think more upon the liberty of their fathers than they did upon their lives; yea, they had been taught by their mothers , that if they did not doubt, God would deliver them.',
@@ -544,6 +628,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '56:47',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 56', 'Year: Approx. 66 BC'],
     },
     {
         'quote': 'Yea, and they did obey and observe to perform every word of command with exactness; yea, and even according to their faith it was done unto them; and I did remember the words which they said unto me that their mothers had taught them.',
@@ -551,6 +636,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '57:21',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 57', 'Year: Approx. 63 BC'],
     },
     {
         'quote': 'And it came to pass that when the men of Moroni saw the fierceness and the anger of the Lamanites, they were about to shrink and flee from them. And Moroni, perceiving their intent, sent forth and inspired their hearts with these thoughtsâ\x80\x94yea, the thoughts of their lands, their liberty, yea, their freedom from bondage.',
@@ -558,6 +644,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '43:48',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 43', 'Year: Approx. 74 BC'],
     },
     {
         'quote': 'Behold, I am Jesus Christ, whom the prophets testified shall come into the world. And behold, I am the light and the life of the world; and I have drunk out of that bitter cup which the Father hath given me, and have glorified the Father in taking upon me the sins of the world, in the which I have suffered the will of the Father in all things from the beginning.',
@@ -565,6 +652,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '11:10-11',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 11', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'And he shall go forth, suffering pains and afflictions and temptations of every kind; and this that the word might be fulfilled which saith he will take upon him the pains and the sicknesses of his people. And he will take upon him death , that he may loose the bands of death which bind his people; and he will take upon him their infirmities, that his bowels may be filled with mercy, according to the flesh, that he may know according to the flesh how to succor his people according to their infirmities.',
@@ -572,6 +660,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '7:11-12',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 7', 'Year: Approx. 83 BC'],
     },
     {
         'quote': 'Having ascended into heaven, having the bowels of mercy; being filled with compassion towards the children of men; standing betwixt them and justice; having broken the bands of death, taken upon himself their iniquity and their transgressions, having redeemed them, and satisfied the demands of justice.',
@@ -579,6 +668,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '15:9',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 15', 'Year: Approx. 148 BC'],
     },
     {
         'quote': 'Have ye any that are sick among you? Bring them hither. Have ye any that are lame, or blind, or halt, or maimed, or leprous , or that are withered, or that are deaf, or that are afflicted in any manner? Bring them hither and I will heal them, for I have compassion upon you; my bowels are filled with mercy.',
@@ -586,6 +676,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '17:7',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 17', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'Pray in your families unto the Father, always in my name, that your wives and your children may be blessed.',
@@ -593,6 +684,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '18:21',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 18', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'Behold I have given unto you my gospel , and this is the gospel which I have given unto youâ\x80\x94that I came into the world to do the will of my Father, because my Father sent me.',
@@ -600,6 +692,7 @@ quotes_data = [
         'book': '3 Nephi',
         'chapter': '27:13',
         'hints': ['3 Nephi'],
+        'hints': ['Book: 3 Nephi', 'Chapter: 27', 'Year: Approx. 34 AD'],
     },
     {
         'quote': 'And he shall be called Jesus Christ , the Son of God , the Father of heaven and earth, the Creator of all things from the beginning; and his mother shall be called Mary.',
@@ -607,6 +700,7 @@ quotes_data = [
         'book': 'Mosiah',
         'chapter': '3:8',
         'hints': ['Mosiah'],
+        'hints': ['Book: Mosiah', 'Chapter: 3', 'Year: Approx. 124 BC'],
     },
     {
         'quote': 'And now, the plan of mercy could not be brought about except an atonement should be made; therefore God himself atoneth for the sins of the world, to bring about the plan of mercy , to appease the demands of justice , that God might be a perfect , just God, and a merciful God also.',
@@ -614,6 +708,7 @@ quotes_data = [
         'book': 'Alma',
         'chapter': '42:15',
         'hints': ['Alma'],
+        'hints': ['Book: Alma', 'Chapter: 42', 'Year: Approx. 73 BC'],
     },
     {
         'quote': 'And we talk of Christ, we rejoice in Christ, we preach of Christ, we prophesy of Christ, and we write according to our prophecies, that our children may know to what source they may look for a remission of their sins.',
@@ -621,41 +716,14 @@ quotes_data = [
         'book': '2 Nephi',
         'chapter': '25:26',
         'hints': ['2 Nephi'],
+        'hints': ['Book: 2 Nephi', 'Chapter: 25', 'Year: Approx. 559-545 BC'],
     },
     {
-        'quote': 'Yea, come unto Christ, and be perfected in him, and deny yourselves of all ungodliness; and if ye shall deny yourselves of all ungodliness, and love God with all your might, mind and strength, then is his grace sufficient for you, that by his grace ye may be perfect in Christ; and if by the grace of God ye are perfect in Christ, ye can in nowise deny the power of God.',
+        'quote': 'Yea, come unto Christ, and be perfected in him, and deny yourselves of all ungodliness; and if ye shall deny yourselves of all ungodliness, and love God with all your might, mind and strength, then is his grace sufficient for you, that by his grace ye may be perfect in Christ...',
         'speaker': 'Moroni',
         'book': 'Moroni',
         'chapter': '10:32',
         'hints': ['Moroni'],
+        'hints': ['Book: Moroni', 'Chapter: 10', 'Year: Approx. 421 AD'],
     },
-    {
-        'quote': 'And Christ hath said: If ye will have faith in me ye shall have power to do whatsoever thing is expedient in me.',
-        'speaker': 'Mormon',
-        'book': 'Moroni',
-        'chapter': '7:33',
-        'hints': ['Moroni'],
-    },
-    {
-        'quote': 'And when ye shall receive these things, I would exhort you that ye would ask God, the Eternal Father, in the name of Christ, if these things are not true; and if ye shall ask with a sincere heart, with real intent, having faith in Christ, he will manifest the truth of it unto you, by the power of the Holy Ghost.',
-        'speaker': 'Moroni',
-        'book': 'Moroni',
-        'chapter': '10:4-5',
-        'hints': ['Moroni'],
-    },
-    {
-        'quote': 'But charity is the pure love of Christ, and it endureth forever; and whoso is found possessed of it at the last day, it shall be well with him.',
-        'speaker': 'Mormon',
-        'book': 'Moroni',
-        'chapter': '7:47',
-        'hints': ['Moroni'],
-    },
-    {
-        'quote': 'For behold, the Spirit of Christ is given to every man, that he may know good from evil; wherefore, I show unto you the way to judge; for every thing which inviteth to do good, and to persuade to believe in Christ, is sent forth by the power and gift of Christ; wherefore ye may know with a perfect knowledge it is of God.',
-        'speaker': 'Mormon',
-        'book': 'Moroni',
-        'chapter': '7:16',
-        'hints': ['Moroni'],
-    },
-
 ]
