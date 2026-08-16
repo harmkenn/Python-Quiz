@@ -39,7 +39,6 @@ def main():
 
     with st.sidebar:
 
-
         # Compact pulldown selector for choosing the game
         display_map = {
             "Home": "🏠 Home",

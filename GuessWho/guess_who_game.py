@@ -29,43 +29,46 @@ def build_character_options(correct_character, all_characters, num_options=6):
 
 def app():
     """Main Guess Who Game Application"""
-    
+
     # --- CSS Styling ---
     st.markdown("""
     <style>
+    /* General font size increase for radio buttons and buttons */
+    .stRadio, .stButton>button {
+        font-size: 1.1rem;
+    }
+    h3 {
+        font-size: 2.2rem;
+    }
+    h5 {
+        font-size: 1.5rem;
+    }
     .character-hints {
-        font-size: 20px;
-        text-align: left;
-        color: #1E3A8A;
-        margin: 20px 0;
-        padding: 20px;
-        background-color: #DBEAFE;
-        border-radius: 10px;
-        border: 3px solid #1E3A8A;
+        font-size: 1.4rem; /* Larger font for hints */
         line-height: 1.6;
+        padding: 10px;
     }
     .hint-item {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
     .answer-guess {
-        font-size: 20px;
+        font-size: 1.5rem; /* Larger font for results */
         padding: 15px;
         margin: 10px 0;
-        background-color: #DDD;
         border-radius: 8px;
         text-align: center;
         font-weight: bold;
     }
     .answer-correct {
-        background-color: #10B981 !important;
+        background-color: #10B981;
         color: white;
     }
     .answer-wrong {
-        background-color: #EF4444 !important;
+        background-color: #EF4444;
         color: white;
     }
     .score-label {
-        font-size: 22px;
+        font-size: 1.6rem; /* Larger font for scores */
         font-weight: bold;
         text-align: center;
         padding: 10px;
@@ -73,19 +76,12 @@ def app():
         color: white;
     }
     .team-current {
-        font-weight: 700;
         border: 3px solid #000;
     }
     .character-name-display {
-        font-size: 24px;
+        font-size: 1.75rem; /* Larger font for correct character name */
         font-weight: bold;
         text-align: center;
-        padding: 20px;
-        background-color: #E0E7FF;
-        border-radius: 10px;
-        border: 2px solid #4F46E5;
-        color: #1E3A8A;
-        margin: 20px 0;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -152,7 +148,7 @@ def app():
     if not st.session_state.character_options_for_current_question:
         st.session_state.character_options_for_current_question = build_character_options(
             current_char_data['character_name'],
-            all_character_names
+            all_character_names, num_options=10
         )
 
     # --- Answer Input ---
