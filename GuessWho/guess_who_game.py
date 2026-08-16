@@ -42,7 +42,7 @@ def initialize_game_state(num_teams):
     st.session_state.team_scores = [0] * num_teams
     st.session_state.current_team = 0 # Team 0 starts
     st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
-    st.session_state.hints_revealed_count = 0
+    st.session_state.hints_revealed_count = 1 # Start with the first hint revealed
     st.session_state.character_game_history = []
     st.session_state.character_game_over = False
     st.session_state.character_options_for_current_question = []
@@ -50,6 +50,7 @@ def initialize_game_state(num_teams):
     st.session_state.buzzed_team_index = None
     st.session_state.has_guessed_this_round = [False] * num_teams # Track who has guessed for current question
     st.session_state.guess_timer_start = None
+    st.session_state.question_answered = False
     st.session_state.initialized = True
 
 
@@ -57,20 +58,21 @@ def app():
     """Main Guess Who Game Application"""
 
     # --- CSS Styling ---
+    st.set_page_config(layout="wide")
     st.markdown("""
     <style>
     /* General font size increase for radio buttons and buttons */
     .stRadio, .stButton>button {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     h3 {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
     h5 {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
     }
     .character-hints {
-        font-size: 1.4rem; /* Larger font for hints */
+        font-size: 1.6rem; /* Larger font for hints */
         line-height: 1.6;
         padding: 10px;
     }
@@ -78,7 +80,7 @@ def app():
         margin-bottom: 12px;
     }
     .answer-guess {
-        font-size: 1.5rem; /* Larger font for results */
+        font-size: 1.7rem; /* Larger font for results */
         padding: 15px;
         margin: 10px 0;
         border-radius: 8px;
@@ -94,7 +96,7 @@ def app():
         color: white;
     }
     .score-label {
-        font-size: 1.6rem; /* Larger font for scores */
+        font-size: 1.8rem; /* Larger font for scores */
         font-weight: bold;
         text-align: center;
         padding: 10px;
@@ -105,7 +107,7 @@ def app():
         border: 3px solid #000;
     }
     .character-name-display {
-        font-size: 1.75rem; /* Larger font for correct character name */
+        font-size: 2.0rem; /* Larger font for correct character name */
         font-weight: bold;
         text-align: center;
     }
@@ -159,27 +161,27 @@ def app():
     
     # --- Game Logic based on Phase ---
     if st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL:
-        elapsed_time = time.time() - st.session_state.last_action_time
-        remaining_time = HINT_REVEAL_INTERVAL - elapsed_time
-
-        if remaining_time <= 0:
-            st.session_state.hints_revealed_count += 1
-            st.session_state.last_action_time = time.time() # Reset timer for next hint
-            if st.session_state.hints_revealed_count > len(current_char_data['hints']):
-                # All hints revealed, no one buzzed, move to answer reveal
-                st.session_state.game_phase = PHASE_ANSWER_REVEALED
-                st.session_state.question_answered = True # Mark as answered to show correct answer
-            st.rerun() # Rerun to update hints or phase
-
-        st.markdown(f"**Next hint in:** {int(max(0, remaining_time))} seconds")
-
+        # Display hints
         st.markdown("<div class='character-hints'>", unsafe_allow_html=True)
         for i in range(st.session_state.hints_revealed_count):
             if i < len(current_char_data['hints']):
                 st.markdown(f"<div class='hint-item'>**Hint {i+1}:** {current_char_data['hints'][i]}</div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-        # Buzz-in buttons
+        # "Next Hint" button
+        if st.session_state.hints_revealed_count < len(current_char_data['hints']):
+            if st.button("Reveal Next Hint"):
+                st.session_state.hints_revealed_count += 1
+                st.rerun()
+        else:
+            st.info("All hints have been revealed!")
+            if st.button("Show Answer"):
+                st.session_state.game_phase = PHASE_ANSWER_REVEALED
+                st.session_state.question_answered = True
+                st.rerun()
+
+        st.markdown("---")
+        st.markdown("##### Who's buzzing in?")
         buzz_cols = st.columns(len(st.session_state.team_scores))
         for t in range(len(st.session_state.team_scores)):
             with buzz_cols[t]:
@@ -191,6 +193,8 @@ def app():
                         st.rerun()
                 else:
                     st.write(f"Team {t+1} has guessed.")
+
+
 
     elif st.session_state.game_phase == PHASE_BUZZED_IN_GUESS:
         buzzed_team = st.session_state.buzzed_team_index
@@ -258,6 +262,11 @@ def app():
             
             if is_correct:
                 st.session_state.team_scores[st.session_state.current_team] += points_earned
+                st.session_state.game_phase = PHASE_ANSWER_REVEALED
+                st.session_state.question_answered = True
+            else:
+                st.session_state.team_scores[st.session_state.current_team] += points_earned # Apply penalty
+                st.session_state.game_phase = PHASE_ANSWER_REVEALED # Go to reveal phase after wrong answer
             
             st.rerun()
 
@@ -284,13 +293,12 @@ def app():
         if st.button("➡️ Next Character", key=f"next_char_{question_num}"):
             st.session_state.current_character_question += 1
             st.session_state.question_answered = False
-            st.session_state.hints_revealed_count = 0
+            st.session_state.hints_revealed_count = 1 # Start next question with first hint revealed
             st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
             st.session_state.buzzed_team_index = None
             st.session_state.has_guessed_this_round = [False] * len(st.session_state.team_scores)
             st.session_state.character_options_for_current_question = [] # Clear options for next question
             st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
-            st.session_state.last_action_time = time.time() # Start timer for first hint of new question
             st.rerun()
 
     # --- Score Display ---

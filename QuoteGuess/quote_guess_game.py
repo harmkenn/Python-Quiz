@@ -297,13 +297,13 @@ def app():
         
         st.write(f"**Reference:** {current_quote_data['book']} {current_quote_data['chapter']}")
         
-        # --- Next Question Button ---
-        if st.button("➡️ Next Question", key=f"next-{question_num}"):
+        if st.button("➡️ Next Question", key=f"next_quote_{question_num}"):
             st.session_state.current_question += 1
             st.session_state.question_answered = False
             st.session_state.hints_shown = []
             st.session_state.current_team = (st.session_state.current_team + 1) % num_teams
             st.rerun()
+
 
     # --- Score Display ---
     st.markdown("---")
