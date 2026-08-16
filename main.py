@@ -46,7 +46,8 @@ def main():
             "Matching": "🧩 Matching",
             "Jeopardy": "📘 Jeopardy",
             "Wheel": "🎡 Wheel",
-            "FamilyFeud": "👨‍👩‍👧‍👦 Family Feud",
+            "FamilyFeud": "👨‍👩‍👧‍👦 Family Feud", # Assuming this is an existing game
+            "GuessWho": "👤 Guess Who", # New game
             "QuoteGuess": "💭 Quote Guess",
         }
         options = [display_map[k] for k in ["Home", "Matching", "Jeopardy", "Wheel", "FamilyFeud", "QuoteGuess"]]
@@ -86,6 +87,9 @@ def main():
         mod.app()
     elif st.session_state.current_game == "QuoteGuess":
         mod = load_game_module("QuoteGuess", "quote_guess_game.py", "game_quote_guess")
+        mod.app()
+    elif st.session_state.current_game == "GuessWho":
+        mod = load_game_module("GuessWho", "guess_who_game.py", "game_guess_who")
         mod.app()
 
 if __name__ == "__main__":
