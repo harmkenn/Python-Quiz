@@ -272,24 +272,34 @@ def app():
 
     # --- Show Result ---
     if st.session_state.question_answered:
-        hist = st.session_state.character_game_history[-1]
-        
-        if hist['is_correct']:
+        if st.session_state.character_game_history:
+            hist = st.session_state.character_game_history[-1]
+
+            if hist['is_correct']:
+                st.markdown(
+                    f"<div class='answer-guess answer-correct'>✅ Correct! Team {hist['team']} earned {hist['points']} points!</div>",
+                    unsafe_allow_html=True
+                )
+            else:
+                st.markdown(
+                    f"<div class='answer-guess answer-wrong'>❌ Incorrect guess! Team {hist['team']} guessed '{hist['guess']}'. That is not the correct character. -100 points.</div>",
+                    unsafe_allow_html=True
+                )
+
             st.markdown(
-                f"<div class='answer-guess answer-correct'>✅ Correct! Team {hist['team']} earned {hist['points']} points!</div>",
+                f"<div class='character-name-display'>The character was: {hist['character_name']}</div>",
                 unsafe_allow_html=True
             )
         else:
             st.markdown(
-                f"<div class='answer-guess answer-wrong'>❌ Incorrect! You guessed: {hist['guess']}</div>",
+                "<div class='answer-guess answer-wrong'>ℹ️ Answer revealed without a submitted guess.</div>",
                 unsafe_allow_html=True
             )
-        
-        st.markdown(
-            f"<div class='character-name-display'>The character was: {hist['character_name']}</div>",
-            unsafe_allow_html=True
-        )
-        
+            st.markdown(
+                f"<div class='character-name-display'>The character was: {current_char_data['character_name']}</div>",
+                unsafe_allow_html=True
+            )
+
         if st.button("➡️ Next Character", key=f"next_char_{question_num}"):
             st.session_state.current_character_question += 1
             st.session_state.question_answered = False
