@@ -161,6 +161,13 @@ def app():
     
     # --- Game Logic based on Phase ---
     if st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL:
+        if st.session_state.character_game_history:
+            hist = st.session_state.character_game_history[-1]
+            if hist['question_num'] == question_num and not hist['is_correct']:
+                st.warning(
+                    f"Team {hist['team']} guessed '{hist['guess']}' and lost {abs(hist['points'])} points."
+                )
+
         # Display hints
         st.markdown("<div class='character-hints'>", unsafe_allow_html=True)
         for i in range(st.session_state.hints_revealed_count):
@@ -256,40 +263,61 @@ def app():
                 'guess': selected_character,
                 'is_correct': is_correct,
                 'points': points_earned,
-                'team': st.session_state.current_team + 1,
+                'team': buzzed_team + 1,
                 'hints_used': st.session_state.hints_revealed_count
             })
             
             if is_correct:
-                st.session_state.team_scores[st.session_state.current_team] += points_earned
+                st.session_state.team_scores[buzzed_team] += points_earned
                 st.session_state.game_phase = PHASE_ANSWER_REVEALED
                 st.session_state.question_answered = True
             else:
-                st.session_state.team_scores[st.session_state.current_team] += points_earned # Apply penalty
-                st.session_state.game_phase = PHASE_ANSWER_REVEALED # Go to reveal phase after wrong answer
+                st.session_state.team_scores[buzzed_team] += points_earned
+                st.session_state.has_guessed_this_round[buzzed_team] = True
+                st.session_state.buzzed_team_index = None
+
+                if all(st.session_state.has_guessed_this_round):
+                    st.session_state.game_phase = PHASE_ANSWER_REVEALED
+                    st.session_state.question_answered = True
+                else:
+                    st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
+                    st.session_state.last_action_time = time.time()
+                    st.session_state.current_team = (buzzed_team + 1) % len(st.session_state.team_scores)
+                    while st.session_state.has_guessed_this_round[st.session_state.current_team]:
+                        st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
             
             st.rerun()
 
     # --- Show Result ---
     if st.session_state.question_answered:
-        hist = st.session_state.character_game_history[-1]
-        
-        if hist['is_correct']:
+        if st.session_state.character_game_history:
+            hist = st.session_state.character_game_history[-1]
+
+            if hist['is_correct']:
+                st.markdown(
+                    f"<div class='answer-guess answer-correct'>✅ Correct! Team {hist['team']} earned {hist['points']} points!</div>",
+                    unsafe_allow_html=True
+                )
+            else:
+                st.markdown(
+                    f"<div class='answer-guess answer-wrong'>❌ Incorrect guess! Team {hist['team']} guessed '{hist['guess']}'. That is not the correct character. -100 points.</div>",
+                    unsafe_allow_html=True
+                )
+
             st.markdown(
-                f"<div class='answer-guess answer-correct'>✅ Correct! Team {hist['team']} earned {hist['points']} points!</div>",
+                f"<div class='character-name-display'>The character was: {hist['character_name']}</div>",
                 unsafe_allow_html=True
             )
         else:
             st.markdown(
-                f"<div class='answer-guess answer-wrong'>❌ Incorrect! You guessed: {hist['guess']}</div>",
+                "<div class='answer-guess answer-wrong'>ℹ️ Answer revealed without a submitted guess.</div>",
                 unsafe_allow_html=True
             )
-        
-        st.markdown(
-            f"<div class='character-name-display'>The character was: {hist['character_name']}</div>",
-            unsafe_allow_html=True
-        )
-        
+            st.markdown(
+                f"<div class='character-name-display'>The character was: {current_char_data['character_name']}</div>",
+                unsafe_allow_html=True
+            )
+
         if st.button("➡️ Next Character", key=f"next_char_{question_num}"):
             st.session_state.current_character_question += 1
             st.session_state.question_answered = False

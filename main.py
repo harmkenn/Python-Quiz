@@ -49,7 +49,7 @@ def main():
             "GuessWho": "👤 Guess Who", # New game
             "QuoteGuess": "💭 Quote Guess",
         }
-        options = [display_map[k] for k in ["Home", "Matching", "Jeopardy", "Wheel", "FamilyFeud", "QuoteGuess"]]
+        options = [display_map[k] for k in ["Home", "Matching", "Jeopardy", "Wheel", "FamilyFeud", "GuessWho", "QuoteGuess"]]
 
         # Determine current index for the selectbox
         current_display = display_map.get(st.session_state.get("current_game", "Home"), "🏠 Home")

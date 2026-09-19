@@ -54,7 +54,7 @@ character_data = [
         ]
     },
     {
-        'character_name': 'Joseph (Youngest son of Lehi)',
+        'character_name': 'Joseph (Son of Lehi)',
         'hints': [
             'He was the youngest son of Lehi.',
             'He was born in the wilderness.',

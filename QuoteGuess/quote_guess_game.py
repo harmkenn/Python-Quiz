@@ -103,6 +103,21 @@ def app():
     num_teams = st.sidebar.slider("Number of teams:", 2, 4, 2, step=1)
     num_questions = st.sidebar.slider("Number of questions:", 5, len(quotes_data), 10, step=1)
 
+    if "current_team" not in st.session_state:
+        st.session_state.current_team = 0
+
+    team_options = [f"Team {t + 1}" for t in range(num_teams)]
+
+    st.markdown("### 🎯 Select Guessing Team")
+    team_cols = st.columns(num_teams)
+    for t, team_name in enumerate(team_options):
+        with team_cols[t]:
+            is_active = t == st.session_state.current_team
+            button_label = f"{team_name} {'● Active' if is_active else ''}".strip()
+            if st.button(button_label, key=f"quote_team_{t}", use_container_width=True):
+                st.session_state.current_team = t
+                st.rerun()
+
     # Define team colors
     team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"]
     team_colors = team_colors[:num_teams]
