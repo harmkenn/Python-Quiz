@@ -252,6 +252,7 @@ def app():
         st.session_state.selected = []
         st.session_state.matched = []
         st.session_state.matched_by_team = {}
+        st.session_state.matched_history = []  # <--- Stores ordered tuples: (english, italian, team_idx)
         st.session_state.turns = 0
         st.session_state.team_scores = [0] * num_teams
         st.session_state.current_team = random.randint(0, num_teams - 1)
@@ -284,6 +285,16 @@ def app():
                 st.session_state.matched_by_team[idx1] = team
                 st.session_state.matched_by_team[idx2] = team
                 st.session_state.team_scores[team] += 1
+                
+                # Retrieve normalized english and italian phrases for history logging
+                c1_text, c1_type = st.session_state.cards[idx1]
+                c2_text, c2_type = st.session_state.cards[idx2]
+                eng_phrase = c1_text if c1_type == "eng" else c2_text
+                ita_phrase = c2_text if c1_type == "eng" else c1_text
+                
+                # Append to match history
+                st.session_state.matched_history.append((eng_phrase, ita_phrase, team))
+                
                 st.session_state.selected = []
             else:
                 st.session_state.selected = []
@@ -331,6 +342,21 @@ def app():
 
     st.markdown(f"**Turns taken:** {st.session_state.turns}")
 
+    # --- Live Matched Pairs List ---
+    st.markdown("---")
+    st.subheader("📝 Matched Pairs History (In Order)")
+    
+    if len(st.session_state.matched_history) == 0:
+        st.caption("No pairs matched yet. Flip cards to make a match!")
+    else:
+        for idx, (eng, ita, team_idx) in enumerate(st.session_state.matched_history, 1):
+            t_color = team_colors[team_idx]
+            st.markdown(
+                f"**{idx}.** {eng} ↔️ **{ita}** "
+                f"<span style='color:{t_color}; font-weight:bold;'>(Matched by Team {team_idx + 1})</span>",
+                unsafe_allow_html=True
+            )
+
     # --- Game Over ---
     if len(st.session_state.matched) == len(st.session_state.cards):
         st.success("🎉 Game Over! All pairs matched!")
@@ -344,4 +370,3 @@ def app():
 
 if __name__ == "__main__":
     app()
-
