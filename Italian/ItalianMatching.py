@@ -392,7 +392,7 @@ def app():
     # --- Sidebar: Game Setup ---
     st.sidebar.header("🎮 Game Setup")
     num_pairs = st.sidebar.slider("Number of word pairs:", 10, len(italian_set), 30, step=1)
-    num_teams = st.sidebar.slider("Number of teams:", 2, 2, 2, step=1)
+    num_teams = st.sidebar.slider("Number of teams:", 2, 4, 4, step=1)
 
     # --- Initialize game ---
     if "initialized" not in st.session_state:
