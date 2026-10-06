@@ -88,6 +88,8 @@ def app():
         padding: 15px 25px !important;
         width: 100%;
         margin-bottom: 10px;
+        white-space: normal;
+        overflow-wrap: anywhere;
     }
     .stRadio label {
         font-size: 2.2rem !important;
@@ -126,6 +128,9 @@ def app():
     .hint-item {
         margin-bottom: 20px;
         color: #111;
+    }
+    .hint-item strong {
+        color: #111 !important;
     }
     .answer-guess {
         font-size: 2.5rem !important;
@@ -211,12 +216,11 @@ def app():
     st.markdown("<div class='options-box'><div class='options-title'>📋 Character Choice Board</div></div>", unsafe_allow_html=True)
     
     options = st.session_state.character_options_for_current_question
-    # Display options in 2 balanced grid columns
-    opt_col1, opt_col2 = st.columns(2)
+    # Display choices in five columns so they fill the board in multiple rows.
+    option_columns = st.columns(5)
     
     for idx, opt in enumerate(options):
-        col = opt_col1 if idx % 2 == 0 else opt_col2
-        with col:
+        with option_columns[idx % 5]:
             # Highlight option button if currently selected
             is_selected = (st.session_state.selected_option == opt)
             label = f"⭐ {opt}" if is_selected else opt
