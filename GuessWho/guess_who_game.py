@@ -17,7 +17,7 @@ def clean_character_name(name):
     """Removes parenthetical parts from character names."""
     return re.sub(r"\(.*\)", "", name).strip()
 
-def build_character_options(correct_character, all_characters, num_options=6):
+def build_character_options(correct_character, all_characters, num_options=10):
     """Return a list of character options including the correct character."""
     cleaned_correct_character = clean_character_name(correct_character)
     available = [
@@ -40,13 +40,13 @@ def initialize_game_state(num_teams):
     st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
     st.session_state.character_game_history = []
     st.session_state.character_game_over = False
-    st.session_state.character_options_for_current_question = []
     st.session_state.buzzed_team_index = None
     st.session_state.has_guessed_this_round = [False] * num_teams
     st.session_state.guess_timer_start = None
     st.session_state.question_answered = False
+    st.session_state.selected_option = None
     
-    # --- New Timer & Hint State ---
+    # --- Timer & Hint State ---
     st.session_state.question_start_time = time.time()
     st.session_state.timer_stopped = False
     st.session_state.shuffled_hint_indices = []
@@ -55,33 +55,42 @@ def initialize_game_state(num_teams):
 def setup_question():
     """Sets up state specifically for the active question."""
     current_char = st.session_state.character_questions[st.session_state.current_character_question]
-    num_hints = len(current_char['hints'])
+    all_character_names = [char['character_name'] for char in character_data]
     
-    # Randomize the order in which hint indices (0, 1, 2, 3) will reveal
+    # Pre-generate multiple-choice options immediately at question start
+    st.session_state.character_options_for_current_question = build_character_options(
+        current_char['character_name'],
+        all_character_names,
+        num_options=10
+    )
+    
+    num_hints = len(current_char['hints'])
     indices = list(range(num_hints))
     random.shuffle(indices)
     st.session_state.shuffled_hint_indices = indices
     st.session_state.question_start_time = time.time()
     st.session_state.timer_stopped = False
+    st.session_state.selected_option = None
 
 def app():
     """Main Guess Who Game Application"""
 
     st.set_page_config(layout="wide")
     
-    # --- Doubled Font CSS Styling ---
+    # --- Custom CSS for Large Options & Fonts ---
     st.markdown("""
     <style>
-    /* Doubled font sizes across UI elements */
     html, body, [class*="css"] {
         font-size: 1.5rem;
     }
     .stButton>button {
         font-size: 2.2rem !important;
-        padding: 15px 30px !important;
+        padding: 15px 25px !important;
+        width: 100%;
+        margin-bottom: 10px;
     }
     .stRadio label {
-        font-size: 2.0rem !important;
+        font-size: 2.2rem !important;
     }
     h1 {
         font-size: 4.5rem !important;
@@ -91,6 +100,20 @@ def app():
     }
     h5 {
         font-size: 2.5rem !important;
+    }
+    .options-box {
+        background-color: #1E293B;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        color: white;
+    }
+    .options-title {
+        font-size: 2.8rem !important;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+        color: #F3F4F6;
     }
     .character-hints {
         font-size: 2.5rem !important;
@@ -128,9 +151,6 @@ def app():
         border-radius: 12px;
         color: white;
     }
-    .team-current {
-        border: 5px solid #000;
-    }
     .character-name-display {
         font-size: 3.0rem !important;
         font-weight: bold;
@@ -144,7 +164,7 @@ def app():
     </style>
     """, unsafe_allow_html=True)
 
-    # --- Initialize game state ---
+    # --- Sidebar Setup ---
     st.sidebar.header("🎮 Game Setup")
     num_teams_setting = st.sidebar.slider("Number of teams:", 2, 4, 2, step=1)
 
@@ -163,8 +183,6 @@ def app():
         setup_question()
         st.rerun()
 
-    all_character_names = [char['character_name'] for char in character_data]
-
     # --- Game Over Check ---
     if st.session_state.current_character_question >= len(st.session_state.character_questions):
         st.session_state.character_game_over = True
@@ -180,27 +198,46 @@ def app():
             st.rerun()
         return
 
-    # --- Current Question ---
+    # --- Current Question Info ---
     current_char_data = st.session_state.character_questions[st.session_state.current_character_question]
     question_num = st.session_state.current_character_question + 1
     total_questions = len(st.session_state.character_questions)
 
     st.markdown(f"### Question {question_num} of {total_questions}")
+
+    # =========================================================
+    # 📌 TOP SECTION: Multiple Choice Answers Available Immediately
+    # =========================================================
+    st.markdown("<div class='options-box'><div class='options-title'>📋 Character Choice Board</div></div>", unsafe_allow_html=True)
     
-    # Calculate elapsed time & active hints
+    options = st.session_state.character_options_for_current_question
+    # Display options in 2 balanced grid columns
+    opt_col1, opt_col2 = st.columns(2)
+    
+    for idx, opt in enumerate(options):
+        col = opt_col1 if idx % 2 == 0 else opt_col2
+        with col:
+            # Highlight option button if currently selected
+            is_selected = (st.session_state.selected_option == opt)
+            label = f"⭐ {opt}" if is_selected else opt
+            
+            if st.button(label, key=f"opt_btn_{question_num}_{idx}"):
+                st.session_state.selected_option = opt
+                st.rerun()
+
+    st.markdown("---")
+
+    # --- Calculate elapsed time & active hints ---
     total_hints = len(current_char_data['hints'])
     if not st.session_state.timer_stopped and st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL:
         elapsed = time.time() - st.session_state.question_start_time
     else:
         elapsed = getattr(st.session_state, 'frozen_elapsed', 0)
 
-    # 1 hint at start, auto-reveal an extra hint every 15s
     hints_to_show_count = min(total_hints, max(1, int(elapsed // HINT_REVEAL_INTERVAL) + 1))
-    
-    # Calculate dynamic point value (Decreases as more hints auto-open)
     points_possible = max(100, 500 - (hints_to_show_count * 100))
 
-    # Timer display & stop button top layout
+    # --- Timer & Control Header ---
     col_timer, col_stop = st.columns([3, 1])
     with col_timer:
         st.markdown(f"<div class='timer-display'>⏱️ Time: {int(elapsed)}s | Value: {points_possible} pts</div>", unsafe_allow_html=True)
@@ -212,12 +249,12 @@ def app():
                     st.session_state.frozen_elapsed = elapsed
                     st.rerun()
             else:
-                if st.button("▶️️ RESUME CLOCK", key="resume_clock_btn"):
+                if st.button("▶ RESUME CLOCK", key="resume_clock_btn"):
                     st.session_state.timer_stopped = False
                     st.session_state.question_start_time = time.time() - st.session_state.frozen_elapsed
                     st.rerun()
 
-    # --- Game Logic based on Phase ---
+    # --- Game Logic: Hint Reveal Phase ---
     if st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL:
         if st.session_state.character_game_history:
             hist = st.session_state.character_game_history[-1]
@@ -226,7 +263,7 @@ def app():
                     f"Team {hist['team']} guessed '{hist['guess']}' and lost {abs(hist['points'])} points."
                 )
 
-        # Render active random hints
+        # Active Hints Block
         st.markdown("<div class='character-hints'>", unsafe_allow_html=True)
         active_indices = st.session_state.shuffled_hint_indices[:hints_to_show_count]
         for display_idx, hint_idx in enumerate(active_indices):
@@ -234,7 +271,7 @@ def app():
         st.markdown("</div>", unsafe_allow_html=True)
 
         if hints_to_show_count >= total_hints and not st.session_state.question_answered:
-            st.info("All hints have been revealed!")
+            st.info("All hints revealed!")
             if st.button("Show Answer"):
                 st.session_state.game_phase = PHASE_ANSWER_REVEALED
                 st.session_state.question_answered = True
@@ -255,9 +292,10 @@ def app():
                 else:
                     st.write(f"Team {t+1} has guessed.")
 
+    # --- Game Logic: Buzzed-In Guess Phase ---
     elif st.session_state.game_phase == PHASE_BUZZED_IN_GUESS:
         buzzed_team = st.session_state.buzzed_team_index
-        st.markdown(f"##### Team {buzzed_team + 1} Buzzed In! Guess within {GUESS_TIME_LIMIT} seconds.")
+        st.markdown(f"##### 🔔 Team {buzzed_team + 1} Buzzed In! You have {GUESS_TIME_LIMIT} seconds.")
 
         elapsed_guess_time = time.time() - st.session_state.guess_timer_start
         remaining_guess_time = GUESS_TIME_LIMIT - elapsed_guess_time
@@ -284,21 +322,19 @@ def app():
             st.markdown(f"<div class='hint-item'>**Hint {display_idx + 1}:** {current_char_data['hints'][hint_idx]}</div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-        if not st.session_state.character_options_for_current_question:
-            st.session_state.character_options_for_current_question = build_character_options(
-                current_char_data['character_name'],
-                all_character_names, num_options=10
-            )
+        # Radio selection synced with top button grid
+        options = st.session_state.character_options_for_current_question
+        selected_idx = options.index(st.session_state.selected_option) if st.session_state.selected_option in options else 0
 
         selected_character = st.radio(
-            "Who is this character?",
-            st.session_state.character_options_for_current_question,
+            "Confirm or change choice:",
+            options,
+            index=selected_idx,
             key=f"char_guess_{question_num}_{buzzed_team}"
         )
         
         if st.button("Submit Guess", key=f"submit_char_{question_num}_{buzzed_team}"):
             is_correct = (clean_character_name(selected_character) == clean_character_name(current_char_data['character_name']))
-            
             points_earned = points_possible if is_correct else -100
 
             st.session_state.character_game_history.append({
@@ -326,7 +362,7 @@ def app():
             
             st.rerun()
 
-    # --- Show Result ---
+    # --- Show Answer Result Phase ---
     if st.session_state.question_answered or st.session_state.game_phase == PHASE_ANSWER_REVEALED:
         if st.session_state.character_game_history:
             hist = st.session_state.character_game_history[-1]
@@ -361,7 +397,6 @@ def app():
             st.session_state.question_answered = False
             st.session_state.buzzed_team_index = None
             st.session_state.has_guessed_this_round = [False] * len(st.session_state.team_scores)
-            st.session_state.character_options_for_current_question = []
             st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
             setup_question()
             st.rerun()
@@ -381,7 +416,7 @@ def app():
                 unsafe_allow_html=True
             )
 
-    # --- Auto-rerun loop to keep timer ticking ---
+    # --- Auto-rerun loop to drive ticking timer ---
     if st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL and not st.session_state.timer_stopped and not st.session_state.question_answered:
         time.sleep(1)
         st.rerun()
