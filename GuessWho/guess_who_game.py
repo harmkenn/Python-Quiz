@@ -10,24 +10,20 @@ PHASE_BUZZED_IN_GUESS = "buzzed_in_guess"
 PHASE_ANSWER_REVEALED = "answer_revealed"
 
 # --- Game Configuration ---
-HINT_REVEAL_INTERVAL = 20 # seconds between hints
+HINT_REVEAL_INTERVAL = 15 # seconds between auto-revealing hints
 GUESS_TIME_LIMIT = 15 # seconds for a buzzed-in team to guess
 
 def clean_character_name(name):
     """Removes parenthetical parts from character names."""
     return re.sub(r"\(.*\)", "", name).strip()
 
-
 def build_character_options(correct_character, all_characters, num_options=6):
     """Return a list of character options including the correct character."""
     cleaned_correct_character = clean_character_name(correct_character)
-    # Ensure we don't have duplicates after cleaning and exclude the correct one
     available = [
         char for char in all_characters
         if clean_character_name(char) != cleaned_correct_character
     ]
-    
-    # If there aren't enough unique characters, just use what's available
     num_distractors = min(num_options - 1, len(available))
     distractors = random.sample(available, num_distractors) if num_distractors > 0 else []
     
@@ -36,54 +32,83 @@ def build_character_options(correct_character, all_characters, num_options=6):
     return options
 
 def initialize_game_state(num_teams):
-    selected_characters = random.sample(character_data, len(character_data)) # Use all 50 characters
+    selected_characters = random.sample(character_data, len(character_data))
     st.session_state.character_questions = selected_characters
     st.session_state.current_character_question = 0
     st.session_state.team_scores = [0] * num_teams
-    st.session_state.current_team = 0 # Team 0 starts
+    st.session_state.current_team = 0
     st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
-    st.session_state.hints_revealed_count = 1 # Start with the first hint revealed
     st.session_state.character_game_history = []
     st.session_state.character_game_over = False
     st.session_state.character_options_for_current_question = []
-    st.session_state.last_action_time = time.time()
     st.session_state.buzzed_team_index = None
-    st.session_state.has_guessed_this_round = [False] * num_teams # Track who has guessed for current question
+    st.session_state.has_guessed_this_round = [False] * num_teams
     st.session_state.guess_timer_start = None
     st.session_state.question_answered = False
+    
+    # --- New Timer & Hint State ---
+    st.session_state.question_start_time = time.time()
+    st.session_state.timer_stopped = False
+    st.session_state.shuffled_hint_indices = []
     st.session_state.initialized = True
 
+def setup_question():
+    """Sets up state specifically for the active question."""
+    current_char = st.session_state.character_questions[st.session_state.current_character_question]
+    num_hints = len(current_char['hints'])
+    
+    # Randomize the order in which hint indices (0, 1, 2, 3) will reveal
+    indices = list(range(num_hints))
+    random.shuffle(indices)
+    st.session_state.shuffled_hint_indices = indices
+    st.session_state.question_start_time = time.time()
+    st.session_state.timer_stopped = False
 
 def app():
     """Main Guess Who Game Application"""
 
-    # --- CSS Styling ---
     st.set_page_config(layout="wide")
+    
+    # --- Doubled Font CSS Styling ---
     st.markdown("""
     <style>
-    /* General font size increase for radio buttons and buttons */
-    .stRadio, .stButton>button {
-        font-size: 1.2rem;
+    /* Doubled font sizes across UI elements */
+    html, body, [class*="css"] {
+        font-size: 1.5rem;
+    }
+    .stButton>button {
+        font-size: 2.2rem !important;
+        padding: 15px 30px !important;
+    }
+    .stRadio label {
+        font-size: 2.0rem !important;
+    }
+    h1 {
+        font-size: 4.5rem !important;
     }
     h3 {
-        font-size: 2.5rem;
+        font-size: 3.5rem !important;
     }
     h5 {
-        font-size: 1.7rem;
+        font-size: 2.5rem !important;
     }
     .character-hints {
-        font-size: 1.6rem; /* Larger font for hints */
+        font-size: 2.5rem !important;
         line-height: 1.6;
-        padding: 10px;
+        padding: 20px;
+        background-color: #f0f2f6;
+        border-radius: 12px;
+        margin-bottom: 20px;
     }
     .hint-item {
-        margin-bottom: 12px;
+        margin-bottom: 20px;
+        color: #111;
     }
     .answer-guess {
-        font-size: 1.7rem; /* Larger font for results */
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 8px;
+        font-size: 2.5rem !important;
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 12px;
         text-align: center;
         font-weight: bold;
     }
@@ -96,44 +121,47 @@ def app():
         color: white;
     }
     .score-label {
-        font-size: 1.8rem; /* Larger font for scores */
+        font-size: 2.5rem !important;
         font-weight: bold;
         text-align: center;
-        padding: 10px;
-        border-radius: 10px;
+        padding: 18px;
+        border-radius: 12px;
         color: white;
     }
     .team-current {
-        border: 3px solid #000;
+        border: 5px solid #000;
     }
     .character-name-display {
-        font-size: 2.0rem; /* Larger font for correct character name */
+        font-size: 3.0rem !important;
         font-weight: bold;
         text-align: center;
+    }
+    .timer-display {
+        font-size: 3.0rem !important;
+        font-weight: bold;
+        color: #D97706;
     }
     </style>
     """, unsafe_allow_html=True)
 
     # --- Initialize game state ---
     st.sidebar.header("🎮 Game Setup")
-    num_teams_setting = st.sidebar.slider("Number of teams:", 2, 4, 2, step=1) # Allow up to 4 teams
+    num_teams_setting = st.sidebar.slider("Number of teams:", 2, 4, 2, step=1)
 
     if "initialized" not in st.session_state or not st.session_state.initialized:
         initialize_game_state(num_teams_setting)
+        setup_question()
         st.rerun()
     
-    # If number of teams changed in sidebar, re-initialize
     if st.session_state.initialized and len(st.session_state.team_scores) != num_teams_setting:
         initialize_game_state(num_teams_setting)
+        setup_question()
         st.rerun()
 
-    if st.sidebar.button("🔁 Start New Game (Resets Scores)"):
+    if st.sidebar.button("🔁 Start New Game"):
         initialize_game_state(num_teams_setting)
+        setup_question()
         st.rerun()
-
-    if not st.session_state.initialized:
-        st.info("👈 Click 'Start New Game' in the sidebar to begin!")
-        return
 
     all_character_names = [char['character_name'] for char in character_data]
 
@@ -159,6 +187,36 @@ def app():
 
     st.markdown(f"### Question {question_num} of {total_questions}")
     
+    # Calculate elapsed time & active hints
+    total_hints = len(current_char_data['hints'])
+    if not st.session_state.timer_stopped and st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL:
+        elapsed = time.time() - st.session_state.question_start_time
+    else:
+        elapsed = getattr(st.session_state, 'frozen_elapsed', 0)
+
+    # 1 hint at start, auto-reveal an extra hint every 15s
+    hints_to_show_count = min(total_hints, max(1, int(elapsed // HINT_REVEAL_INTERVAL) + 1))
+    
+    # Calculate dynamic point value (Decreases as more hints auto-open)
+    points_possible = max(100, 500 - (hints_to_show_count * 100))
+
+    # Timer display & stop button top layout
+    col_timer, col_stop = st.columns([3, 1])
+    with col_timer:
+        st.markdown(f"<div class='timer-display'>⏱️ Time: {int(elapsed)}s | Value: {points_possible} pts</div>", unsafe_allow_html=True)
+    with col_stop:
+        if st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL:
+            if not st.session_state.timer_stopped:
+                if st.button("🛑 STOP CLOCK", key="stop_clock_btn"):
+                    st.session_state.timer_stopped = True
+                    st.session_state.frozen_elapsed = elapsed
+                    st.rerun()
+            else:
+                if st.button("▶️️ RESUME CLOCK", key="resume_clock_btn"):
+                    st.session_state.timer_stopped = False
+                    st.session_state.question_start_time = time.time() - st.session_state.frozen_elapsed
+                    st.rerun()
+
     # --- Game Logic based on Phase ---
     if st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL:
         if st.session_state.character_game_history:
@@ -168,19 +226,14 @@ def app():
                     f"Team {hist['team']} guessed '{hist['guess']}' and lost {abs(hist['points'])} points."
                 )
 
-        # Display hints
+        # Render active random hints
         st.markdown("<div class='character-hints'>", unsafe_allow_html=True)
-        for i in range(st.session_state.hints_revealed_count):
-            if i < len(current_char_data['hints']):
-                st.markdown(f"<div class='hint-item'>**Hint {i+1}:** {current_char_data['hints'][i]}</div>", unsafe_allow_html=True)
+        active_indices = st.session_state.shuffled_hint_indices[:hints_to_show_count]
+        for display_idx, hint_idx in enumerate(active_indices):
+            st.markdown(f"<div class='hint-item'>**Hint {display_idx + 1}:** {current_char_data['hints'][hint_idx]}</div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-        # "Next Hint" button
-        if st.session_state.hints_revealed_count < len(current_char_data['hints']):
-            if st.button("Reveal Next Hint"):
-                st.session_state.hints_revealed_count += 1
-                st.rerun()
-        else:
+        if hints_to_show_count >= total_hints and not st.session_state.question_answered:
             st.info("All hints have been revealed!")
             if st.button("Show Answer"):
                 st.session_state.game_phase = PHASE_ANSWER_REVEALED
@@ -197,48 +250,40 @@ def app():
                         st.session_state.buzzed_team_index = t
                         st.session_state.game_phase = PHASE_BUZZED_IN_GUESS
                         st.session_state.guess_timer_start = time.time()
+                        st.session_state.frozen_elapsed = elapsed
                         st.rerun()
                 else:
                     st.write(f"Team {t+1} has guessed.")
 
-
-
     elif st.session_state.game_phase == PHASE_BUZZED_IN_GUESS:
         buzzed_team = st.session_state.buzzed_team_index
-        st.markdown(f"##### Team {buzzed_team + 1} has buzzed in! You have {GUESS_TIME_LIMIT} seconds to guess.")
+        st.markdown(f"##### Team {buzzed_team + 1} Buzzed In! Guess within {GUESS_TIME_LIMIT} seconds.")
 
         elapsed_guess_time = time.time() - st.session_state.guess_timer_start
         remaining_guess_time = GUESS_TIME_LIMIT - elapsed_guess_time
 
         if remaining_guess_time <= 0:
             st.warning(f"Time's up for Team {buzzed_team + 1}! -100 points.")
-            st.session_state.team_scores[buzzed_team] -= 100 # Penalty for not guessing in time
+            st.session_state.team_scores[buzzed_team] -= 100
             st.session_state.has_guessed_this_round[buzzed_team] = True
             st.session_state.buzzed_team_index = None
             
-            # Check if other teams can still guess
             if all(st.session_state.has_guessed_this_round):
                 st.session_state.game_phase = PHASE_ANSWER_REVEALED
                 st.session_state.question_answered = True
             else:
                 st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
-                st.session_state.last_action_time = time.time() # Restart hint timer for next team/hint
-                # Move to the next team that hasn't guessed yet
-                st.session_state.current_team = (buzzed_team + 1) % len(st.session_state.team_scores)
-                while st.session_state.has_guessed_this_round[st.session_state.current_team] and not all(st.session_state.has_guessed_this_round):
-                    st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
             st.rerun()
 
         st.markdown(f"**Time remaining:** {int(max(0, remaining_guess_time))} seconds")
 
-        # Display hints revealed so far
+        # Hints display
         st.markdown("<div class='character-hints'>", unsafe_allow_html=True)
-        for i in range(st.session_state.hints_revealed_count):
-            if i < len(current_char_data['hints']):
-                st.markdown(f"<div class='hint-item'>**Hint {i+1}:** {current_char_data['hints'][i]}</div>", unsafe_allow_html=True)
+        active_indices = st.session_state.shuffled_hint_indices[:hints_to_show_count]
+        for display_idx, hint_idx in enumerate(active_indices):
+            st.markdown(f"<div class='hint-item'>**Hint {display_idx + 1}:** {current_char_data['hints'][hint_idx]}</div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-        # Prepare options for the current question if not already done
         if not st.session_state.character_options_for_current_question:
             st.session_state.character_options_for_current_question = build_character_options(
                 current_char_data['character_name'],
@@ -254,8 +299,7 @@ def app():
         if st.button("Submit Guess", key=f"submit_char_{question_num}_{buzzed_team}"):
             is_correct = (clean_character_name(selected_character) == clean_character_name(current_char_data['character_name']))
             
-            points_possible = 500 - (st.session_state.hints_revealed_count * 100)
-            points_earned = points_possible if is_correct else -100 # Incorrect guess penalty
+            points_earned = points_possible if is_correct else -100
 
             st.session_state.character_game_history.append({
                 'question_num': question_num,
@@ -264,15 +308,13 @@ def app():
                 'is_correct': is_correct,
                 'points': points_earned,
                 'team': buzzed_team + 1,
-                'hints_used': st.session_state.hints_revealed_count
             })
             
+            st.session_state.team_scores[buzzed_team] += points_earned
             if is_correct:
-                st.session_state.team_scores[buzzed_team] += points_earned
                 st.session_state.game_phase = PHASE_ANSWER_REVEALED
                 st.session_state.question_answered = True
             else:
-                st.session_state.team_scores[buzzed_team] += points_earned
                 st.session_state.has_guessed_this_round[buzzed_team] = True
                 st.session_state.buzzed_team_index = None
 
@@ -281,15 +323,11 @@ def app():
                     st.session_state.question_answered = True
                 else:
                     st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
-                    st.session_state.last_action_time = time.time()
-                    st.session_state.current_team = (buzzed_team + 1) % len(st.session_state.team_scores)
-                    while st.session_state.has_guessed_this_round[st.session_state.current_team]:
-                        st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
             
             st.rerun()
 
     # --- Show Result ---
-    if st.session_state.question_answered:
+    if st.session_state.question_answered or st.session_state.game_phase == PHASE_ANSWER_REVEALED:
         if st.session_state.character_game_history:
             hist = st.session_state.character_game_history[-1]
 
@@ -300,7 +338,7 @@ def app():
                 )
             else:
                 st.markdown(
-                    f"<div class='answer-guess answer-wrong'>❌ Incorrect guess! Team {hist['team']} guessed '{hist['guess']}'. That is not the correct character. -100 points.</div>",
+                    f"<div class='answer-guess answer-wrong'>❌ Incorrect guess! Team {hist['team']} guessed '{hist['guess']}'. -100 points.</div>",
                     unsafe_allow_html=True
                 )
 
@@ -310,7 +348,7 @@ def app():
             )
         else:
             st.markdown(
-                "<div class='answer-guess answer-wrong'>ℹ️ Answer revealed without a submitted guess.</div>",
+                "<div class='answer-guess answer-wrong'>ℹ️ Answer revealed without a correct guess.</div>",
                 unsafe_allow_html=True
             )
             st.markdown(
@@ -321,12 +359,11 @@ def app():
         if st.button("➡️ Next Character", key=f"next_char_{question_num}"):
             st.session_state.current_character_question += 1
             st.session_state.question_answered = False
-            st.session_state.hints_revealed_count = 1 # Start next question with first hint revealed
-            st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
             st.session_state.buzzed_team_index = None
             st.session_state.has_guessed_this_round = [False] * len(st.session_state.team_scores)
-            st.session_state.character_options_for_current_question = [] # Clear options for next question
+            st.session_state.character_options_for_current_question = []
             st.session_state.game_phase = PHASE_WAITING_FOR_HINT_REVEAL
+            setup_question()
             st.rerun()
 
     # --- Score Display ---
@@ -335,26 +372,19 @@ def app():
     
     num_teams = len(st.session_state.team_scores)
     team_cols = st.columns(num_teams)
-    for t in range(num_teams): # Iterate through all teams
-        color = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"][t] # Re-define for local scope
+    for t in range(num_teams):
+        color = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"][t]
         label = f"Team {t+1}: {st.session_state.team_scores[t]}"
         with team_cols[t]:
-            if t == st.session_state.current_team and not st.session_state.question_answered:
-                st.markdown(
-                    f"<div class='score-label team-current' style='background-color:{color}'>{label} ⬅️</div>",
-                    unsafe_allow_html=True
-                )
-            else:
-                st.markdown(
-                    f"<div class='score-label' style='background-color:{color}'>{label}</div>",
-                    unsafe_allow_html=True
-                )
+            st.markdown(
+                f"<div class='score-label' style='background-color:{color}'>{label}</div>",
+                unsafe_allow_html=True
+            )
 
-    # --- Restart Game ---
-    if st.button("🔄 Restart Game"):
-        st.session_state.clear()
+    # --- Auto-rerun loop to keep timer ticking ---
+    if st.session_state.game_phase == PHASE_WAITING_FOR_HINT_REVEAL and not st.session_state.timer_stopped and not st.session_state.question_answered:
+        time.sleep(1)
         st.rerun()
-
 
 if __name__ == "__main__":
     app()
