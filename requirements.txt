@@ -3,6 +3,7 @@
 
 
 streamlit
+dash
 qrcode
 pandas
 streamlit_autorefresh
