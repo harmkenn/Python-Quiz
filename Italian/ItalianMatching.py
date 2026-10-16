@@ -3,7 +3,7 @@ import random
 
 # --- Page Setup ---
 if __name__ == "__main__":
-    st.set_page_config(page_title="Italian Match & Flashcards", layout="wide")
+    st.set_page_config(page_title="Italian Language Arcade", layout="wide")
 
 # --- Load custom phrase set: (English + Lit, Italian + Phonetic) ---
 ITALIAN_PHRASES = [
@@ -393,11 +393,11 @@ def play_audio(text):
     st.components.v1.html(js_speech, height=0, width=0)
 
 def app():
-    # --- Custom CSS for Styling ---
+    # --- Custom CSS Styling ---
     st.markdown("""
     <style>
     .big-font { font-size: 18px !important; text-align: center; }
-    .stButton button { height: auto !important; min-height: 70px; width: 100%; font-size: 15px; white-space: pre-wrap !important; word-wrap: break-word; padding: 0.4rem 0.5rem !important; line-height: 1.25 !important; }
+    .stButton button { height: auto !important; min-height: 50px; width: 100%; font-size: 15px; white-space: pre-wrap !important; word-wrap: break-word; padding: 0.4rem 0.5rem !important; line-height: 1.25 !important; }
     .stButton button div p { white-space: pre-wrap !important; line-height: 1.25 !important; }
     .team-current { font-weight: 700; color: green; }
     .score-label { font-size: 24px; font-weight: bold; text-align: center; }
@@ -405,54 +405,120 @@ def app():
     .card-selected { border: 3px solid yellow !important; }
     .card-matched { opacity: 0.5; }
     
-    /* Flashcard Specific CSS */
-    .flashcard-box {
+    /* Custom Box Styles */
+    .flashcard-box, .unscramble-box {
         background-color: #f8f9fa;
         border: 2px solid #007BFF;
         border-radius: 12px;
-        padding: 30px;
+        padding: 25px;
         text-align: center;
-        margin: 20px 0;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 15px 0;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
     }
-    .flashcard-title {
-        font-size: 22px;
-        font-weight: bold;
-        color: #1e293b;
-        margin-bottom: 12px;
-    }
-    .flashcard-sub {
-        font-size: 18px;
-        color: #64748b;
-        white-space: pre-line;
-    }
-    .flashcard-answer {
-        font-size: 22px;
-        font-weight: bold;
-        color: #16a34a;
-        margin-top: 15px;
-        border-top: 1px dashed #cbd5e1;
-        padding-top: 15px;
-        white-space: pre-line;
-    }
+    .flashcard-title { font-size: 20px; font-weight: bold; color: #1e293b; margin-bottom: 10px; }
+    .flashcard-sub { font-size: 18px; color: #475569; white-space: pre-line; }
+    .flashcard-answer { font-size: 22px; font-weight: bold; color: #16a34a; margin-top: 15px; border-top: 1px dashed #cbd5e1; padding-top: 15px; white-space: pre-line; }
+    .assembled-box { background-color: #e2e8f0; border-radius: 8px; padding: 12px; font-size: 20px; font-weight: bold; color: #0f172a; min-height: 50px; margin-top: 10px; }
     </style>
     """, unsafe_allow_html=True)
 
     # --- Sidebar Controls ---
     st.sidebar.header("🕹️ Choose Game Mode")
-    game_mode = st.sidebar.radio("Select Mode:", ["🧩 Matching Game", "🎴 Flashcards"])
+    game_mode = st.sidebar.radio("Select Mode:", ["🧩 Matching Game", "🎴 Flashcards", "🧱 Sentence Unscramble"])
 
     # ==========================================
-    # --- GAME MODE 1: FLASHCARDS ---
+    # --- GAME MODE 1: SENTENCE UNSCRAMBLE ---
     # ==========================================
-    if game_mode == "🎴 Flashcards":
+    if game_mode == "🧱 Sentence Unscramble":
+        st.title("🧱 Italian Sentence Builder")
+        st.caption("Click word blocks in the correct order to form the Italian sentence!")
+
+        # Initialize Unscramble State
+        if "scramble_idx" not in st.session_state:
+            st.session_state.scramble_idx = random.randint(0, len(ITALIAN_PHRASES) - 1)
+            st.session_state.selected_words = []
+            st.session_state.scramble_checked = False
+
+        def load_new_sentence():
+            st.session_state.scramble_idx = random.randint(0, len(ITALIAN_PHRASES) - 1)
+            st.session_state.selected_words = []
+            st.session_state.scramble_checked = False
+            if "scrambled_words" in st.session_state:
+                del st.session_state["scrambled_words"]
+
+        eng_text, ita_full = ITALIAN_PHRASES[st.session_state.scramble_idx]
+        ita_clean = ita_full.split("\n")[0].strip()
+
+        # Extract words for scrambling (strip punctuation for fair matching)
+        import re
+        words_original = ita_clean.split()
+
+        if "scrambled_words" not in st.session_state:
+            words_copy = list(words_original)
+            random.shuffle(words_copy)
+            st.session_state.scrambled_words = words_copy
+
+        # Render Prompt Box
+        st.markdown(f"""
+        <div class="unscramble-box">
+            <div class="flashcard-title">Translate into Italian:</div>
+            <div class="flashcard-sub">{eng_text}</div>
+            <div class="assembled-box">
+                {' '.join(st.session_state.selected_words) if st.session_state.selected_words else '<span style="color:#94a3b8; font-weight:normal;">(Click words below to build phrase)</span>'}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Render Clickable Word Blocks
+        st.subheader("Available Words:")
+        cols = st.columns(min(len(st.session_state.scrambled_words), 6))
+        for idx, word in enumerate(st.session_state.scrambled_words):
+            col_idx = idx % len(cols)
+            # Disable word button if already selected
+            is_used = st.session_state.selected_words.count(word) >= st.session_state.scrambled_words.count(word)
+            with cols[col_idx]:
+                if st.button(word, key=f"word-{idx}", disabled=is_used):
+                    st.session_state.selected_words.append(word)
+                    st.rerun()
+
+        st.markdown("---")
+        b_col1, b_col2, b_col3 = st.columns(3)
+
+        with b_col1:
+            if st.button("🧹 Clear Selection"):
+                st.session_state.selected_words = []
+                st.session_state.scramble_checked = False
+                st.rerun()
+
+        with b_col2:
+            if st.button("✅ Check Answer"):
+                st.session_state.scramble_checked = True
+                user_sentence = " ".join(st.session_state.selected_words)
+                
+                # Strip trailing punctuation for flexible matching
+                clean_target = re.sub(r'[^\w\s\']', '', ita_clean).lower()
+                clean_user = re.sub(r'[^\w\s\']', '', user_sentence).lower()
+
+                if clean_user == clean_target:
+                    st.success("🎉 Correct! Excellent job!")
+                    play_audio(ita_clean)
+                else:
+                    st.error(f"❌ Not quite. Correct Italian: **{ita_clean}**")
+
+        with b_col3:
+            if st.button("➡️ Next Sentence"):
+                load_new_sentence()
+                st.rerun()
+
+    # ==========================================
+    # --- GAME MODE 2: FLASHCARDS ---
+    # ==========================================
+    elif game_mode == "🎴 Flashcards":
         st.title("🎴 Italian Flashcards")
         st.caption("Press **Spacebar** or **Enter** to flip the card, then press again for the next phrase!")
 
-        # Flashcard mode options
         card_dir = st.sidebar.radio("Prompt Direction:", ["English ➔ Italian", "Italian ➔ English"])
 
-        # Initialize flashcard state
         if "fc_index" not in st.session_state:
             st.session_state.fc_index = random.randint(0, len(ITALIAN_PHRASES) - 1)
             st.session_state.fc_show_answer = False
@@ -463,14 +529,12 @@ def app():
 
         def toggle_answer():
             st.session_state.fc_show_answer = not st.session_state.fc_show_answer
-            # Play audio when Italian is revealed
             curr_eng, curr_ita = ITALIAN_PHRASES[st.session_state.fc_index]
             if st.session_state.fc_show_answer:
                 play_audio(curr_ita)
 
         curr_eng, curr_ita = ITALIAN_PHRASES[st.session_state.fc_index]
 
-        # Determine prompt vs answer based on direction
         if card_dir == "English ➔ Italian":
             prompt_text = curr_eng
             answer_text = curr_ita
@@ -478,7 +542,6 @@ def app():
             prompt_text = curr_ita
             answer_text = curr_eng
 
-        # Flashcard Render
         st.markdown(f"""
         <div class="flashcard-box">
             <div class="flashcard-title">Card #{st.session_state.fc_index + 1} of {len(ITALIAN_PHRASES)}</div>
@@ -487,7 +550,6 @@ def app():
         </div>
         """, unsafe_allow_html=True)
 
-        # Control Buttons
         col1, col2 = st.columns(2)
         with col1:
             if not st.session_state.fc_show_answer:
@@ -504,7 +566,7 @@ def app():
                 play_audio(curr_ita)
 
     # ==========================================
-    # --- GAME MODE 2: MATCHING GAME ---
+    # --- GAME MODE 3: MATCHING GAME ---
     # ==========================================
     else:
         st.sidebar.header("🎮 Game Setup")
@@ -541,7 +603,6 @@ def app():
             st.session_state.initialized = True
             st.rerun()
 
-        # Matching logic
         def is_matching_pair(idx1, idx2):
             card1, type1 = st.session_state.cards[idx1]
             card2, type2 = st.session_state.cards[idx2]
@@ -581,18 +642,15 @@ def app():
                     st.session_state.audio_to_play = None
                     st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
 
-        # Team controls
         if st.sidebar.button("🔀 Switch Team"):
             st.session_state.selected = []
             st.session_state.audio_to_play = None
             st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
 
-        # Audio Trigger
         if st.session_state.get("audio_to_play"):
             play_audio(st.session_state.audio_to_play)
             st.session_state.audio_to_play = None
 
-        # Display Board
         st.markdown(f"### Current turn: Team {st.session_state.current_team + 1}")
         cols_per_row = 6
         num_cards = len(st.session_state.cards)
@@ -618,7 +676,6 @@ def app():
                             flip_card(idx)
             st.markdown("<div class='row-space'></div>", unsafe_allow_html=True)
 
-        # Scores
         st.markdown("---")
         score_cols = st.columns(len(st.session_state.team_scores))
         for t in range(len(st.session_state.team_scores)):
@@ -631,7 +688,6 @@ def app():
 
         st.markdown(f"**Turns taken:** {st.session_state.turns}")
 
-        # Live Matched Pairs List
         st.markdown("---")
         st.subheader("📝 Matched Pairs History (In Order)")
         
@@ -648,13 +704,11 @@ def app():
                     unsafe_allow_html=True
                 )
 
-        # Game Over
         if len(st.session_state.matched) == len(st.session_state.cards):
             st.success("🎉 Game Over! All pairs matched!")
             winner = max(range(len(st.session_state.team_scores)), key=lambda i: st.session_state.team_scores[i])
             st.info(f"🏆 Winner: Team {winner + 1} with {st.session_state.team_scores[winner]} points!")
 
-        # Restart
         if st.button("🔁 Restart Game"):
             st.session_state.clear()
             st.rerun()
