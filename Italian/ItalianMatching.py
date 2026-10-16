@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+import re
 
 # --- Page Setup ---
 if __name__ == "__main__":
@@ -392,6 +393,20 @@ def play_audio(text):
     """
     st.components.v1.html(js_speech, height=0, width=0)
 
+def get_distractors(target_words, num_distractors=3):
+    """Gathers realistic distractor words from other Italian phrases."""
+    all_italian_words = set()
+    for _, ita in ITALIAN_PHRASES:
+        clean_ita = ita.split("\n")[0].strip()
+        words = clean_ita.split()
+        for w in words:
+            # Strip punctuation for clean words
+            clean_w = re.sub(r'[^\w\s\']', '', w)
+            if clean_w and clean_w.lower() not in [t.lower() for t in target_words]:
+                all_italian_words.add(clean_w)
+    
+    return random.sample(list(all_italian_words), min(num_distractors, len(all_italian_words)))
+
 def app():
     # --- Custom CSS Styling ---
     st.markdown("""
@@ -431,7 +446,7 @@ def app():
     # ==========================================
     if game_mode == "🧱 Sentence Unscramble":
         st.title("🧱 Italian Sentence Builder")
-        st.caption("Click word blocks in the correct order to form the Italian sentence!")
+        st.caption("Click word blocks in the correct order to form the Italian sentence! Watch out for distractor words!")
 
         # Initialize Unscramble State
         if "scramble_idx" not in st.session_state:
@@ -449,12 +464,12 @@ def app():
         eng_text, ita_full = ITALIAN_PHRASES[st.session_state.scramble_idx]
         ita_clean = ita_full.split("\n")[0].strip()
 
-        # Extract words for scrambling (strip punctuation for fair matching)
-        import re
         words_original = ita_clean.split()
 
+        # Scramble correct words + add distractors
         if "scrambled_words" not in st.session_state:
-            words_copy = list(words_original)
+            distractors = get_distractors(words_original, num_distractors=random.randint(2, 3))
+            words_copy = list(words_original) + distractors
             random.shuffle(words_copy)
             st.session_state.scrambled_words = words_copy
 
@@ -470,11 +485,10 @@ def app():
         """, unsafe_allow_html=True)
 
         # Render Clickable Word Blocks
-        st.subheader("Available Words:")
+        st.subheader("Available Words (Includes Distractors):")
         cols = st.columns(min(len(st.session_state.scrambled_words), 6))
         for idx, word in enumerate(st.session_state.scrambled_words):
             col_idx = idx % len(cols)
-            # Disable word button if already selected
             is_used = st.session_state.selected_words.count(word) >= st.session_state.scrambled_words.count(word)
             with cols[col_idx]:
                 if st.button(word, key=f"word-{idx}", disabled=is_used):
@@ -495,7 +509,6 @@ def app():
                 st.session_state.scramble_checked = True
                 user_sentence = " ".join(st.session_state.selected_words)
                 
-                # Strip trailing punctuation for flexible matching
                 clean_target = re.sub(r'[^\w\s\']', '', ita_clean).lower()
                 clean_user = re.sub(r'[^\w\s\']', '', user_sentence).lower()
 
