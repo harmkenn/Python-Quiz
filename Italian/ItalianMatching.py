@@ -376,8 +376,24 @@ ITALIAN_PHRASES = [
 
 italian_set = dict(ITALIAN_PHRASES)
 
+def play_audio(text):
+    """Triggers browser native text-to-speech for the clean Italian phrase."""
+    # Clean string: remove phonetic brackets and newlines before speaking
+    clean_text = text.split("\n")[0].replace("'", "\\'").replace('"', '\\"')
+    js_speech = f"""
+    <script>
+    if ('speechSynthesis' in window) {{
+        window.speechSynthesis.cancel(); // Stop any pending speech
+        var msg = new SpeechSynthesisUtterance("{clean_text}");
+        msg.lang = 'it-IT';
+        msg.rate = 0.9; // Slightly slower for language learners
+        window.speechSynthesis.speak(msg);
+    }}
+    </script>
+    """
+    st.components.v1.html(js_speech, height=0, width=0)
+
 def app():
-    # CSS override so newlines (\n) inside Streamlit buttons display properly
     st.markdown("""
     <style>
     .big-font { font-size: 18px !important; text-align: center; }
@@ -401,7 +417,6 @@ def app():
         st.session_state.initialized = False
         st.session_state.num_teams = num_teams
     
-    # Use stored num_teams if game is already running, otherwise use slider value
     if st.session_state.initialized:
         num_teams = st.session_state.num_teams
     
@@ -420,10 +435,11 @@ def app():
         st.session_state.selected = []
         st.session_state.matched = []
         st.session_state.matched_by_team = {}
-        st.session_state.matched_history = []  # Stores ordered tuples: (english, italian, team_idx)
+        st.session_state.matched_history = []
         st.session_state.turns = 0
         st.session_state.team_scores = [0] * num_teams
         st.session_state.current_team = random.randint(0, num_teams - 1)
+        st.session_state.audio_to_play = None
         st.session_state.initialized = True
         st.rerun()
 
@@ -454,24 +470,31 @@ def app():
                 st.session_state.matched_by_team[idx2] = team
                 st.session_state.team_scores[team] += 1
                 
-                # Retrieve normalized english and italian phrases for history logging
                 c1_text, c1_type = st.session_state.cards[idx1]
                 c2_text, c2_type = st.session_state.cards[idx2]
                 eng_phrase = c1_text if c1_type == "eng" else c2_text
                 ita_phrase = c2_text if c1_type == "eng" else c1_text
                 
-                # Append to match history
-                st.session_state.matched_history.append((eng_phrase, ita_phrase, team))
+                # Queue Italian phrase audio to play
+                st.session_state.audio_to_play = ita_phrase
                 
+                st.session_state.matched_history.append((eng_phrase, ita_phrase, team))
                 st.session_state.selected = []
             else:
                 st.session_state.selected = []
+                st.session_state.audio_to_play = None
                 st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
 
     # --- Team controls ---
     if st.sidebar.button("🔀 Switch Team"):
         st.session_state.selected = []
+        st.session_state.audio_to_play = None
         st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
+
+    # --- Play audio if match made ---
+    if st.session_state.get("audio_to_play"):
+        play_audio(st.session_state.audio_to_play)
+        st.session_state.audio_to_play = None
 
     # --- Display Board ---
     st.markdown(f"### Current turn: Team {st.session_state.current_team + 1}")
