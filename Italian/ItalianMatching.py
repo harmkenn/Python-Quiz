@@ -3,7 +3,7 @@ import random
 
 # --- Page Setup ---
 if __name__ == "__main__":
-    st.set_page_config(page_title="Italian Match", layout="wide")
+    st.set_page_config(page_title="Italian Match & Flashcards", layout="wide")
 
 # --- Load custom phrase set: (English + Lit, Italian + Phonetic) ---
 ITALIAN_PHRASES = [
@@ -377,16 +377,15 @@ ITALIAN_PHRASES = [
 italian_set = dict(ITALIAN_PHRASES)
 
 def play_audio(text):
-    """Triggers browser native text-to-speech for the clean Italian phrase."""
-    # Clean string: remove phonetic brackets and newlines before speaking
+    """Triggers browser native text-to-speech for the Italian phrase."""
     clean_text = text.split("\n")[0].replace("'", "\\'").replace('"', '\\"')
     js_speech = f"""
     <script>
     if ('speechSynthesis' in window) {{
-        window.speechSynthesis.cancel(); // Stop any pending speech
+        window.speechSynthesis.cancel();
         var msg = new SpeechSynthesisUtterance("{clean_text}");
         msg.lang = 'it-IT';
-        msg.rate = 0.9; // Slightly slower for language learners
+        msg.rate = 0.9;
         window.speechSynthesis.speak(msg);
     }}
     </script>
@@ -394,6 +393,7 @@ def play_audio(text):
     st.components.v1.html(js_speech, height=0, width=0)
 
 def app():
+    # --- Custom CSS for Styling ---
     st.markdown("""
     <style>
     .big-font { font-size: 18px !important; text-align: center; }
@@ -404,164 +404,260 @@ def app():
     .row-space { margin-top: 8px; }
     .card-selected { border: 3px solid yellow !important; }
     .card-matched { opacity: 0.5; }
+    
+    /* Flashcard Specific CSS */
+    .flashcard-box {
+        background-color: #f8f9fa;
+        border: 2px solid #007BFF;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        margin: 20px 0;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .flashcard-title {
+        font-size: 22px;
+        font-weight: bold;
+        color: #1e293b;
+        margin-bottom: 12px;
+    }
+    .flashcard-sub {
+        font-size: 18px;
+        color: #64748b;
+        white-space: pre-line;
+    }
+    .flashcard-answer {
+        font-size: 22px;
+        font-weight: bold;
+        color: #16a34a;
+        margin-top: 15px;
+        border-top: 1px dashed #cbd5e1;
+        padding-top: 15px;
+        white-space: pre-line;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-    # --- Sidebar: Game Setup ---
-    st.sidebar.header("🎮 Game Setup")
-    num_pairs = st.sidebar.slider("Number of word pairs:", 10, len(italian_set), 30, step=1)
-    num_teams = st.sidebar.slider("Number of teams:", 2, 4, 4, step=1)
+    # --- Sidebar Controls ---
+    st.sidebar.header("🕹️ Choose Game Mode")
+    game_mode = st.sidebar.radio("Select Mode:", ["🧩 Matching Game", "🎴 Flashcards"])
 
-    # --- Initialize game ---
-    if "initialized" not in st.session_state:
-        st.session_state.initialized = False
-        st.session_state.num_teams = num_teams
-    
-    if st.session_state.initialized:
-        num_teams = st.session_state.num_teams
-    
-    team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"][:num_teams]
+    # ==========================================
+    # --- GAME MODE 1: FLASHCARDS ---
+    # ==========================================
+    if game_mode == "🎴 Flashcards":
+        st.title("🎴 Italian Flashcards")
+        st.caption("Press **Spacebar** or **Enter** to flip the card, then press again for the next phrase!")
 
-    if st.sidebar.button("🔁 Start New Game") or not st.session_state.initialized:
-        st.session_state.num_teams = num_teams
-        selected = random.sample(list(italian_set.items()), num_pairs)
-        pairs = []
-        for eng, ita in selected:
-            pairs.append((eng, "eng"))
-            pairs.append((ita, "ita"))
-        random.shuffle(pairs)
+        # Flashcard mode options
+        card_dir = st.sidebar.radio("Prompt Direction:", ["English ➔ Italian", "Italian ➔ English"])
 
-        st.session_state.cards = pairs
-        st.session_state.selected = []
-        st.session_state.matched = []
-        st.session_state.matched_by_team = {}
-        st.session_state.matched_history = []
-        st.session_state.turns = 0
-        st.session_state.team_scores = [0] * num_teams
-        st.session_state.current_team = random.randint(0, num_teams - 1)
-        st.session_state.audio_to_play = None
-        st.session_state.initialized = True
-        st.rerun()
+        # Initialize flashcard state
+        if "fc_index" not in st.session_state:
+            st.session_state.fc_index = random.randint(0, len(ITALIAN_PHRASES) - 1)
+            st.session_state.fc_show_answer = False
 
-    # --- Matching logic ---
-    def is_matching_pair(idx1, idx2):
-        card1, type1 = st.session_state.cards[idx1]
-        card2, type2 = st.session_state.cards[idx2]
-        if type1 == type2:
-            return False
-        if type1 == "eng":
-            return italian_set[card1] == card2
+        def next_card():
+            st.session_state.fc_index = random.randint(0, len(ITALIAN_PHRASES) - 1)
+            st.session_state.fc_show_answer = False
+
+        def toggle_answer():
+            st.session_state.fc_show_answer = not st.session_state.fc_show_answer
+            # Play audio when Italian is revealed
+            curr_eng, curr_ita = ITALIAN_PHRASES[st.session_state.fc_index]
+            if st.session_state.fc_show_answer:
+                play_audio(curr_ita)
+
+        curr_eng, curr_ita = ITALIAN_PHRASES[st.session_state.fc_index]
+
+        # Determine prompt vs answer based on direction
+        if card_dir == "English ➔ Italian":
+            prompt_text = curr_eng
+            answer_text = curr_ita
         else:
-            return italian_set[card2] == card1
+            prompt_text = curr_ita
+            answer_text = curr_eng
 
-    def flip_card(index):
-        if index in st.session_state.matched or index in st.session_state.selected:
-            return
+        # Flashcard Render
+        st.markdown(f"""
+        <div class="flashcard-box">
+            <div class="flashcard-title">Card #{st.session_state.fc_index + 1} of {len(ITALIAN_PHRASES)}</div>
+            <div class="flashcard-sub">{prompt_text}</div>
+            {f'<div class="flashcard-answer">{answer_text}</div>' if st.session_state.fc_show_answer else ''}
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.session_state.selected.append(index)
-
-        if len(st.session_state.selected) == 2:
-            idx1, idx2 = st.session_state.selected
-            st.session_state.turns += 1
-            if is_matching_pair(idx1, idx2):
-                st.session_state.matched.extend([idx1, idx2])
-                team = st.session_state.current_team
-                st.session_state.matched_by_team[idx1] = team
-                st.session_state.matched_by_team[idx2] = team
-                st.session_state.team_scores[team] += 1
-                
-                c1_text, c1_type = st.session_state.cards[idx1]
-                c2_text, c2_type = st.session_state.cards[idx2]
-                eng_phrase = c1_text if c1_type == "eng" else c2_text
-                ita_phrase = c2_text if c1_type == "eng" else c1_text
-                
-                # Queue Italian phrase audio to play
-                st.session_state.audio_to_play = ita_phrase
-                
-                st.session_state.matched_history.append((eng_phrase, ita_phrase, team))
-                st.session_state.selected = []
+        # Control Buttons
+        col1, col2 = st.columns(2)
+        with col1:
+            if not st.session_state.fc_show_answer:
+                if st.button("👁️ Show Answer (Spacebar)", key="fc_btn_flip"):
+                    toggle_answer()
+                    st.rerun()
             else:
-                st.session_state.selected = []
-                st.session_state.audio_to_play = None
-                st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
+                if st.button("➡️ Next Random Card (Spacebar)", key="fc_btn_next"):
+                    next_card()
+                    st.rerun()
 
-    # --- Team controls ---
-    if st.sidebar.button("🔀 Switch Team"):
-        st.session_state.selected = []
-        st.session_state.audio_to_play = None
-        st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
+        with col2:
+            if st.button("🔊 Replay Italian Audio"):
+                play_audio(curr_ita)
 
-    # --- Play audio if match made ---
-    if st.session_state.get("audio_to_play"):
-        play_audio(st.session_state.audio_to_play)
-        st.session_state.audio_to_play = None
-
-    # --- Display Board ---
-    st.markdown(f"### Current turn: Team {st.session_state.current_team + 1}")
-    cols_per_row = 6
-    num_cards = len(st.session_state.cards)
-
-    for start in range(0, num_cards, cols_per_row):
-        cols = st.columns(cols_per_row)
-        for i, col in enumerate(cols):
-            idx = start + i
-            if idx >= num_cards:
-                continue
-            card, ctype = st.session_state.cards[idx]
-            
-            clean_card = card.replace("<br>", "\n").replace(" <br>", "\n")
-
-            with col:
-                if idx in st.session_state.matched:
-                    team = st.session_state.matched_by_team.get(idx, 0)
-                    color = team_colors[team]
-                    html_formatted = clean_card.replace("\n", "<br>")
-                    st.markdown(f"<div class='big-font card-matched' style='color:{color}'>{html_formatted}</div>", unsafe_allow_html=True)
-                else:
-                    if st.button(clean_card, key=f"card-{idx}"):
-                        flip_card(idx)
-        st.markdown("<div class='row-space'></div>", unsafe_allow_html=True)
-
-    # --- Scores ---
-    st.markdown("---")
-    score_cols = st.columns(len(st.session_state.team_scores))
-    for t in range(len(st.session_state.team_scores)):
-        color = team_colors[t]
-        label = f"Team {t+1}: {st.session_state.team_scores[t]}"
-        if t == st.session_state.current_team:
-            score_cols[t].markdown(f"<div class='score-label team-current' style='color:{color}'>{label} ⬅️</div>", unsafe_allow_html=True)
-        else:
-            score_cols[t].markdown(f"<div class='score-label' style='color:{color}'>{label}</div>", unsafe_allow_html=True)
-
-    st.markdown(f"**Turns taken:** {st.session_state.turns}")
-
-    # --- Live Matched Pairs List ---
-    st.markdown("---")
-    st.subheader("📝 Matched Pairs History (In Order)")
-    
-    if len(st.session_state.matched_history) == 0:
-        st.caption("No pairs matched yet. Flip cards to make a match!")
+    # ==========================================
+    # --- GAME MODE 2: MATCHING GAME ---
+    # ==========================================
     else:
-        for idx, (eng, ita, team_idx) in enumerate(st.session_state.matched_history, 1):
-            t_color = team_colors[team_idx]
-            formatted_eng = eng.replace("\n", " ").replace("<br>", " ")
-            formatted_ita = ita.replace("\n", " ").replace("<br>", " ")
-            st.markdown(
-                f"**{idx}.** {formatted_eng} ↔️ **{formatted_ita}** "
-                f"<span style='color:{t_color}; font-weight:bold;'>(Matched by Team {team_idx + 1})</span>",
-                unsafe_allow_html=True
-            )
+        st.sidebar.header("🎮 Game Setup")
+        num_pairs = st.sidebar.slider("Number of word pairs:", 10, len(italian_set), 30, step=1)
+        num_teams = st.sidebar.slider("Number of teams:", 2, 4, 4, step=1)
 
-    # --- Game Over ---
-    if len(st.session_state.matched) == len(st.session_state.cards):
-        st.success("🎉 Game Over! All pairs matched!")
-        winner = max(range(len(st.session_state.team_scores)), key=lambda i: st.session_state.team_scores[i])
-        st.info(f"🏆 Winner: Team {winner + 1} with {st.session_state.team_scores[winner]} points!")
+        if "initialized" not in st.session_state:
+            st.session_state.initialized = False
+            st.session_state.num_teams = num_teams
+        
+        if st.session_state.initialized:
+            num_teams = st.session_state.num_teams
+        
+        team_colors = ["#FF4B4B", "#007BFF", "#2ECC71", "#F4B400"][:num_teams]
 
-    # --- Restart ---
-    if st.button("🔁 Restart Game"):
-        st.session_state.clear()
-        st.rerun()
+        if st.sidebar.button("🔁 Start New Game") or not st.session_state.initialized:
+            st.session_state.num_teams = num_teams
+            selected = random.sample(list(italian_set.items()), num_pairs)
+            pairs = []
+            for eng, ita in selected:
+                pairs.append((eng, "eng"))
+                pairs.append((ita, "ita"))
+            random.shuffle(pairs)
+
+            st.session_state.cards = pairs
+            st.session_state.selected = []
+            st.session_state.matched = []
+            st.session_state.matched_by_team = {}
+            st.session_state.matched_history = []
+            st.session_state.turns = 0
+            st.session_state.team_scores = [0] * num_teams
+            st.session_state.current_team = random.randint(0, num_teams - 1)
+            st.session_state.audio_to_play = None
+            st.session_state.initialized = True
+            st.rerun()
+
+        # Matching logic
+        def is_matching_pair(idx1, idx2):
+            card1, type1 = st.session_state.cards[idx1]
+            card2, type2 = st.session_state.cards[idx2]
+            if type1 == type2:
+                return False
+            if type1 == "eng":
+                return italian_set[card1] == card2
+            else:
+                return italian_set[card2] == card1
+
+        def flip_card(index):
+            if index in st.session_state.matched or index in st.session_state.selected:
+                return
+
+            st.session_state.selected.append(index)
+
+            if len(st.session_state.selected) == 2:
+                idx1, idx2 = st.session_state.selected
+                st.session_state.turns += 1
+                if is_matching_pair(idx1, idx2):
+                    st.session_state.matched.extend([idx1, idx2])
+                    team = st.session_state.current_team
+                    st.session_state.matched_by_team[idx1] = team
+                    st.session_state.matched_by_team[idx2] = team
+                    st.session_state.team_scores[team] += 1
+                    
+                    c1_text, c1_type = st.session_state.cards[idx1]
+                    c2_text, c2_type = st.session_state.cards[idx2]
+                    eng_phrase = c1_text if c1_type == "eng" else c2_text
+                    ita_phrase = c2_text if c1_type == "eng" else c1_text
+                    
+                    st.session_state.audio_to_play = ita_phrase
+                    st.session_state.matched_history.append((eng_phrase, ita_phrase, team))
+                    st.session_state.selected = []
+                else:
+                    st.session_state.selected = []
+                    st.session_state.audio_to_play = None
+                    st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
+
+        # Team controls
+        if st.sidebar.button("🔀 Switch Team"):
+            st.session_state.selected = []
+            st.session_state.audio_to_play = None
+            st.session_state.current_team = (st.session_state.current_team + 1) % len(st.session_state.team_scores)
+
+        # Audio Trigger
+        if st.session_state.get("audio_to_play"):
+            play_audio(st.session_state.audio_to_play)
+            st.session_state.audio_to_play = None
+
+        # Display Board
+        st.markdown(f"### Current turn: Team {st.session_state.current_team + 1}")
+        cols_per_row = 6
+        num_cards = len(st.session_state.cards)
+
+        for start in range(0, num_cards, cols_per_row):
+            cols = st.columns(cols_per_row)
+            for i, col in enumerate(cols):
+                idx = start + i
+                if idx >= num_cards:
+                    continue
+                card, ctype = st.session_state.cards[idx]
+                
+                clean_card = card.replace("<br>", "\n").replace(" <br>", "\n")
+
+                with col:
+                    if idx in st.session_state.matched:
+                        team = st.session_state.matched_by_team.get(idx, 0)
+                        color = team_colors[team]
+                        html_formatted = clean_card.replace("\n", "<br>")
+                        st.markdown(f"<div class='big-font card-matched' style='color:{color}'>{html_formatted}</div>", unsafe_allow_html=True)
+                    else:
+                        if st.button(clean_card, key=f"card-{idx}"):
+                            flip_card(idx)
+            st.markdown("<div class='row-space'></div>", unsafe_allow_html=True)
+
+        # Scores
+        st.markdown("---")
+        score_cols = st.columns(len(st.session_state.team_scores))
+        for t in range(len(st.session_state.team_scores)):
+            color = team_colors[t]
+            label = f"Team {t+1}: {st.session_state.team_scores[t]}"
+            if t == st.session_state.current_team:
+                score_cols[t].markdown(f"<div class='score-label team-current' style='color:{color}'>{label} ⬅️</div>", unsafe_allow_html=True)
+            else:
+                score_cols[t].markdown(f"<div class='score-label' style='color:{color}'>{label}</div>", unsafe_allow_html=True)
+
+        st.markdown(f"**Turns taken:** {st.session_state.turns}")
+
+        # Live Matched Pairs List
+        st.markdown("---")
+        st.subheader("📝 Matched Pairs History (In Order)")
+        
+        if len(st.session_state.matched_history) == 0:
+            st.caption("No pairs matched yet. Flip cards to make a match!")
+        else:
+            for idx, (eng, ita, team_idx) in enumerate(st.session_state.matched_history, 1):
+                t_color = team_colors[team_idx]
+                formatted_eng = eng.replace("\n", " ").replace("<br>", " ")
+                formatted_ita = ita.replace("\n", " ").replace("<br>", " ")
+                st.markdown(
+                    f"**{idx}.** {formatted_eng} ↔️ **{formatted_ita}** "
+                    f"<span style='color:{t_color}; font-weight:bold;'>(Matched by Team {team_idx + 1})</span>",
+                    unsafe_allow_html=True
+                )
+
+        # Game Over
+        if len(st.session_state.matched) == len(st.session_state.cards):
+            st.success("🎉 Game Over! All pairs matched!")
+            winner = max(range(len(st.session_state.team_scores)), key=lambda i: st.session_state.team_scores[i])
+            st.info(f"🏆 Winner: Team {winner + 1} with {st.session_state.team_scores[winner]} points!")
+
+        # Restart
+        if st.button("🔁 Restart Game"):
+            st.session_state.clear()
+            st.rerun()
 
 if __name__ == "__main__":
     app()
